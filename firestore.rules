@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global safety net catches any unhandled paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Public curated portfolio case studies (anyone can read, write allowed for admin demo purposes)
+    match /projects/{projectId} {
+      allow read, write: if true;
+    }
+
+    // Public boutique shop products (anyone can read, write allowed for admin demo purposes)
+    match /products/{productId} {
+      allow read, write: if true;
+    }
+
+    // Saved designs (only the owner can read, write, or delete their saved designs)
+    match /saved_designs/{designId} {
+      allow read, delete: if isOwner(resource.data.userId);
+      allow create: if isSignedIn() 
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.styleName is string
+        && request.resource.data.styleName.size() <= 100
+        && request.resource.data.headline is string
+        && request.resource.data.headline.size() <= 200
+        && request.resource.data.designerNote is string
+        && request.resource.data.designerNote.size() <= 2000
+        && request.resource.data.imageUrl is string;
+      allow update: if false; // Saved designs are immutable after creation
+    }
+
+    // Saved wishlist items (only the owner can read, write, or delete their wishlist)
+    match /wishlists/{wishlistId} {
+      allow read, delete: if isOwner(resource.data.userId);
+      allow create: if isSignedIn() 
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.productId is string
+        && request.resource.data.productId.size() <= 128;
+      allow update: if false; // Wishlist items are immutable
+    }
+
+    // Gift purchases (only the purchaser can read or create their purchases)
+    match /gift_purchases/{purchaseId} {
+      allow read: if isOwner(resource.data.userId);
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.productId is string
+        && request.resource.data.productName is string
+        && request.resource.data.price is number
+        && request.resource.data.recipientName is string
+        && request.resource.data.recipientName.size() <= 200
+        && request.resource.data.recipientEmail is string
+        && request.resource.data.recipientEmail.size() <= 200
+        && request.resource.data.recipientPhone is string
+        && request.resource.data.recipientPhone.size() <= 40
+        && request.resource.data.deliveryAddress is string
+        && request.resource.data.deliveryAddress.size() <= 1000
+        && request.resource.data.status is string;
+      allow update, delete: if false; // Gift purchases are logged and unmodifiable by client
+    }
+  }
+}

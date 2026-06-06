@@ -1,0 +1,107 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Information about an interior design project/case study",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string", "enum": ["Homes", "Commercial", "Designs"] },
+        "location": { "type": "string" },
+        "servicesUsed": { "type": "array" },
+        "description": { "type": "string" },
+        "imageBg": { "type": "string" },
+        "isFeatured": { "type": "boolean" }
+      },
+      "required": ["id", "title", "category", "location", "servicesUsed", "description", "imageBg"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "A luxury furniture piece listed in the Boutique Shop",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "category": { "type": "string", "enum": ["Beds", "Sofas", "Shelving", "Tables", "Storage"] },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "imageBg": { "type": "string" },
+        "iconType": { "type": "string", "enum": ["bed", "sofa", "shelving", "table", "storage"] },
+        "isNew": { "type": "boolean" }
+      },
+      "required": ["id", "category", "name", "price", "imageBg", "iconType"]
+    },
+    "SavedDesign": {
+      "title": "SavedDesign",
+      "description": "A room design generated in My Space and saved to the user's account",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "styleName": { "type": "string" },
+        "headline": { "type": "string" },
+        "palette": { "type": "array" },
+        "paletteNames": { "type": "array" },
+        "designerNote": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "styleName", "headline", "palette", "paletteNames", "designerNote", "imageUrl", "createdAt"]
+    },
+    "WishlistItem": {
+      "title": "WishlistItem",
+      "description": "A item from the boutique catalog the user saved to their wishlist",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "addedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "productId", "addedAt"]
+    },
+    "GiftPurchase": {
+      "title": "GiftPurchase",
+      "description": "A bespoke furniture piece purchased as a gift for a third party",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "price": { "type": "number" },
+        "recipientName": { "type": "string" },
+        "recipientEmail": { "type": "string" },
+        "recipientPhone": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "personalMsg": { "type": "string" },
+        "giftWrap": { "type": "boolean" },
+        "purchasedAt": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "userId", "productId", "productName", "price", "recipientName", "recipientEmail", "recipientPhone", "deliveryAddress", "purchasedAt", "status"]
+    }
+  },
+  "firestore": {
+    "projects": {
+      "schema": "Project",
+      "description": "Collection of interior design projects (portfolio case studies) curated by Zanori Spaces"
+    },
+    "products": {
+      "schema": "Product",
+      "description": "Bespoke high-end furniture items in the Zanori Spaces Boutique Catalog"
+    },
+    "saved_designs": {
+      "schema": "SavedDesign",
+      "description": "User saved generated AI room arrangements"
+    },
+    "wishlists": {
+      "schema": "WishlistItem",
+      "description": "User curations of boutique shop furniture for wishlist tracing"
+    },
+    "gift_purchases": {
+      "schema": "GiftPurchase",
+      "description": "Secured listings of furniture gifts ordered for third party delivery in Lagos"
+    }
+  }
+}
