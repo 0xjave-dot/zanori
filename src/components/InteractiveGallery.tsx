@@ -117,7 +117,7 @@ export default function InteractiveGallery() {
         <div className="flex justify-center">
           {/* MAIN PANORAMA VIEWER WINDOW: Centered */}
           <div className="w-full max-w-4xl">
-            <div className="relative w-full rounded-3xl overflow-hidden border border-brand-wood/25 shadow-2xl bg-[#120F0D]">
+            <div className="relative w-full rounded-3xl overflow-hidden border border-brand-wood/25 shadow-2xl bg-[#120F0D] min-h-[480px] sm:min-h-[640px]">
               
               {/* Decorative premium framing details */}
               <div className="absolute top-4 left-4 z-20 pointer-events-none">
@@ -134,13 +134,13 @@ export default function InteractiveGallery() {
                 key={activeSpace.id} // Ensure key refreshes iframe beautifully on switch
                 src={activeSpace.url}
                 width="100%" 
-                height="640px" 
+                height="100%" 
                 style={{ border: 0, display: 'block' }}
                 allowFullScreen
                 allow="xr-spatial-tracking; gyroscope; accelerometer"
                 title={`${activeSpace.name} - 3D Interactive Room Render`}
                 referrerPolicy="no-referrer"
-                className="w-full h-[520px] sm:h-[640px] select-none -mt-8"
+                className="w-full h-full select-none"
               ></iframe>
 
               {/* Dark branding waterlines at footer */}

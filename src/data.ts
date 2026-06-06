@@ -153,18 +153,33 @@ export const PRODUCTS_DATA: Product[] = [
 
 export const TESTIMONIALS_DATA: TestimonialItem[] = [
   {
-    quote: 'The online visualization was the moment everything clicked. I could see exactly what my living room would become, and they brought it to life down to the exact wood grains and furniture.',
-    client: 'Toheerah D.',
-
+    quote: "If you want real marketing that works and effective implementation — mobile app's got you covered.",
+    client: 'Human Being',
+    project: ''
   },
   {
-    quote: 'Their design consultation saved us months of expensive construction mistakes. They styled our photography lounge with an incredible balance of light and warmth.',
-    client: 'Daniel A.',
-   
+    quote: "I have been using this service for over a year now and I love it! I can't imagine life without it. It's so easy to use, and the customer service is great.",
+    client: 'Human Being',
+    project: ''
   },
   {
-    quote: 'Zanori Spaces’ pieces are heirloom quality. Hard to believe anyone can consistently deliver furniture of such quality everytime. The 3-seater and King Bed changed the entire energy of our home into a serene and restorative place.',
-    client: 'Kurosaki O.',
-  
+    quote: 'Would definitely recommend this to anyone. Will definitely be ordering again.',
+    client: 'Human Being',
+    project: ''
+  },
+  {
+    quote: 'If you are a business owner, you need this. Highly recommend you check it out.',
+    client: 'Human Being',
+    project: ''
+  },
+  {
+    quote: 'This platform has been so important for us as we continue to grow our company.',
+    client: 'Human Being',
+    project: ''
+  },
+  {
+    quote: 'Switching to this was the best decision we made this year. Results were immediate.',
+    client: 'Human Being',
+    project: ''
   }
 ];
