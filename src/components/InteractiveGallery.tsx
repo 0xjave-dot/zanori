@@ -16,7 +16,7 @@ const KUULA_SPACES: KuulaSpace[] = [
     name: "Private Interior Lounge",
     location: "",
     description: "Designed to frame natural morning skylights, this panoramic blueprint embeds double-sanded local teak cabinetry, high-contrast granite platforms, and open tropical ventilation pathways suited for modern climates.",
-    url: "https://kuula.co/share/h5Hpv?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1",
+    url: "https://kuula.co/share/h5Hpv?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1",
     conceptTag: "LAGOS HEIRLOOM APARTMENT"
   },
   {
@@ -24,7 +24,7 @@ const KUULA_SPACES: KuulaSpace[] = [
     name: "Luxury Cafe",
     location: "",
     description: "An organic luxury sanctuary emphasizing warm clay-baked pigments, intricate woven West African heritage accents, custom ceiling light integration, and low-profile premium mahogany loungers.",
-    url: "https://kuula.co/share/hb9t7?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1",
+    url: "https://kuula.co/share/hb9t7?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1",
     conceptTag: "HERITAGE COUTURE RESIDENCE"
   },
   {
@@ -32,7 +32,7 @@ const KUULA_SPACES: KuulaSpace[] = [
     name: "Custom Wood-finish Livingroom",
     location: "",
     description: "An executive screen-free mental sanctuary. Showcases basalt countertops, custom recessed task spotlights, scorched cedar walls, and dynamic double-padded seating zones for focused thought.",
-    url: "https://kuula.co/share/5H7Z7?logo=0&info=1&fs=1&vr=0&sd=1&thumbs=1",
+    url: "https://kuula.co/share/5H7Z7?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1",
     conceptTag: "OBSIDIAN INTELLECTUAL SUITE"
   }
 ];
@@ -52,7 +52,7 @@ export default function InteractiveGallery() {
             
             </span>
             <h2 className="font-serif text-4xl md:text-5xl font-light text-brand-dark leading-none">
-              Interactive 3D Gallery
+              Featured Spaces
             </h2>
             <p className="text-xs text-brand-muted max-w-xl font-light leading-relaxed">
               
@@ -158,7 +158,7 @@ export default function InteractiveGallery() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-brand-dark px-5 py-2.5 text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-base shadow-lg shadow-black/20"
                 >
-                  Open 3D Viewer
+                 
                 </a>
               </div>
             </div>

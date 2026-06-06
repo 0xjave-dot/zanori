@@ -35,7 +35,7 @@ export default function Hero() {
       </div>
       <div className="absolute inset-0 bg-brand-dark/30 pointer-events-none" />
       
-      <div className="relative flex flex-col justify-center space-y-8 z-10 px-6 md:px-12 py-8 flex-grow pointer-events-none">
+      <div className="relative flex flex-col justify-center space-y-8 z-10 px-6 md:px-12 py-8 flex-grow">
         <div className="max-w-4xl mx-auto w-full space-y-8">
           <div className="space-y-4">
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark/80 flex items-center space-x-2">
@@ -56,13 +56,26 @@ export default function Hero() {
             <button
               id="cta-book-hero"
               onClick={(e) => handleCtaClick(e, 'contact-section')}
-              className="pointer-events-auto px-8 py-3.5 bg-brand-dark text-brand-base rounded-full hover:bg-[#8B6F52] hover:text-white text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
+              className="px-8 py-3.5 bg-brand-dark text-brand-base rounded-full hover:bg-[#8B6F52] hover:text-white text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
             >
               Book a consultation
             </button>
-          
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={(e) => handleCtaClick(e, 'interactive-render-gallery')}
+          className="absolute right-6 bottom-4 z-30 inline-flex flex-col items-center text-brand-base/90 hover:text-brand-base transition-colors duration-300 lg:hidden"
+        >
+          <span className="text-[10px] uppercase tracking-[0.25em] mb-2"></span>
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-base/40 bg-white/10 backdrop-blur-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <path d="M18 13L12 19L6 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
       </div>
     </section>
   );
