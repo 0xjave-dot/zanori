@@ -18,12 +18,22 @@ export default function Hero() {
     }
   };
 
-  const heroBgUrl = 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1600&q=80';
+  const kuulaHeroUrl = 'https://kuula.co/share/NjV1w?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1';
 
   return (
     <section id="hero-section" className="relative pt-24 md:pt-32 md:pb-16 min-h-screen flex flex-col justify-between overflow-hidden">
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${heroBgUrl})` }} />
-      <div className="absolute inset-0 bg-brand-dark/60 pointer-events-none" />
+      <div className="absolute inset-0 overflow-hidden">
+        <iframe
+          src={kuulaHeroUrl}
+          title="Zanori Spaces interactive interior tour"
+          className="absolute left-0 right-0 top-[-56px] w-full border-0"
+          style={{ height: 'calc(100% + 56px)' }}
+          allow="xr-spatial-tracking; gyroscope; accelerometer"
+          allowFullScreen
+          referrerPolicy="no-referrer"
+        />
+      </div>
+      <div className="absolute inset-0 bg-brand-dark/30 pointer-events-none" />
       
       <div className="relative flex flex-col justify-center space-y-8 z-10 px-6 md:px-12 py-8 flex-grow">
         <div className="max-w-4xl mx-auto w-full space-y-8">
