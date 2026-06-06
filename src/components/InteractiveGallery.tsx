@@ -16,7 +16,7 @@ const KUULA_SPACES: KuulaSpace[] = [
     name: "Private Interior Lounge",
     location: "",
     description: "Designed to frame natural morning skylights, this panoramic blueprint embeds double-sanded local teak cabinetry, high-contrast granite platforms, and open tropical ventilation pathways suited for modern climates.",
-    url: "https://kuula.co/share/h5Hpv?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=0",
+    url: "https://kuula.co/share/h5Hpv?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=0&pitch=0",
     conceptTag: "LAGOS HEIRLOOM APARTMENT"
   },
   {
@@ -24,7 +24,7 @@ const KUULA_SPACES: KuulaSpace[] = [
     name: "Luxury Cafe",
     location: "",
     description: "An organic luxury sanctuary emphasizing warm clay-baked pigments, intricate woven West African heritage accents, custom ceiling light integration, and low-profile premium mahogany loungers.",
-    url: "https://kuula.co/share/hb9t7?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=0",
+    url: "https://kuula.co/share/hb9t7?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=0&pitch=0",
     conceptTag: "HERITAGE COUTURE RESIDENCE"
   },
   {
@@ -32,7 +32,7 @@ const KUULA_SPACES: KuulaSpace[] = [
     name: "Custom Wood-finish Livingroom",
     location: "",
     description: "An executive screen-free mental sanctuary. Showcases basalt countertops, custom recessed task spotlights, scorched cedar walls, and dynamic double-padded seating zones for focused thought.",
-    url: "https://kuula.co/share/5H7Z7?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=0",
+    url: "https://kuula.co/share/5H7Z7?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=0&pitch=0",
     conceptTag: "OBSIDIAN INTELLECTUAL SUITE"
   }
 ];
@@ -135,12 +135,12 @@ export default function InteractiveGallery() {
                 src={activeSpace.url}
                 width="100%" 
                 height="640px" 
-                style={{ border: 0, display: 'block', touchAction: 'pan-y' }}
+                style={{ border: 0, display: 'block' }}
                 allowFullScreen
                 allow="xr-spatial-tracking; gyroscope; accelerometer"
                 title={`${activeSpace.name} - 3D Interactive Room Render`}
                 referrerPolicy="no-referrer"
-                className="w-full h-[520px] sm:h-[640px] select-none -mt-16"
+                className="w-full h-[520px] sm:h-[640px] select-none -mt-8"
               ></iframe>
 
               {/* Dark branding waterlines at footer */}
