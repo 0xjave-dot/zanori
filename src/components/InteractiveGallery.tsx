@@ -117,7 +117,7 @@ export default function InteractiveGallery() {
         <div className="flex justify-center">
           {/* MAIN PANORAMA VIEWER WINDOW: Centered */}
           <div className="w-full max-w-4xl">
-            <div className="relative w-full rounded-3xl overflow-hidden border border-brand-wood/25 shadow-2xl bg-[#120F0D] min-h-[480px] sm:min-h-[640px]">
+            <div className="relative w-full rounded-3xl overflow-hidden border border-brand-wood/25 shadow-2xl bg-[#120F0D] h-[420px] sm:h-[560px] md:h-[640px] lg:h-[720px]">
               
               {/* Decorative premium framing details */}
               <div className="absolute top-4 left-4 z-20 pointer-events-none">
@@ -129,19 +129,29 @@ export default function InteractiveGallery() {
                 </div>
               </div>
 
+              {/* Overlays to hide Kuula logo/info badges in top corners (non-interactive) */}
+              <div className="absolute top-3 left-3 z-40 pointer-events-none">
+                <div className="w-16 h-8 bg-[#120F0D] rounded-md opacity-95"></div>
+              </div>
+              <div className="absolute top-3 right-3 z-40 pointer-events-none">
+                <div className="w-16 h-8 bg-[#120F0D] rounded-md opacity-95"></div>
+              </div>
+
               {/* Native responsive iframe directly referencing requested Kuula panoramic tour URL */}
-              <iframe 
-                key={activeSpace.id} // Ensure key refreshes iframe beautifully on switch
-                src={activeSpace.url}
-                width="100%" 
-                height="100%" 
-                style={{ border: 0, display: 'block', pointerEvents: 'auto', touchAction: 'auto' }}
-                allowFullScreen
-                allow="xr-spatial-tracking; gyroscope; accelerometer"
-                title={`${activeSpace.name} - 3D Interactive Room Render`}
-                referrerPolicy="no-referrer"
-                className="w-full h-full"
-              ></iframe>
+              <div className="relative w-full h-full overflow-hidden">
+                <iframe
+                  key={activeSpace.id} // Ensure key refreshes iframe beautifully on switch
+                  src={activeSpace.url}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, display: 'block', pointerEvents: 'auto', touchAction: 'auto', position: 'absolute', top: '-32px', left: 0, height: 'calc(100% + 32px)' }}
+                  allowFullScreen
+                  allow="xr-spatial-tracking"
+                  title={`${activeSpace.name} - 3D Interactive Room Render`}
+                  referrerPolicy="no-referrer"
+                  className="w-full"
+                ></iframe>
+              </div>
 
               {/* Dark branding waterlines at footer */}
               <div className="absolute bottom-4 left-4 z-20 pointer-events-none hidden sm:block">
