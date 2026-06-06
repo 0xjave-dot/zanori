@@ -190,25 +190,29 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
 
         {/* Right Studio Information Column */}
         <div className="lg:col-span-5 space-y-8 lg:pl-4">
-          {/* Studio Image Representation Container */}
-          <div
-            className="rounded-3xl h-[260px] relative overflow-hidden flex flex-col justify-end p-6 border border-brand-wood/15"
-            style={{ background: 'linear-gradient(135deg, #C4A882 0%, #8B6F52 50%, #2A2520 100%)' }}
-          >
-            <div className="absolute inset-0 bg-black/10 mix-blend-multiply pointer-events-none"></div>
-
-            {/* Graphic technical guidelines */}
-            <div className="absolute inset-4 border border-brand-base/20 rounded-xl pointer-events-none opacity-40"></div>
-
-            <div className="relative z-10 text-brand-base space-y-1">
-              <span className="text-[9px] uppercase tracking-widest text-[#E8E0D4] font-medium font-mono">
-                FIND US
-              </span>
-              <h4 className="font-serif text-lg font-light leading-snug">
-               
-              </h4>
-            </div>
+          {/* Google Maps Embed */}
+          <div className="rounded-3xl h-[400px] overflow-hidden border border-brand-wood/15 shadow-lg">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.6559410857254!2d3.455421!3d6.434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f7b5b8c8c8c8c8d%3A0x0!2sZanori%20Spaces!5e0!3m2!1sen!2sng!4v1234567890"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-full"
+            ></iframe>
           </div>
+
+          {/* Directions Link */}
+          <a
+            href="https://maps.app.goo.gl/WqYWVPsE7Ata1bSx6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-brand-dark hover:bg-brand-wood text-brand-base hover:text-brand-dark rounded-full text-xs uppercase tracking-[0.15em] font-semibold transition-all duration-300"
+          >
+            Get Directions
+          </a>
 
           {/* Directory blocks */}
           <div className="space-y-6 pt-4">

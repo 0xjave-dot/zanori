@@ -51,7 +51,7 @@ export default function HowItWorks() {
           <div className="hidden lg:block absolute top-[28px] left-[40px] right-[40px] h-[1px] bg-brand-wood/25 z-0"></div>
 
           {/* Staggered Steps */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 relative z-10">
             {steps.map((step, idx) => (
               <div
                 key={step.num}
