@@ -135,7 +135,7 @@ export default function InteractiveGallery() {
                 src={activeSpace.url}
                 width="100%" 
                 height="640px" 
-                style={{ border: 0, display: 'block' }}
+                style={{ border: 0, display: 'block', touchAction: 'pan-y' }}
                 allowFullScreen
                 allow="xr-spatial-tracking; gyroscope; accelerometer"
                 title={`${activeSpace.name} - 3D Interactive Room Render`}
@@ -148,6 +148,18 @@ export default function InteractiveGallery() {
                 <span className="text-[9px] font-mono uppercase tracking-widest text-white/50 bg-[#2A2520]/80 px-3 py-1 rounded-md border border-white/5">
                   DESIGN SUITE // {activeSpace.id}
                 </span>
+              </div>
+
+              {/* Mobile-friendly open button for touchscreens */}
+              <div className="absolute inset-x-0 bottom-4 z-30 flex justify-center sm:hidden px-4">
+                <a
+                  href={activeSpace.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-dark px-5 py-2.5 text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-base shadow-lg shadow-black/20"
+                >
+                  Open 3D Viewer
+                </a>
               </div>
             </div>
           </div>
