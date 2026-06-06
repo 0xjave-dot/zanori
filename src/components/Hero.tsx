@@ -18,7 +18,7 @@ export default function Hero() {
     }
   };
 
-  const kuulaHeroUrl = 'https://kuula.co/share/NjV1w?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1';
+  const kuulaHeroUrl = 'https://kuula.co/share/NjV1w?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1&gyro=0';
 
   return (
     <section id="hero-section" className="relative pt-24 md:pt-32 md:pb-16 min-h-screen flex flex-col justify-between overflow-hidden">
@@ -28,14 +28,14 @@ export default function Hero() {
           title="Zanori Spaces interactive interior tour"
           className="absolute left-0 right-0 top-[-56px] w-full border-0"
           style={{ height: 'calc(100% + 56px)' }}
-          allow="xr-spatial-tracking; gyroscope; accelerometer"
+          allow="xr-spatial-tracking"
           allowFullScreen
           referrerPolicy="no-referrer"
         />
       </div>
       <div className="absolute inset-0 bg-brand-dark/30 pointer-events-none" />
       
-      <div className="relative flex flex-col justify-center space-y-8 z-10 px-6 md:px-12 py-8 flex-grow">
+      <div className="relative flex flex-col justify-center space-y-8 z-10 px-6 md:px-12 py-8 flex-grow pointer-events-none">
         <div className="max-w-4xl mx-auto w-full space-y-8">
           <div className="space-y-4">
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark/80 flex items-center space-x-2">
@@ -56,7 +56,7 @@ export default function Hero() {
             <button
               id="cta-book-hero"
               onClick={(e) => handleCtaClick(e, 'contact-section')}
-              className="px-8 py-3.5 bg-brand-dark text-brand-base rounded-full hover:bg-[#8B6F52] hover:text-white text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
+              className="pointer-events-auto px-8 py-3.5 bg-brand-dark text-brand-base rounded-full hover:bg-[#8B6F52] hover:text-white text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
             >
               Book a consultation
             </button>
