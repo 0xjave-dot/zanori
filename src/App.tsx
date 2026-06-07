@@ -331,23 +331,23 @@ export default function App() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       if (hash.startsWith('#/work')) {
-        setCurrentPage('work');
-        window.scrollTo({ top: 0, behavior: 'instant' as any });
+        setToastMessage('not done yet');
+        window.location.hash = '#';
       } else if (hash.startsWith('#/services')) {
-        setCurrentPage('services');
-        window.scrollTo({ top: 0, behavior: 'instant' as any });
+        setToastMessage('not done yet');
+        window.location.hash = '#';
       } else if (hash.startsWith('#/shop')) {
-        setCurrentPage('shop');
-        window.scrollTo({ top: 0, behavior: 'instant' as any });
+        setToastMessage('not done yet');
+        window.location.hash = '#';
       } else if (hash.startsWith('#/ai-renderer')) {
-        setCurrentPage('ai-renderer');
-        window.scrollTo({ top: 0, behavior: 'instant' as any });
+        setToastMessage('not done yet');
+        window.location.hash = '#';
       } else if (hash.startsWith('#/account')) {
-        setCurrentPage('account');
-        window.scrollTo({ top: 0, behavior: 'instant' as any });
+        setToastMessage('not done yet');
+        window.location.hash = '#';
       } else if (hash.startsWith('#/admin')) {
-        setCurrentPage('admin');
-        window.scrollTo({ top: 0, behavior: 'instant' as any });
+        setToastMessage('not done yet');
+        window.location.hash = '#';
       } else {
         setCurrentPage('home');
         if (hash.includes('home-')) {
