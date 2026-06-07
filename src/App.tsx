@@ -9,6 +9,8 @@ import HowItWorks from './components/HowItWorks';
 import ContactForm from './components/ContactForm';
 import DesignerBio from './components/DesignerBio';
 import InteractiveGallery from './components/InteractiveGallery';
+import WhyChooseUs from './components/WhyChooseUs';
+import Testimonial from './components/Testimonial';
 import Footer from './components/Footer';
 
 // Dialog / Utility Overlays
@@ -485,6 +487,7 @@ export default function App() {
           <div className="space-y-0">
             <div className="reveal"><Hero /></div>
             <div className="reveal"><InteractiveGallery /></div>
+            <div className="reveal"><WhyChooseUs /></div>
             <div className="reveal"><DesignerBio /></div>
             <div className="reveal"><HowItWorks /></div>
           </div>
@@ -545,7 +548,7 @@ export default function App() {
           <div className="reveal max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
-                ZANORI COUTURE SERVICES
+                ZANORI SERVICES
               </span>
               <h1 className="font-serif text-4xl md:text-5xl font-light text-brand-dark">
                 {user ? "Member's Lounge" : "Secure Authentication"}

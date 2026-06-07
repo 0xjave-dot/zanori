@@ -34,6 +34,17 @@ export default function Hero() {
 
   const kuulaHeroUrl = 'https://kuula.co/share/NjV1w?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1&gyro=0';
 
+  // Rotating verb settings
+  const verbs = ['feel', 'breathe', 'move', 'flow', 'love'];
+  const [verbIdx, setVerbIdx] = useState<number>(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVerbIdx((v) => (v + 1) % verbs.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="hero-section" className="relative pt-24 md:pt-32 md:pb-16 min-h-screen flex flex-col justify-between overflow-hidden bg-brand-base">
       <div className="absolute inset-0 overflow-hidden">
@@ -57,7 +68,11 @@ export default function Hero() {
             </span>
             
             <h1 className="font-serif text-5xl md:text-6xl font-light leading-[1.1] text-brand-ivory">
-              Spaces designed around the way <span className="italic">you live.</span>
+              Spaces designed around the way you{' '}
+              <span className="italic">
+                <span key={verbs[verbIdx]} className="dynamic-verb drop-in text-brand-cranberry">{verbs[verbIdx]}</span>
+              </span>
+              .
             </h1>
             
           </div>
