@@ -223,7 +223,6 @@ export default function AccountPanel({
 
           {/* Social login divider */}
           <div className="relative flex items-center justify-center">
-            <div className="absolute inset-x-0 h-[1px] bg-brand-wood/15"></div>
                 <span className="relative px-3 bg-brand-sand text-[8px] uppercase tracking-widest text-brand-wood font-semibold">
               Or Authenticate with
             </span>
@@ -298,7 +297,7 @@ export default function AccountPanel({
       </div>
 
       {/* Profile caskets switch tab */}
-      <div className="flex border-b border-brand-wood/15 pb-2 overflow-x-auto gap-4">
+      <div className="flex pb-2 overflow-x-auto gap-4">
         {[
           { key: 'profile', label: 'Client Profile', count: null },
           { key: 'designs', label: 'My Saved Spaces', count: savedDesigns.length },
@@ -335,19 +334,19 @@ export default function AccountPanel({
               <h3 className="font-serif text-lg text-brand-dark italic">Design Identity & Credentials</h3>
               
               <div className="space-y-4 font-sans text-xs">
-                <div className="flex justify-between py-2 border-b border-brand-wood/10">
+                <div className="flex justify-between py-2">
                   <span className="text-brand-muted uppercase tracking-wider font-light">Account Holder</span>
                   <span className="font-medium text-brand-dark">{user.displayName || 'Unspecified'}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-brand-wood/10">
+                <div className="flex justify-between py-2">
                   <span className="text-brand-muted uppercase tracking-wider font-light">Client Email</span>
                   <span className="font-mono text-brand-dark">{user.email}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-brand-wood/10">
+                <div className="flex justify-between py-2">
                   <span className="text-brand-muted uppercase tracking-wider font-light">Member Tag ID</span>
                   <span className="font-mono text-brand-muted shrink-0 text-[10px]">{user.uid.substring(0, 12)}...</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-brand-wood/10">
+                <div className="flex justify-between py-2">
                   <span className="text-brand-muted uppercase tracking-wider font-light">Last Sign In</span>
                   <span className="text-brand-dark">Just now</span>
                 </div>
@@ -380,7 +379,7 @@ export default function AccountPanel({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {savedDesigns.map((design) => (
                   <div key={design.id} className="bg-brand-sand rounded-2xl overflow-hidden border border-brand-wood/15 flex flex-col justify-between group shadow-xs">
-                    <div className="relative h-44 bg-zinc-50 flex items-center justify-center border-b border-brand-wood/15 overflow-hidden">
+                    <div className="relative h-44 bg-zinc-50 flex items-center justify-center overflow-hidden">
                       {design.imageUrl ? (
                         <img 
                           src={design.imageUrl} 
@@ -406,12 +405,12 @@ export default function AccountPanel({
                         <blockquote className="font-serif text-[13.5px] italic text-brand-bark leading-relaxed">
                           "{design.headline}"
                         </blockquote>
-                        <p className="text-[11px] leading-relaxed font-sans text-brand-muted font-light pl-3 border-l border-brand-wood/30">
+                        <p className="text-[11px] leading-relaxed font-sans text-brand-muted font-light pl-3">
                           {design.designerNote}
                         </p>
                       </div>
 
-                      <div className="space-y-2 pt-2 border-t border-brand-wood/10">
+                      <div className="space-y-2 pt-2">
                         <div className="flex justify-between items-center text-[8px] font-mono tracking-wider text-brand-muted uppercase">
                           <span>Synthesized Palette</span>
                           <span>{design.createdAt}</span>
@@ -481,7 +480,7 @@ export default function AccountPanel({
                           <span className="text-xs font-semibold text-brand-dark font-sans block pt-1">{formatNaira(prod.price)}</span>
                         </div>
 
-                        <div className="pt-3 mt-3 border-t border-brand-wood/10 text-center">
+                        <div className="pt-3 mt-3 text-center">
                           <button
                             onClick={() => onAddProductToInquiry(prod)}
                             className="w-full py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-white text-[9px] uppercase tracking-wider font-semibold transition-all cursor-pointer flex items-center justify-center space-x-1"
@@ -521,7 +520,7 @@ export default function AccountPanel({
               <div className="space-y-6">
                 {giftPurchases.map((gift) => (
                   <div key={gift.id} className="bg-brand-sand rounded-xl border border-brand-wood/15 p-6 space-y-4 shadow-xs">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-wood/10 pb-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
                       <div className="space-y-1">
                         <span className="text-[9px] font-mono text-brand-muted uppercase tracking-wider block">GIFT ORDER ID: {gift.id}</span>
                         <h4 className="font-serif text-[15px] font-semibold text-brand-dark">Curated Piece: {gift.productName}</h4>
@@ -565,7 +564,7 @@ export default function AccountPanel({
                             "{gift.personalMsg || 'No engraved message requested.'}"
                           </p>
                         </div>
-                        <div className="flex justify-between items-center text-[9px] font-semibold text-brand-muted pt-2 border-t border-brand-wood/10">
+                        <div className="flex justify-between items-center text-[9px] font-semibold text-brand-muted pt-2">
                           <span>LUXURY GIFT WRAP:</span>
                           <span className={gift.giftWrap ? 'text-brand-dark' : 'text-zinc-400'}>{gift.giftWrap ? 'Satin Wrapped Box ✓' : 'Standard Carton Package'}</span>
                         </div>
@@ -598,3 +597,4 @@ export default function AccountPanel({
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-ï»¿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Hero() {
   const [arrowTop, setArrowTop] = useState<number>(0);
@@ -63,7 +63,7 @@ export default function Hero() {
           </div>
 
           <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.1em]">
-            Space Styling Â· Design Consultation Â· Curated Furniture 
+            Space Styling · Design Consultation · Curated Furniture 
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -95,3 +95,4 @@ export default function Hero() {
     </section>
   );
 }
+

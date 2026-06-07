@@ -38,6 +38,7 @@ export default function App() {
   
   // Custom toasts
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const showNavBlockedToast = () => setToastMessage('not done cooking');
 
   // Dynamic synchronized state with database (backed by Firestore)
   const [projects, setProjects] = useState<Project[]>(PORTFOLIO_DATA);
@@ -307,6 +308,26 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<string>('home');
 
   useEffect(() => {
+    const revealElements = document.querySelectorAll<HTMLElement>('.reveal:not(.reveal-visible)');
+    if (revealElements.length === 0) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    revealElements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [currentPage]);
+
+  useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
       if (hash.startsWith('#/work')) {
@@ -453,6 +474,7 @@ export default function App() {
         inquiryCount={totalInquiryItemsCount}
         currentPage={currentPage}
         user={user}
+        onBlockedNavigation={showNavBlockedToast}
       />
 
       {/* Dynamic Routing Screen Page Views */}
@@ -460,32 +482,32 @@ export default function App() {
         
         {/* HOMEPAGE ROUTE */}
         {currentPage === 'home' && (
-          <div className="animate-feed-in">
-            <Hero />
-            <InteractiveGallery />
-            <DesignerBio />
-            <HowItWorks />
+          <div className="space-y-24">
+            <div className="reveal"><Hero /></div>
+            <div className="reveal"><InteractiveGallery /></div>
+            <div className="reveal"><DesignerBio /></div>
+            <div className="reveal"><HowItWorks /></div>
           </div>
         )}
 
         {/* WORK PAGE ROUTE */}
         {currentPage === 'work' && (
-          <div className="animate-feed-in">
-            <Portfolio onProjectSelect={handleProjectSelect} projects={projects} />
-            <Testimonial />
+          <div className="space-y-24">
+            <div className="reveal"><Portfolio onProjectSelect={handleProjectSelect} projects={projects} /></div>
+            <div className="reveal"><Testimonial /></div>
           </div>
         )}
 
         {/* SERVICES PAGE ROUTE */}
         {currentPage === 'services' && (
-          <div className="animate-feed-in">
+          <div className="reveal">
             <Services onSelectService={handleSelectServiceFromServices} />
           </div>
         )}
 
         {/* SHOP PAGE ROUTE */}
         {currentPage === 'shop' && (
-          <div className="animate-feed-in">
+          <div className="reveal">
             <Shop
               onAddProductToInquiry={handleAddProductToInquiryVal}
               onOpenInquiryDrawer={handleOpenInquiryDrawer}
@@ -500,7 +522,7 @@ export default function App() {
 
         {/* My Spaces / PRIVATE LOUNGE WORKSPACE */}
         {currentPage === 'ai-renderer' && (
-          <div className="animate-feed-in max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
+          <div className="reveal max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
                 ZANORI DIGITAL DESIGN WORKSPACE
@@ -520,7 +542,7 @@ export default function App() {
 
         {/* ACCOUNT CLIENT SPACE */}
         {currentPage === 'account' && (
-          <div className="animate-feed-in max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
+          <div className="reveal max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
                 ZANORI COUTURE SERVICES
@@ -552,7 +574,7 @@ export default function App() {
 
         {/* ADMIN WORKSTATION ROUTE */}
         {currentPage === 'admin' && (
-          <div className="animate-feed-in">
+          <div className="reveal">
             <AdminPanel
               projects={projects}
               setProjects={setProjects}
@@ -574,7 +596,7 @@ export default function App() {
       </main>
 
       {/* Primary Footer */}
-      <Footer />
+      <Footer onBlockedNavigation={showNavBlockedToast} />
 
       {/* Luxury Gift Purchasing Drawer modal */}
       <GiftModal

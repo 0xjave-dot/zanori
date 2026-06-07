@@ -102,7 +102,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
           className="relative bg-brand-base w-full max-w-lg rounded-2xl overflow-hidden border border-brand-wood/25 shadow-xl max-h-[90vh] flex flex-col justify-between"
         >
           {/* Header */}
-          <div className="p-6 border-b border-brand-wood/15 bg-brand-sand/55 flex items-center justify-between">
+          <div className="p-6 bg-brand-sand/55 flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="p-2 bg-brand-warm text-brand-wood rounded-lg">
                 <Gift size={16} />
@@ -121,7 +121,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
           </div>
 
           {/* Stepper indicator bar */}
-          <div className="grid grid-cols-2 text-center text-[10px] font-mono tracking-widest text-brand-muted bg-brand-warm py-2.5 border-b border-brand-wood/10">
+          <div className="grid grid-cols-2 text-center text-[10px] font-mono tracking-widest text-brand-muted bg-brand-warm py-2.5">
             <span className={step === 1 ? 'text-brand-dark font-bold' : ''}>1. RECIPIENT BRIEF</span>
             <span className={step === 2 ? 'text-brand-dark font-bold' : ''}>2. SECURED CHECKOUT</span>
           </div>
@@ -244,7 +244,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                     <span className="text-brand-wood">{giftWrap ? 'Included' : 'None'}</span>
                   </div>
 
-                  <div className="border-t border-brand-wood/15 pt-2 flex justify-between items-center text-sm font-semibold">
+                  <div className="pt-2 flex justify-between items-center text-sm font-semibold">
                     <span className="text-brand-bark">Total Premium Paid</span>
                     <span className="text-brand-bark font-sans font-bold">{formatNaira(product.price)}</span>
                   </div>
@@ -306,7 +306,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
           </div>
 
           {/* Footer controls */}
-          <div className="p-6 border-t border-brand-wood/15 bg-brand-sand/35 flex items-center justify-between">
+          <div className="p-6 bg-brand-sand/35 flex items-center justify-between">
             {step === 2 && (
               <button
                 type="button"
@@ -352,3 +352,4 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
     </AnimatePresence>
   );
 }
+

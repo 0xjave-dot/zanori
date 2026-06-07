@@ -77,14 +77,14 @@ export default function InteractiveGallery() {
   }, [activeSpace]);
 
   return (
-    <section id="interactive-render-gallery" className="py-24 md:py-32 bg-brand-sand border-b border-brand-wood/15 text-brand-dark">
+    <section id="interactive-render-gallery" className="py-24 md:py-32 bg-brand-sand text-brand-dark">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-0">
         
         {/* Dynamic Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 border-b border-brand-wood/15 pb-2">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 pb-2">
           <div className="space-y-0">
             <h2 className="font-serif text-4xl md:text-5xl font-light text-brand-dark leading-none">
-              Featured
+              Immerse Yourself
             </h2>
           </div>
 
@@ -199,3 +199,4 @@ export default function InteractiveGallery() {
     </section>
   );
 }
+

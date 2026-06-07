@@ -84,7 +84,7 @@ export default function Shop({
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
         
         {/* Page Header */}
-        <div className="border-b border-brand-wood/15 pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
               ZANORI HEIRLOOM BOUTIQUE
@@ -103,7 +103,7 @@ export default function Shop({
           <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6">
             
             {/* Left: Interactive Category Tabs */}
-            <div className="flex flex-wrap items-center gap-1.5 border-b lg:border-none border-brand-wood/10 pb-4 lg:pb-0">
+            <div className="flex flex-wrap items-center gap-1.5 pb-4 lg:pb-0">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -152,7 +152,7 @@ export default function Shop({
           </div>
 
           {/* Collapsible/Extended Budget Controller Slider */}
-          <div className="pt-4 border-t border-brand-wood/10 flex flex-col sm:flex-row items-baseline sm:items-center justify-between gap-4">
+          <div className="pt-4 flex flex-col sm:flex-row items-baseline sm:items-center justify-between gap-4">
             <span className="text-[10px] font-mono tracking-widest text-brand-wood uppercase font-bold flex items-center space-x-1.5">
               <SlidersHorizontal size={12} />
               <span>Optimize Budget Allocation Limit</span>
@@ -236,7 +236,7 @@ export default function Shop({
                       </h3>
                     </div>
 
-                    <div className="flex items-center justify-between pt-3 border-t border-brand-wood/10 gap-2">
+                    <div className="flex items-center justify-between pt-3 gap-2">
                       <span className="text-sm font-medium text-brand-dark tracking-wide font-sans">
                         {formatNairaVal(product.price)}
                       </span>
@@ -288,7 +288,7 @@ export default function Shop({
         )}
 
         {/* Expanded delivery terms and boutique standards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-brand-wood/15">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
           {logisticsGuides.map((guide, i) => (
             <div key={i} className="bg-brand-base rounded-2xl p-6 border border-brand-wood/10 flex items-start space-x-4">
               <div className="p-3 bg-brand-warm text-brand-bark rounded-xl">
@@ -308,3 +308,4 @@ export default function Shop({
     </div>
   );
 }
+

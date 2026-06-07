@@ -387,7 +387,7 @@ export default function AdminPanel({
             </button>
           </form>
 
-          <div className="pt-6 border-t border-brand-wood/10 text-center">
+          <div className="pt-6 text-center">
             <button
               type="button"
               onClick={onNavigateHome}
@@ -415,7 +415,7 @@ export default function AdminPanel({
         )}
 
         {/* Page Header */}
-        <div className="border-b border-brand-wood/25 pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4 text-left">
             <div className="flex items-center space-x-2">
               <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
@@ -468,7 +468,7 @@ export default function AdminPanel({
           <div className="lg:col-span-8 bg-brand-base rounded-2xl border border-brand-wood/15 p-6 md:p-8 space-y-6 shadow-sm">
             
             {/* Tab selection panel */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-wood/10 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
               <div className="flex bg-brand-warm/60 p-1 rounded-full items-center">
                 <button
                   type="button"
@@ -730,7 +730,7 @@ export default function AdminPanel({
               // FORM IS ENGAGED - Render Project Form or Product Form
               <>
                 {/* Form header */}
-                <div className="flex items-center justify-between pb-3 border-b border-brand-wood/10">
+                <div className="flex items-center justify-between pb-3">
                   <span className="text-[10px] tracking-widest text-brand-wood uppercase font-mono font-bold block">
                     {editingProject || editingProduct ? 'Curate Workspace Edit' : 'Append New Curation'}
                   </span>
@@ -1039,5 +1039,6 @@ export default function AdminPanel({
     </div>
     );
   }
+
 
 

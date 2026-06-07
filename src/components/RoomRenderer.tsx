@@ -127,7 +127,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
     setTooltip(null);
 
     try {
-      const response = await fetch('/api/reimagine', {
+      const response = await fetch('http://localhost:3000/api/reimagine', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -213,7 +213,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24">
         
         {/* Page Header */}
-        <div className="border-b border-brand-wood/20 pb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="pb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
               ZANORI EXPERIMENTAL LAB
@@ -248,7 +248,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="pt-4 border-t border-brand-wood/15"
+                className="pt-4"
               >
                 <button
                   onClick={handleScrollToContact}
@@ -266,15 +266,6 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
             
             {/* Animating wood-tone progress bar */}
             <AnimatePresence>
-              {isGenerating && (
-                <motion.div
-                  initial={{ width: '0%' }}
-                  animate={{ width: '100%' }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1.8, ease: 'easeInOut' }}
-                  className="absolute top-0 left-0 h-1 bg-brand-wood"
-                />
-              )}
             </AnimatePresence>
 
             {/* Step-by-Step workspace or side-by-side results display */}
@@ -460,7 +451,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                   className="space-y-6 animate-feed-in"
                 >
                   {/* Pair view header titles */}
-                  <div className="flex border-b border-brand-wood/10 pb-3 justify-between items-center text-[10px] uppercase tracking-[0.12em] font-mono text-brand-muted">
+                  <div className="flex pb-3 justify-between items-center text-[10px] uppercase tracking-[0.12em] font-mono text-brand-muted">
                     <span>Source Snapshot</span>
                     <span>AI Curated Design Report</span>
                   </div>
@@ -470,7 +461,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                     
                     {/* Left Frame: original uploaded snapshot */}
                     <div className="rounded-lg bg-zinc-50 border border-brand-wood/10 flex flex-col justify-between overflow-hidden">
-                      <div className="p-2 border-b border-brand-wood/10 flex justify-between items-center bg-brand-sand/30">
+                      <div className="p-2 flex justify-between items-center bg-brand-sand/30">
                         <span className="text-[9px] uppercase tracking-widest text-brand-wood font-semibold">Your room snapshot</span>
                         <span className="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>
                       </div>
@@ -493,7 +484,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                       transition={{ delay: 0.15, duration: 0.5 }}
                       className="rounded-lg bg-brand-sand/40 border border-brand-wood/30 p-5 space-y-5 flex flex-col justify-between"
                     >
-                        <div className="flex justify-between items-center text-[9px] uppercase tracking-widest text-brand-wood font-semibold border-b border-brand-wood/10 pb-2">
+                        <div className="flex justify-between items-center text-[9px] uppercase tracking-widest text-brand-wood font-semibold pb-2">
                         <span>Reimagined by Zanori Spaces</span>
                         <span className="flex items-center space-x-1">
                           <span className="w-1.5 h-1.5 rounded-full bg-brand-wood animate-pulse" />
@@ -537,13 +528,13 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                   </div>
 
                   {/* Furniture catalog listings mapping */}
-                  <div className="border-t border-brand-wood/10 pt-5 space-y-3">
+                  <div className="pt-5 space-y-3">
                     <span className="text-[10px] uppercase tracking-wider text-brand-muted font-mono block animate-pulse">
                       Zanori Catalog curation for {result?.style_name}
                     </span>
                     <div className="space-y-2.5">
                       {result?.furniture_suggestions.map((suggestion, idx) => (
-                        <div key={idx} className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between text-xs py-1 border-b border-dashed border-brand-wood/10">
+                        <div key={idx} className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between text-xs py-1">
                           <span className="font-serif italic font-medium text-brand-bark shrink-0 sm:w-1/3">
                             {suggestion.piece}
                           </span>
@@ -623,7 +614,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
         </div>
 
         {/* Dynamic Static Inspiration Boarding row */}
-        <div className="space-y-8 pt-8 border-t border-brand-wood/20">
+        <div className="space-y-8 pt-8">
           <div className="text-center space-y-2 max-w-2xl mx-auto">
             <span className="text-[10px] tracking-widest text-brand-wood font-mono uppercase font-bold block">STYLE PRESETS</span>
             <h3 className="font-serif text-3xl font-light text-brand-dark">Atmospheric Design Directions</h3>
@@ -644,7 +635,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                   <h4 className="font-serif text-lg font-light text-brand-bark">{item.title}</h4>
                   <p className="text-xs text-brand-muted font-sans font-light leading-relaxed">{item.desc}</p>
                 </div>
-                <div className="pt-4 border-t border-brand-wood/10 mt-6 flex justify-between items-center text-[10px] font-mono text-brand-wood">
+                <div className="pt-4 mt-6 flex justify-between items-center text-[10px] font-mono text-brand-wood">
                   <span>VENEERING MATERIALS:</span>
                   <span className="font-semibold text-brand-dark">{item.materials}</span>
                 </div>
@@ -655,7 +646,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
 
         {/* Dynamic Transformations Roll */}
         <div className="bg-brand-bark/95 text-brand-base rounded-3xl p-8 md:p-12 space-y-8 border border-brand-wood/10">
-          <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 border-b border-brand-wood/15 pb-6">
+          <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 pb-6">
             <h3 className="font-serif text-3xl font-light italic text-white flex items-center gap-2">
               <span>Transformed Concepts Log</span>
             </h3>
@@ -688,3 +679,4 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
     </div>
   );
 }
+

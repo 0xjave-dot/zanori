@@ -30,7 +30,7 @@ export default function Portfolio({ onProjectSelect, projects }: PortfolioProps)
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24">
         
         {/* Page Header */}
-        <div className="border-b border-brand-wood/25 pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
               ZANORI DESIGN GALLERY
@@ -147,3 +147,4 @@ export default function Portfolio({ onProjectSelect, projects }: PortfolioProps)
     </div>
   );
 }
+

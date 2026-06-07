@@ -1,7 +1,11 @@
 import React from 'react';
 import { Instagram, Phone, ArrowUp } from 'lucide-react';
 
-export default function Footer() {
+interface FooterProps {
+  onBlockedNavigation: () => void;
+}
+
+export default function Footer({ onBlockedNavigation }: FooterProps) {
   const handlesScrollUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -28,6 +32,9 @@ export default function Footer() {
           });
         }
       }
+    } else if (targetHash !== '#/') {
+      e.preventDefault();
+      onBlockedNavigation();
     } else {
       window.location.hash = targetHash;
     }
@@ -130,7 +137,7 @@ export default function Footer() {
         </div>
 
         {/* Lower copyright row */}
-        <div className="pt-8 border-t border-brand-wood/10 flex flex-col items-center justify-center text-[10px] md:text-[11px] text-brand-muted/70 tracking-widest font-light gap-2 md:gap-4 md:flex-row md:justify-between">
+        <div className="pt-8 flex flex-col items-center justify-center text-[10px] md:text-[11px] text-brand-muted/70 tracking-widest font-light gap-2 md:gap-4 md:flex-row md:justify-between">
           <span>ZANORI SPACES</span>
           <span className="hidden md:inline">&copy; 2026 ZANORI SPACES &bull; ALL RIGHTS RESERVED &bull; <a href="#/admin" className="text-brand-sand/70 hover:text-brand-base transition-colors duration-300">Admin</a></span>
           <div className="md:hidden text-center space-y-1">
@@ -143,3 +150,4 @@ export default function Footer() {
     </footer>
   );
 }
+

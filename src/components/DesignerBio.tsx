@@ -3,7 +3,7 @@ import { Award, Compass, Heart } from 'lucide-react';
 
 export default function DesignerBio() {
   return (
-    <section id="designer-bio-section" className="py-24 md:py-32 bg-brand-warm border-b border-brand-wood/15">
+    <section id="designer-bio-section" className="py-24 md:py-32 bg-brand-warm">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
@@ -14,11 +14,9 @@ export default function DesignerBio() {
                 src="https://i.ibb.co/qL2XrNxn/IMG-20260606-151745-913.jpg"
                 alt="Adejumoke - Creative Director"
                 referrerPolicy="no-referrer"
-                className="w-full h-[480px] object-cover object-top filter grayscale hover:grayscale-0 transition-all duration-700 ease-in-out transform hover:scale-105"
+                className="w-full h-[340px] sm:h-[420px] md:h-[480px] object-cover object-top filter grayscale hover:grayscale-0 transition-all duration-700 ease-in-out transform hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent pointer-events-none"></div>
-              
-            
             </div>
 
             {/* Behind-frame designer block decoration */}
@@ -47,7 +45,7 @@ export default function DesignerBio() {
             </div>
 
             {/* Three Pillars Core Value list */}
-            <div className="grid grid-cols-3 gap-6 pt-4 border-t border-brand-wood/20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
               <div className="space-y-2">
                 <div className="flex items-center space-x-2 text-brand-wood">
                   <Compass size={14} />
@@ -101,3 +99,4 @@ export default function DesignerBio() {
     </section>
   );
 }
+

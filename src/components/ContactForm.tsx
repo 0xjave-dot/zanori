@@ -55,7 +55,7 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
   };
 
   return (
-    <section id="contact-section" className="py-24 md:py-32 bg-brand-base border-b border-brand-wood/10">
+    <section id="contact-section" className="py-24 md:py-32 bg-brand-base">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
         
         {/* Left Form Panel */}
@@ -216,7 +216,7 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
 
           {/* Directory blocks */}
           <div className="space-y-6 pt-4">
-            <div className="space-y-2 border-b border-brand-wood/15 pb-4">
+            <div className="space-y-2 pb-4">
               <span className="text-[10px] uppercase font-bold tracking-wider text-brand-bark block">
                 CREATIVE OFFICE
               </span>
@@ -226,7 +226,7 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
               </div>
             </div>
 
-            <div className="space-y-2 border-b border-brand-wood/15 pb-4">
+            <div className="space-y-2 pb-4">
               <span className="text-[10px] uppercase font-bold tracking-wider text-brand-bark block">
                 RESPONSES
               </span>
@@ -261,3 +261,4 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
     </section>
   );
 }
+

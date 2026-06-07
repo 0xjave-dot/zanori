@@ -109,7 +109,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
             </div>
 
-            <div className="pt-8 border-t border-brand-wood/25 mt-8 flex flex-col sm:flex-row gap-4">
+            <div className="pt-8 mt-8 flex flex-col sm:flex-row gap-4">
               <a
                 href="#contact"
                 onClick={(e) => {
@@ -133,3 +133,4 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     </div>
   );
 }
+

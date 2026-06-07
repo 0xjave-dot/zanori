@@ -122,7 +122,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24">
         
         {/* Page Header */}
-        <div className="border-b border-brand-wood/20 pb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="pb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
               ZANORI CONSULTANCY DESK
@@ -144,8 +144,6 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               className="bg-brand-warm/65 group rounded-3xl overflow-hidden border border-brand-wood/15 p-8 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/45"
             >
               <div>
-                <div className="h-[2.5px] w-12 bg-brand-wood mb-8 rounded-full"></div>
-
                 <div className="flex justify-between items-start mb-6">
                   <span className="font-mono text-xs tracking-wider text-brand-wood font-semibold">
                     {service.number}
@@ -166,7 +164,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                 </p>
 
                 {/* Scope list bullets */}
-                <div className="space-y-2 pt-2 border-t border-brand-wood/10 pb-6">
+                <div className="space-y-2 pt-2 pb-6">
                   <span className="text-[10px] uppercase tracking-widest text-brand-wood font-semibold font-mono block mb-2">
                     Key Deliverables:
                   </span>
@@ -187,7 +185,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 pt-6 select-none border-t border-brand-wood/10 mt-auto">
+              <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 pt-6 select-none mt-auto">
                 <div
                   className="h-10 w-28 rounded-lg shadow-sm border border-brand-wood/10 flex items-center justify-center text-[8px] tracking-wider text-brand-wood bg-brand-base font-mono"
                   style={{ background: service.imageBg }}
@@ -257,7 +255,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               </p>
             </div>
 
-            <div className="space-y-4 pt-4 border-t border-brand-wood/10">
+            <div className="space-y-4 pt-4">
               <div className="flex items-start space-x-3 text-xs">
                 <ShieldCheck size={16} className="text-brand-wood mt-0.5 shrink-0" />
                 <span className="text-brand-sand/80 font-light leading-snug">
@@ -393,7 +391,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                 </button>
               ) : (
                 <div className="bg-brand-bark/95 rounded-xl border border-brand-wood/30 p-5 space-y-4 animate-feed-in">
-                  <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-brand-wood font-mono font-medium pb-2 border-b border-brand-wood/15">
+                  <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-brand-wood font-mono font-medium pb-2">
                     <span>Draft Estimate Summary</span>
                     <span>VAT inclusive</span>
                   </div>
@@ -414,7 +412,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                       <span className="font-mono text-white">{formatNaira(calcResults?.logisticsFee || 0)}</span>
                     </div>
 
-                    <div className="pt-2 border-t border-brand-wood/15 flex justify-between text-sm font-semibold text-brand-base">
+                    <div className="pt-2 flex justify-between text-sm font-semibold text-brand-base">
                       <span>Total Estimated Draft Allocation:</span>
                       <span className="font-mono text-brand-base">{formatNaira(calcResults?.total || 0)}</span>
                     </div>
@@ -438,3 +436,4 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
     </div>
   );
 }
+

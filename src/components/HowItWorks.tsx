@@ -29,7 +29,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="process-section" className="py-24 md:py-32 bg-brand-base border-b border-brand-wood/10">
+    <section id="process-section" className="py-24 md:py-32 bg-brand-base">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Header */}
@@ -47,8 +47,6 @@ export default function HowItWorks() {
 
         {/* Timeline representation */}
         <div className="relative">
-          {/* Horizontal Hairline (Desktop only) */}
-          <div className="hidden lg:block absolute top-[28px] left-[40px] right-[40px] h-[1px] bg-brand-wood/25 z-0"></div>
 
           {/* Staggered Steps */}
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 relative z-10">
@@ -64,7 +62,7 @@ export default function HowItWorks() {
                     {step.num}
                   </div>
                   
-                  <div className="h-[1px] flex-grow bg-brand-wood/20 lg:hidden"></div>
+
                 </div>
 
                 {/* Step contents */}
@@ -85,3 +83,4 @@ export default function HowItWorks() {
     </section>
   );
 }
+

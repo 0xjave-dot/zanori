@@ -67,7 +67,7 @@ export default function Testimonial() {
   return (
     <section
       id="testimonial-section"
-      className="relative overflow-hidden border-b border-brand-wood/10 bg-brand-bark py-12 sm:min-h-[720px] sm:py-20 md:min-h-[640px] text-brand-base"
+      className="relative overflow-hidden bg-brand-bark py-12 sm:min-h-[720px] sm:py-20 md:min-h-[640px] text-brand-base"
     >
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -162,7 +162,7 @@ export default function Testimonial() {
                   </p>
 
                   {/* Bottom icons */}
-                  <div className="flex gap-6 text-testimonial-icons mt-auto pt-4 border-t border-brand-wood/20">
+                  <div className="flex gap-6 text-testimonial-icons mt-auto pt-4">
                     <button className="hover:text-brand-ivory transition-colors">
                       <span className="text-lg">❤</span>
                     </button>
@@ -214,15 +214,6 @@ export default function Testimonial() {
                 />
               ))}
             </div>
-            <div className="h-0.5 w-full max-w-xs overflow-hidden rounded-full bg-brand-wood/20">
-              <motion.div
-                key={activeIdx}
-                className="h-full rounded-full bg-brand-ivory"
-                initial={{ width: '0%' }}
-                animate={{ width: '100%' }}
-                transition={{ duration: ROTATION_MS / 1000, ease: 'linear' }}
-              />
-            </div>
           </div>
         </div>
 
@@ -250,7 +241,7 @@ export default function Testimonial() {
                     {item.quote}
                   </p>
 
-                  <div className="mt-5 flex items-center gap-2 border-t border-brand-wood/15 pt-3">
+                  <div className="mt-5 flex items-center gap-2 pt-3">
                     <img
                       src={profileImage}
                       alt={item.client}
@@ -332,19 +323,10 @@ export default function Testimonial() {
               ))}
             </div>
 
-            <div className="mt-4 h-1 overflow-hidden rounded-full bg-brand-wood/20">
-              <motion.div
-                key={activeIdx}
-                className="h-full rounded-full"
-                style={{ backgroundColor: STAR_COLOR }}
-                initial={{ width: '0%' }}
-                animate={{ width: '100%' }}
-                transition={{ duration: ROTATION_MS / 1000, ease: 'linear' }}
-              />
-            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
+

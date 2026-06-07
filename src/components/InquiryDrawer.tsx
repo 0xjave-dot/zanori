@@ -79,11 +79,11 @@ export default function InquiryDrawer({
     >
       <div
         id="inquiry-drawer"
-        className="w-full max-w-md bg-brand-base h-full shadow-2xl p-6 md:p-8 flex flex-col justify-between overflow-y-auto animate-slide-left relative border-l border-brand-wood/20"
+        className="w-full max-w-md bg-brand-base h-full shadow-2xl p-6 md:p-8 flex flex-col justify-between overflow-y-auto animate-slide-left relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-6 border-b border-brand-wood/20">
+        <div className="flex items-center justify-between pb-6">
           <div className="space-y-1">
             <span className="text-[10px] uppercase tracking-[0.2em] text-brand-bark font-bold">
               ESTIMATE DRAFT
@@ -182,7 +182,7 @@ export default function InquiryDrawer({
 
         {/* Footer actions */}
         {items.length > 0 && (
-          <div className="pt-6 border-t border-brand-wood/20 space-y-4">
+          <div className="pt-6 space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-widest text-brand-muted font-medium">
                 ESTIMATED ACQUISITION:
@@ -231,3 +231,4 @@ export default function InquiryDrawer({
     </div>
   );
 }
+

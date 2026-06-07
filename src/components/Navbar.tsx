@@ -6,9 +6,10 @@ interface NavbarProps {
   inquiryCount: number;
   currentPage: string;
   user?: any;
+  onBlockedNavigation: () => void;
 }
 
-export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage, user }: NavbarProps) {
+export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage, user, onBlockedNavigation }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -48,6 +49,9 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
           });
         }
       }
+    } else if (targetHash !== '#/') {
+      e.preventDefault();
+      onBlockedNavigation();
     } else {
       window.location.hash = targetHash;
     }
@@ -59,8 +63,8 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
         id="nav-bar"
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'py-4 bg-brand-base/95 backdrop-blur-md shadow-sm border-b border-brand-wood/20'
-            : 'py-6 bg-transparent border-b border-transparent'
+            ? 'py-4 bg-brand-base/95 backdrop-blur-md shadow-sm'
+            : 'py-6 bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -147,7 +151,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               <button
                 type="button"
                 onClick={onOpenInquiryDrawer}
-                className="text-xs uppercase tracking-[0.1em] text-brand-bark border-b border-brand-bark/40 hover:border-brand-bark transition-colors py-1 cursor-pointer"
+                className="text-xs uppercase tracking-[0.1em] text-brand-bark transition-colors py-1 cursor-pointer"
               >
                 Inquiry List ({inquiryCount})
               </button>
@@ -192,7 +196,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
           className="fixed inset-0 z-30 bg-brand-base flex flex-col justify-between p-12 transition-all duration-300"
         >
           <div className="flex flex-col space-y-8 mt-24">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-brand-muted border-b border-brand-wood/20 pb-2">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-brand-muted pb-2">
               
             </div>
             
@@ -245,7 +249,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             >
               Book a consultation
             </a>
-            <div className="flex items-center justify-between text-[10px] text-brand-muted tracking-[0.1em] pt-4 border-t border-brand-wood/20">
+            <div className="flex items-center justify-between text-[10px] text-brand-muted tracking-[0.1em] pt-4">
               <span>LAGOS, NIGERIA</span>
               <span>ZANORI SPACES © 2026</span>
             </div>
@@ -255,3 +259,4 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
     </>
   );
 }
+
