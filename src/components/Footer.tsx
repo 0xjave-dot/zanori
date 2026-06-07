@@ -34,15 +34,15 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-brand-bark text-brand-base pt-16 pb-12 overflow-hidden relative">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
+    <footer className="bg-brand-bark text-brand-base pt-12 md:pt-16 pb-8 md:pb-12 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-8 md:space-y-12">
         {/* Very top: Thin wood-tone hairline */}
         <div className="h-[1px] w-full bg-brand-cranberry/15"></div>
 
         {/* Brand layout grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
           {/* Logo & Tagline */}
-          <div className="md:col-span-5 space-y-3">
+          <div className="md:col-span-5 space-y-2 md:space-y-3">
             <h3 className="font-serif text-3xl font-light tracking-[0.2em] text-white">
               ZANORI SPACES
             </h3>
@@ -52,7 +52,7 @@ export default function Footer() {
           </div>
 
           {/* Nav links repeated */}
-          <div className="md:col-span-4 flex flex-col space-y-3.5 text-xs font-light uppercase tracking-[0.15em] text-brand-sand">
+          <div className="md:col-span-4 flex flex-col space-y-2 md:space-y-3.5 text-xs font-light uppercase tracking-[0.15em] text-brand-sand">
             <span className="text-[10px] text-brand-wood font-mono tracking-widest font-semibold block mb-1">
               
             </span>
@@ -96,7 +96,7 @@ export default function Footer() {
           </div>
 
           {/* Back to top & Socials */}
-          <div className="md:col-span-3 flex flex-col justify-between h-full space-y-6 md:text-right">
+          <div className="md:col-span-3 flex flex-col justify-between h-full space-y-4 md:space-y-6 md:text-right">
             <div>
               <span className="text-[10px] text-brand-wood font-mono tracking-widest font-semibold block mb-3">
                 FOLLOW US
@@ -130,9 +130,14 @@ export default function Footer() {
         </div>
 
         {/* Lower copyright row */}
-        <div className="pt-8 border-t border-brand-wood/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-brand-muted/70 tracking-widest font-light gap-4">
+        <div className="pt-8 border-t border-brand-wood/10 flex flex-col items-center justify-center text-[10px] md:text-[11px] text-brand-muted/70 tracking-widest font-light gap-2 md:gap-4 md:flex-row md:justify-between">
           <span>ZANORI SPACES</span>
-          <span>&copy; 2026 ZANORI SPACES STUDIO &bull; INC. ALL RIGHTS RESERVED &bull; <a href="#/admin" className="text-brand-sand/70 hover:text-brand-base transition-colors duration-300">Admin</a></span>
+          <span className="hidden md:inline">&copy; 2026 ZANORI SPACES &bull; ALL RIGHTS RESERVED &bull; <a href="#/admin" className="text-brand-sand/70 hover:text-brand-base transition-colors duration-300">Admin</a></span>
+          <div className="md:hidden text-center space-y-1">
+            <div>&copy; 2026 ZANORI SPACES</div>
+            <div>ALL RIGHTS RESERVED</div>
+            <a href="#/admin" className="text-brand-sand/70 hover:text-brand-base transition-colors duration-300 block">Admin</a>
+          </div>
         </div>
       </div>
     </footer>

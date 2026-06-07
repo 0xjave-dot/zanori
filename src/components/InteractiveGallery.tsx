@@ -77,7 +77,7 @@ export default function InteractiveGallery() {
   }, [activeSpace]);
 
   return (
-    <section id="interactive-render-gallery" className="py-24 md:py-32 bg-[#F7F4EF] border-b border-brand-wood/15 text-brand-dark">
+    <section id="interactive-render-gallery" className="py-24 md:py-32 bg-brand-sand border-b border-brand-wood/15 text-brand-dark">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-0">
         
         {/* Dynamic Header */}
@@ -112,7 +112,7 @@ export default function InteractiveGallery() {
               <button
                 type="button"
                 onClick={() => setActiveIdx(getCircularIndex(activeIdx - 1))}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-wood/15 bg-white/90 text-brand-dark shadow-sm transition hover:bg-brand-wood/5"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-wood/15 bg-brand-base/95 text-brand-dark shadow-sm transition hover:bg-brand-wood/5"
                 aria-label="Previous featured space"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -120,7 +120,7 @@ export default function InteractiveGallery() {
               <button
                 type="button"
                 onClick={() => setActiveIdx(getCircularIndex(activeIdx + 1))}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-wood/15 bg-white/90 text-brand-dark shadow-sm transition hover:bg-brand-wood/5"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-wood/15 bg-brand-base/95 text-brand-dark shadow-sm transition hover:bg-brand-wood/5"
                 aria-label="Next featured space"
               >
                 <ChevronRight className="h-4 w-4" />
@@ -133,13 +133,13 @@ export default function InteractiveGallery() {
         <div className="flex justify-center">
           {/* MAIN PANORAMA VIEWER WINDOW: Centered */}
           <div className="w-full max-w-4xl">
-            <div className="relative w-full rounded-3xl overflow-hidden border border-brand-wood/25 shadow-2xl bg-[#120F0D] h-[420px] sm:h-[560px] md:h-[640px] lg:h-[720px]">
+            <div className="relative w-full rounded-3xl overflow-hidden border border-brand-wood/25 shadow-2xl bg-brand-bark h-[420px] sm:h-[560px] md:h-[640px] lg:h-[720px]">
               
               {/* Decorative premium framing details */}
               <div className="absolute top-4 left-4 z-20 pointer-events-none">
-                <div className="bg-black/40 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-xl flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-[#C4A882] font-semibold">
+                  <div className="bg-black/40 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-xl flex items-center space-x-2">
+                  <span className="w-2 h-2 rounded-full bg-brand-cranberry animate-pulse"></span>
+                  <span className="text-[9px] font-mono uppercase tracking-widest text-brand-wood font-semibold">
                     
                   </span>
                 </div>
@@ -147,10 +147,10 @@ export default function InteractiveGallery() {
 
               {/* Overlays to hide Kuula logo/info badges in top corners (non-interactive) */}
               <div className="absolute top-3 left-3 z-40 pointer-events-none">
-                <div className="w-16 h-8 bg-[#120F0D] rounded-md opacity-95"></div>
+                <div className="w-16 h-8 bg-brand-bark rounded-md opacity-95"></div>
               </div>
               <div className="absolute top-3 right-3 z-40 pointer-events-none">
-                <div className="w-16 h-8 bg-[#120F0D] rounded-md opacity-95"></div>
+                <div className="w-16 h-8 bg-brand-bark rounded-md opacity-95"></div>
               </div>
 
               {/* Native responsive iframe or collection embed for selected featured space */}
@@ -175,7 +175,7 @@ export default function InteractiveGallery() {
 
               {/* Dark branding waterlines at footer */}
               <div className="absolute bottom-4 left-4 z-20 pointer-events-none hidden sm:block">
-                <span className="text-[9px] font-mono uppercase tracking-widest text-white/50 bg-[#2A2520]/80 px-3 py-1 rounded-md border border-white/5">
+                <span className="text-[9px] font-mono uppercase tracking-widest text-brand-sand/70 bg-brand-bark/80 px-3 py-1 rounded-md border border-brand-sand/10">
                   DESIGN SUITE // {activeSpace.id}
                 </span>
               </div>
@@ -186,7 +186,7 @@ export default function InteractiveGallery() {
                   href={activeSpace.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-brand-dark px-5 py-2.5 text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-base shadow-lg shadow-black/20"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-dark px-5 py-2.5 text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-base shadow-lg shadow-brand-bark/30"
                 >
                   
                 </a>

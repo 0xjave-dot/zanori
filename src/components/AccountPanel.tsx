@@ -132,18 +132,18 @@ export default function AccountPanel({
       <div className="relative min-h-[580px] w-full rounded-3xl overflow-hidden flex items-center justify-center p-4 sm:p-8 md:p-12">
         {/* Underlay representing the premium boutique lounge blur */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center"></div>
-        <div className="absolute inset-0 bg-[#2A2520]/80 backdrop-blur-md"></div>
+        <div className="absolute inset-0 bg-brand-bark/80 backdrop-blur-md"></div>
 
         {/* Floating Modal Frame */}
-        <div className="relative z-10 w-full max-w-md bg-[#FDFCFA]/95 hover:bg-[#FDFCFA] transition-all duration-300 rounded-2xl border border-white/20 p-8 shadow-2xl space-y-6">
+        <div className="relative z-10 w-full max-w-md bg-brand-sand/95 hover:bg-brand-sand transition-all duration-300 rounded-2xl border border-white/20 p-8 shadow-2xl space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-10 h-10 bg-[#2A2520] text-brand-base rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
+            <div className="w-10 h-10 bg-brand-bark text-brand-base rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
               <LockKeyhole size={16} />
             </div>
-            <span className="text-[9px] tracking-[0.25em] text-[#8B6F52] uppercase font-mono block">
+            <span className="text-[9px] tracking-[0.25em] text-brand-wood uppercase font-mono block">
               ZANORI PRIVATE SECURE STUDIO
             </span>
-            <h2 className="font-serif text-2xl font-light text-[#2A2520]">
+            <h2 className="font-serif text-2xl font-light text-brand-bark">
               {isSignUp ? 'Create Studio Account' : 'Welcome to the Lounge'}
             </h2>
             <p className="text-[11px] text-brand-muted font-sans font-light leading-relaxed max-w-xs mx-auto">
@@ -165,7 +165,7 @@ export default function AccountPanel({
                     placeholder="e.g. Olutosin Alabi"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2.5 bg-[#F7F4EF]/45 rounded-xl border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark transition-colors"
+                    className="w-full pl-9 pr-4 py-2.5 bg-brand-sand/45 rounded-xl border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark transition-colors"
                   />
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default function AccountPanel({
                   placeholder="name@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 bg-[#F7F4EF]/45 rounded-xl border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark transition-colors"
+                  className="w-full pl-9 pr-4 py-2.5 bg-brand-sand/45 rounded-xl border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark transition-colors"
                 />
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function AccountPanel({
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 bg-[#F7F4EF]/45 rounded-xl border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark transition-colors"
+                  className="w-full pl-9 pr-4 py-2.5 bg-brand-sand/45 rounded-xl border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark transition-colors"
                 />
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function AccountPanel({
             <button
               type="submit"
               disabled={isAuthLoading}
-              className="w-full py-3 mt-2 bg-[#2A2520] hover:bg-brand-bark text-white text-[10px] font-medium uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-xs cursor-pointer"
+              className="w-full py-3 mt-2 bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-[10px] font-medium uppercase tracking-widest rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-xs cursor-pointer"
             >
               <span>{isSignUp ? 'REGISTER ACCOUNT' : 'SECURE LOG IN'}</span>
               <ArrowRight size={11} />
@@ -224,7 +224,7 @@ export default function AccountPanel({
           {/* Social login divider */}
           <div className="relative flex items-center justify-center">
             <div className="absolute inset-x-0 h-[1px] bg-brand-wood/15"></div>
-            <span className="relative px-3 bg-[#FDFCFA] text-[8px] uppercase tracking-widest text-[#8B6F52] font-semibold">
+                <span className="relative px-3 bg-brand-sand text-[8px] uppercase tracking-widest text-brand-wood font-semibold">
               Or Authenticate with
             </span>
           </div>
@@ -233,7 +233,7 @@ export default function AccountPanel({
             type="button"
             onClick={handleGoogleLogin}
             disabled={isAuthLoading}
-            className="w-full py-3 border border-brand-wood/30 hover:border-brand-bark bg-transparent text-brand-dark hover:bg-[#F7F4EF]/35 rounded-xl text-[10px] font-semibold uppercase tracking-wider transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer"
+            className="w-full py-3 border border-brand-wood/30 hover:border-brand-bark bg-transparent text-brand-dark hover:bg-brand-sand/35 rounded-xl text-[10px] font-semibold uppercase tracking-wider transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer"
           >
             {/* Google Logo SVG */}
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24">
@@ -267,23 +267,23 @@ export default function AccountPanel({
     <div className="w-full space-y-8 animate-feed-in">
       
       {/* Visual greeting card banner */}
-      <div className="bg-[#2A2520] rounded-2xl p-6 md:p-8 text-brand-base flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border border-brand-wood/10">
+      <div className="bg-brand-bark rounded-2xl p-6 md:p-8 text-brand-base flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border border-brand-wood/10">
         <div className="space-y-1.5">
-          <span className="text-[9px] font-mono tracking-[0.2em] text-[#C4A882] uppercase bg-[#8B6F52]/30 px-2.5 py-1 rounded-sm">
+          <span className="text-[9px] font-mono tracking-[0.2em] text-brand-wood uppercase bg-brand-wood/30 px-2.5 py-1 rounded-sm">
             ZANORI STUDIO CLUB MEMBERSHIP
           </span>
           <h2 className="font-serif text-2xl font-light tracking-wide text-white">
             Ekaabo, {user.displayName || user.email?.split('@')[0] || 'Client'}
           </h2>
           <p className="text-xs text-brand-sand/75 font-sans font-light">
-            Authenticated securely via <span className="font-mono">{user.providerData[0]?.providerId === 'google.com' ? 'Google' : 'Email Secure'}</span> &bull; Status: <span className="text-[#C4A882]">Director Curator</span>
+            Authenticated securely via <span className="font-mono">{user.providerData[0]?.providerId === 'google.com' ? 'Google' : 'Email Secure'}</span> &bull; Status: <span className="text-brand-wood">Director Curator</span>
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
           <button
             onClick={() => onSetTab('Renderer')}
-            className="px-4 py-2 border border-[#C4A882]/40 hover:border-[#C4A882] text-[#C4A882] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
+            className="px-4 py-2 border border-brand-wood/40 hover:border-brand-wood text-brand-wood text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
           >
             AI Designer Board
           </button>
@@ -331,7 +331,7 @@ export default function AccountPanel({
       <div className="min-h-[300px]">
         {activeAccountTab === 'profile' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="bg-[#FDFCFA] rounded-2xl border border-brand-wood/15 p-6 space-y-6">
+            <div className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 space-y-6">
               <h3 className="font-serif text-lg text-brand-dark italic">Design Identity & Credentials</h3>
               
               <div className="space-y-4 font-sans text-xs">
@@ -354,7 +354,7 @@ export default function AccountPanel({
               </div>
             </div>
 
-            <div className="bg-[#F7F4EF] rounded-2xl border border-brand-wood/15 p-6 space-y-4">
+            <div className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 space-y-4">
               <h3 className="font-serif text-lg text-brand-dark italic flex items-center space-x-1.5">
                 <HelpCircle size={16} className="text-brand-bark" />
                 <span>Need Professional Interior Assistance?</span>
@@ -365,7 +365,7 @@ export default function AccountPanel({
               <div className="pt-2">
                 <button
                   onClick={() => onSetTab('Renderer')}
-                  className="px-5 py-2.5 bg-[#2A2520] hover:bg-brand-bark text-white text-[10px] font-semibold uppercase tracking-widest rounded-xl transition-all"
+                  className="px-5 py-2.5 bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-[10px] font-semibold uppercase tracking-widest rounded-xl transition-all"
                 >
                   Synthesize a Room Now
                 </button>
@@ -379,7 +379,7 @@ export default function AccountPanel({
             {savedDesigns.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {savedDesigns.map((design) => (
-                  <div key={design.id} className="bg-[#FDFCFA] rounded-2xl overflow-hidden border border-brand-wood/15 flex flex-col justify-between group shadow-xs">
+                  <div key={design.id} className="bg-brand-sand rounded-2xl overflow-hidden border border-brand-wood/15 flex flex-col justify-between group shadow-xs">
                     <div className="relative h-44 bg-zinc-50 flex items-center justify-center border-b border-brand-wood/15 overflow-hidden">
                       {design.imageUrl ? (
                         <img 
@@ -389,12 +389,12 @@ export default function AccountPanel({
                           referrerPolicy="no-referrer"
                         />
                       ) : null}
-                      <span className="absolute top-3 left-3 px-3 py-1 bg-brand-dark/80 backdrop-blur-md text-[#C4A882] text-[9px] uppercase tracking-[0.14em] rounded-sm font-medium">
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-brand-dark/80 backdrop-blur-md text-brand-wood text-[9px] uppercase tracking-[0.14em] rounded-sm font-medium">
                         {design.styleName} Preset
                       </span>
                       <button
                         onClick={() => onDeleteDesign(design.id)}
-                        className="absolute bottom-3 right-3 p-2 rounded-full bg-[#2A2520]/80 hover:bg-red-650 text-white transition-all shadow-md cursor-pointer hover:scale-105"
+                        className="absolute bottom-3 right-3 p-2 rounded-full bg-brand-bark/80 hover:bg-brand-cranberry/90 text-brand-sand transition-all shadow-md cursor-pointer hover:scale-105"
                         title="Delete design"
                       >
                         <Trash2 size={13} />
@@ -403,7 +403,7 @@ export default function AccountPanel({
 
                     <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                       <div className="space-y-2">
-                        <blockquote className="font-serif text-[13.5px] italic text-[#2A2520] leading-relaxed">
+                        <blockquote className="font-serif text-[13.5px] italic text-brand-bark leading-relaxed">
                           "{design.headline}"
                         </blockquote>
                         <p className="text-[11px] leading-relaxed font-sans text-brand-muted font-light pl-3 border-l border-brand-wood/30">
@@ -432,7 +432,7 @@ export default function AccountPanel({
               </div>
             ) : (
               <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
-                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-[#8B6F52] mx-auto">
+                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
                   <Star size={16} />
                 </div>
                 <h3 className="font-serif text-xl font-light text-brand-dark">No saved spaces curated</h3>
@@ -458,7 +458,7 @@ export default function AccountPanel({
                   const prod = getProductById(item.productId);
                   if (!prod) return null;
                   return (
-                    <div key={item.id} className="bg-[#FDFCFA] rounded-2xl border border-brand-wood/15 p-4 flex flex-col justify-between group shadow-xs relative">
+                    <div key={item.id} className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-4 flex flex-col justify-between group shadow-xs relative">
                       <button
                         onClick={() => onDeleteWishlist(item.id)}
                         className="absolute top-3 right-3 p-1.5 opacity-60 hover:opacity-100 text-brand-muted hover:text-red-650 transition-all cursor-pointer"
@@ -477,7 +477,7 @@ export default function AccountPanel({
                       <div className="mt-4 flex-1 flex flex-col justify-between">
                         <div className="space-y-1">
                           <span className="text-[9px] uppercase tracking-wider text-brand-muted block">{prod.category}</span>
-                          <h4 className="font-serif text-sm font-medium text-[#2A2520] group-hover:text-brand-bark transition-colors">{prod.name}</h4>
+                          <h4 className="font-serif text-sm font-medium text-brand-bark group-hover:text-brand-bark transition-colors">{prod.name}</h4>
                           <span className="text-xs font-semibold text-brand-dark font-sans block pt-1">{formatNaira(prod.price)}</span>
                         </div>
 
@@ -497,7 +497,7 @@ export default function AccountPanel({
               </div>
             ) : (
               <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
-                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-[#8B6F52] mx-auto">
+                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
                   <Heart size={16} />
                 </div>
                 <h3 className="font-serif text-xl font-light text-brand-dark">Your wishlist casket is empty</h3>
@@ -520,7 +520,7 @@ export default function AccountPanel({
             {giftPurchases.length > 0 ? (
               <div className="space-y-6">
                 {giftPurchases.map((gift) => (
-                  <div key={gift.id} className="bg-[#FDFCFA] rounded-xl border border-brand-wood/15 p-6 space-y-4 shadow-xs">
+                  <div key={gift.id} className="bg-brand-sand rounded-xl border border-brand-wood/15 p-6 space-y-4 shadow-xs">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-wood/10 pb-4">
                       <div className="space-y-1">
                         <span className="text-[9px] font-mono text-brand-muted uppercase tracking-wider block">GIFT ORDER ID: {gift.id}</span>
@@ -558,10 +558,10 @@ export default function AccountPanel({
                         </p>
                       </div>
 
-                      <div className="space-y-2.5 bg-[#F7F4EF]/45 p-4 rounded-lg border border-brand-wood/10 flex flex-col justify-between">
+                      <div className="space-y-2.5 bg-brand-sand/45 p-4 rounded-lg border border-brand-wood/10 flex flex-col justify-between">
                         <div>
                           <span className="text-[10px] uppercase tracking-wider text-brand-muted block font-mono font-bold mb-1">Engraved Card Msg</span>
-                          <p className="italic text-[11px] text-[#8B6F52] leading-relaxed">
+                          <p className="italic text-[11px] text-brand-wood leading-relaxed">
                             "{gift.personalMsg || 'No engraved message requested.'}"
                           </p>
                         </div>
@@ -575,8 +575,8 @@ export default function AccountPanel({
                 ))}
               </div>
             ) : (
-              <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
-                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-[#8B6F52] mx-auto">
+                <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
+                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
                   <GiftIcon size={16} />
                 </div>
                 <h3 className="font-serif text-xl font-light text-brand-dark">No gift deliveries logged</h3>

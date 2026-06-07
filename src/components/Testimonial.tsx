@@ -4,7 +4,7 @@ import { BadgeCheck, Star } from 'lucide-react';
 import { TESTIMONIALS_DATA } from '../data';
 
 const ROTATION_MS = 10000;
-const STAR_COLOR = '#4F6AF5';
+const STAR_COLOR = 'var(--color-brand-cranberry)';
 const backgroundImage =
   'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=85';
 const profileImage =
@@ -22,7 +22,7 @@ function Stars({ size = 16 }: { size?: number }) {
   return (
     <div className="flex items-center gap-0.5" aria-label="5 star rating">
       {Array.from({ length: 5 }).map((_, idx) => (
-        <Star key={idx} size={size} className="fill-[#4F6AF5] text-[#4F6AF5]" strokeWidth={1.8} />
+        <Star key={idx} size={size} className="fill-brand-cranberry text-brand-cranberry" strokeWidth={1.8} />
       ))}
     </div>
   );
@@ -67,52 +67,140 @@ export default function Testimonial() {
   return (
     <section
       id="testimonial-section"
-      className="relative overflow-hidden border-b border-brand-wood/10 bg-brand-base py-6 sm:min-h-[720px] sm:py-20 md:min-h-[640px] text-brand-dark"
+      className="relative overflow-hidden border-b border-brand-wood/10 bg-brand-bark py-12 sm:min-h-[720px] sm:py-20 md:min-h-[640px] text-brand-base"
     >
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       />
-      <div className="absolute inset-0 bg-brand-bark/15" />
+      <div className="absolute inset-0 bg-brand-bark/40" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-3 sm:px-6 md:px-12">
-        <div className="block sm:hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIdx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="rounded-[24px] bg-brand-base p-6 shadow-[0_12px_32px_rgba(0,0,0,0.08)] border border-brand-wood/10"
-            >
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <Stars size={16} />
-                <span className="inline-flex items-center gap-1 text-[8px] font-bold text-[#232742] whitespace-nowrap">
-                  <BadgeCheck size={11} className="fill-[#4F6AF5] text-white" />
-                  Testimonial
-                </span>
-              </div>
-              
-              <p className="text-[15px] leading-relaxed text-brand-dark/90 mb-6 min-h-[80px]">
-                "{current.quote}"
-              </p>
-              
-              <div className="flex items-center gap-3 border-t border-brand-wood/15 pt-4">
-                <img
-                  src={profileImage}
-                  alt={current.client}
-                  className="h-10 w-10 rounded-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div>
-                  <p className="text-[13px] font-bold text-brand-dark">{current.client}</p>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+        {/* Mobile: Layered depth stack testimonials */}
+        <div className="block sm:hidden space-y-8">
+          {/* Section title */}
+          <div className="relative h-16 flex items-center">
+            <h2 className="font-serif text-5xl font-light text-brand-ivory -rotate-6 italic origin-left">
+              Testimonials
+            </h2>
+          </div>
 
-          <div className="mt-6 flex flex-col items-center gap-3">
+          {/* Three-card depth stack */}
+          <div className="relative h-96 flex items-center justify-center px-4" style={{ perspective: '1200px' }}>
+            <div className="relative w-96 h-80 flex items-center justify-center" style={{ overflow: 'visible' }}>
+              <AnimatePresence mode="wait">
+                {/* Left card (behind, rotated, blurred) */}
+                <motion.div
+                  key={`left-${activeIdx}`}
+                  initial={{ opacity: 0, x: -100, rotateZ: -6, scale: 0.7 }}
+                  animate={{ opacity: 0.55, x: 0, rotateZ: -6, scale: 0.82 }}
+                  exit={{ opacity: 0, x: -100, rotateZ: -6, scale: 0.7 }}
+                  transition={{ duration: 0.6, delay: 0.15 }}
+                  className="absolute w-72 h-80 rounded-[20px] bg-testimonial-card film-grain p-6 border border-brand-wood/10 cursor-pointer"
+                  style={{
+                    filter: 'blur(2.5px)',
+                    zIndex: 1,
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
+                    transform: 'translateX(-55%) rotateZ(-6deg) scale(0.82)',
+                    marginLeft: '-110px',
+                  }}
+                >
+                  <div className="opacity-40 text-6xl font-serif text-brand-cranberry leading-none mb-2">
+                    "
+                  </div>
+                </motion.div>
+
+                {/* Center card (front, sharp) */}
+                <motion.div
+                  key={`center-${activeIdx}`}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: -20 }}
+                  exit={{ opacity: 0, y: 40 }}
+                  transition={{ duration: 0.6 }}
+                  whileHover={{ y: -28 }}
+                  className="relative w-72 h-80 rounded-[20px] bg-testimonial-card film-grain p-6 border border-brand-wood/10 z-30 cursor-pointer"
+                  style={{
+                    boxShadow: '0 24px 60px rgba(0,0,0,0.6)',
+                  }}
+                >
+                  {/* Floating badge */}
+                  <motion.div
+                    className="absolute -top-4 -right-4 bg-brand-cranberry text-brand-ivory rounded-full px-3 py-2 flex items-center gap-2 text-xs font-bold shadow-lg z-40 animate-float-bob"
+                  >
+                    <span>❤</span>
+                    <span>125</span>
+                  </motion.div>
+
+                  {/* Quote mark */}
+                  <div className="text-6xl font-serif text-brand-cranberry opacity-40 leading-none mb-3">
+                    "
+                  </div>
+
+                  {/* Avatar + name + stars */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-brand-wood/30 flex items-center justify-center">
+                      <img
+                        src={profileImage}
+                        alt={current.client}
+                        className="w-full h-full rounded-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-brand-ivory">{current.client}</p>
+                      <div className="flex gap-0.5">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star key={i} size={12} className="fill-testimonial-gold text-testimonial-gold" />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Review body */}
+                  <p className="text-sm leading-relaxed text-brand-base mb-4 line-clamp-4">
+                    {current.quote}
+                  </p>
+
+                  {/* Bottom icons */}
+                  <div className="flex gap-6 text-testimonial-icons mt-auto pt-4 border-t border-brand-wood/20">
+                    <button className="hover:text-brand-ivory transition-colors">
+                      <span className="text-lg">❤</span>
+                    </button>
+                    <button className="hover:text-brand-ivory transition-colors">
+                      <span className="text-lg">💬</span>
+                    </button>
+                    <button className="hover:text-brand-ivory transition-colors">
+                      <span className="text-lg">↗</span>
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* Right card (behind, rotated, blurred) */}
+                <motion.div
+                  key={`right-${activeIdx}`}
+                  initial={{ opacity: 0, x: 100, rotateZ: 6, scale: 0.7 }}
+                  animate={{ opacity: 0.55, x: 0, rotateZ: 6, scale: 0.82 }}
+                  exit={{ opacity: 0, x: 100, rotateZ: 6, scale: 0.7 }}
+                  transition={{ duration: 0.6, delay: 0.15 }}
+                  className="absolute w-72 h-80 rounded-[20px] bg-testimonial-card film-grain p-6 border border-brand-wood/10 cursor-pointer"
+                  style={{
+                    filter: 'blur(2.5px)',
+                    zIndex: 1,
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
+                    transform: 'translateX(55%) rotateZ(6deg) scale(0.82)',
+                    marginRight: '-110px',
+                  }}
+                >
+                  <div className="opacity-40 text-6xl font-serif text-brand-cranberry leading-none mb-2">
+                    "
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Carousel indicators */}
+          <div className="flex flex-col items-center gap-4 pt-4">
             <div className="flex gap-2">
               {TESTIMONIALS_DATA.map((item, idx) => (
                 <button
@@ -120,17 +208,16 @@ export default function Testimonial() {
                   type="button"
                   onClick={() => setActiveIdx(idx)}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
-                    activeIdx === idx ? 'w-7 bg-white' : 'w-2.5 bg-white/40 hover:bg-white/60'
+                    activeIdx === idx ? 'w-7 bg-brand-ivory' : 'w-2.5 bg-brand-ivory/40 hover:bg-brand-ivory/60'
                   }`}
                   aria-label={`Show testimonial from ${item.client}`}
                 />
               ))}
             </div>
-            <div className="h-0.5 w-full max-w-sm overflow-hidden rounded-full bg-brand-wood/20">
+            <div className="h-0.5 w-full max-w-xs overflow-hidden rounded-full bg-brand-wood/20">
               <motion.div
                 key={activeIdx}
-                className="h-full rounded-full"
-                style={{ backgroundColor: STAR_COLOR }}
+                className="h-full rounded-full bg-brand-ivory"
                 initial={{ width: '0%' }}
                 animate={{ width: '100%' }}
                 transition={{ duration: ROTATION_MS / 1000, ease: 'linear' }}
@@ -153,8 +240,8 @@ export default function Testimonial() {
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <Stars size={13} />
-                    <span className="inline-flex items-center gap-1 text-[8px] font-bold text-[#232742]">
-                      <BadgeCheck size={10} className="fill-[#4F6AF5] text-white" />
+                    <span className="inline-flex items-center gap-1 text-[8px] font-bold text-brand-dark/90">
+                      <BadgeCheck size={10} className="fill-brand-cranberry text-white" />
                       Testimonial
                     </span>
                   </div>
@@ -197,7 +284,7 @@ export default function Testimonial() {
                     referrerPolicy="no-referrer"
                   />
                     <span className="inline-flex items-center gap-1 rounded-full bg-brand-base/95 px-2 py-1 text-[8px] font-bold text-brand-dark sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-[10px]">
-                    <BadgeCheck size={14} className="fill-[#4F6AF5] text-white" />
+                    <BadgeCheck size={14} className="fill-brand-cranberry text-white" />
                     Testimonial
                   </span>
                 </div>
@@ -223,8 +310,8 @@ export default function Testimonial() {
                     </div>
                   </div>
 
-                  <span className="inline-flex items-center gap-2 text-xs font-bold text-[#20254A]">
-                    <BadgeCheck size={18} className="fill-[#4F6AF5] text-white" />
+                  <span className="inline-flex items-center gap-2 text-xs font-bold text-brand-dark">
+                    <BadgeCheck size={18} className="fill-brand-cranberry text-white" />
                     Testimonial
                   </span>
                 </div>

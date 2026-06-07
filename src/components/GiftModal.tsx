@@ -90,7 +90,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-[#2A2520]/65 backdrop-blur-sm"
+          className="absolute inset-0 bg-brand-bark/65 backdrop-blur-sm"
         />
 
         {/* Modal Sheet */}
@@ -102,9 +102,9 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
           className="relative bg-brand-base w-full max-w-lg rounded-2xl overflow-hidden border border-brand-wood/25 shadow-xl max-h-[90vh] flex flex-col justify-between"
         >
           {/* Header */}
-          <div className="p-6 border-b border-brand-wood/15 bg-[#F7F4EF]/55 flex items-center justify-between">
+          <div className="p-6 border-b border-brand-wood/15 bg-brand-sand/55 flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
-              <div className="p-2 bg-[#EADBC8] text-[#8B6F52] rounded-lg">
+              <div className="p-2 bg-brand-warm text-brand-wood rounded-lg">
                 <Gift size={16} />
               </div>
               <div>
@@ -114,7 +114,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-brand-wood/20 text-[#2A2520] transition-colors cursor-pointer"
+              className="p-1.5 rounded-full hover:bg-brand-wood/20 text-brand-bark transition-colors cursor-pointer"
             >
               <X size={16} />
             </button>
@@ -141,7 +141,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                       placeholder="Olaide Bello"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-3.5 py-2 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark"
+                      className="w-full px-3.5 py-2 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark"
                     />
                   </div>
 
@@ -155,7 +155,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                       placeholder="olaide@domain.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3.5 py-2 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark"
+                      className="w-full px-3.5 py-2 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark"
                     />
                   </div>
                 </div>
@@ -170,7 +170,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                     placeholder="+234 81 2345 6789"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark"
+                    className="w-full px-3.5 py-2 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark"
                   />
                 </div>
 
@@ -184,7 +184,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                     placeholder="e.g. Apartment 4, Block B2, Royal Crest Residences, Lekki Phase 1"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark resize-none"
+                    className="w-full px-3.5 py-2 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark resize-none"
                   />
                 </div>
 
@@ -197,7 +197,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                     placeholder="e.g. Happy housewarming Olaide! May this Lund Bed carry beautiful Lagos morning light. Cheers from Tosin."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark resize-none"
+                    className="w-full px-3.5 py-2 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark resize-none"
                   />
                 </div>
 
@@ -211,7 +211,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                     type="button"
                     onClick={() => setGiftWrap(!giftWrap)}
                     className={`relative w-10 h-5.5 rounded-full transition-colors flex items-center px-1 cursor-pointer ${
-                      giftWrap ? 'bg-[#8B6F52]' : 'bg-brand-wood/40'
+                      giftWrap ? 'bg-brand-wood' : 'bg-brand-wood/40'
                     }`}
                   >
                     <motion.div
@@ -226,7 +226,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
             ) : (
               <form id="payment-form" onSubmit={handleCompletePayment} className="space-y-4">
                 {/* Invoice summary */}
-                <div className="p-4 bg-[#F7F4EF] rounded-xl border border-brand-wood/20 space-y-2.5">
+                <div className="p-4 bg-brand-sand rounded-xl border border-brand-wood/20 space-y-2.5">
                   <span className="text-[9px] font-mono tracking-wider text-brand-muted uppercase block">Checkout Summary</span>
                   
                   <div className="flex justify-between items-center text-xs">
@@ -234,18 +234,18 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                     <span className="font-semibold text-brand-dark">{formatNaira(product.price)}</span>
                   </div>
                   
-                  <div className="flex justify-between items-center text-xs">
+                    <div className="flex justify-between items-center text-xs">
                     <span className="text-brand-dark/75 font-light">Lagos Island/Mainland Fast Cargo Delivery</span>
                     <span className="font-medium text-brand-dark">FREE Curtesy</span>
                   </div>
 
-                  <div className="flex justify-between items-center text-xs">
+                    <div className="flex justify-between items-center text-xs">
                     <span className="text-brand-dark/75 font-light">Satin Luxe Wrapping</span>
-                    <span className="text-[#8B6F52]">{giftWrap ? 'Included' : 'None'}</span>
+                    <span className="text-brand-wood">{giftWrap ? 'Included' : 'None'}</span>
                   </div>
 
                   <div className="border-t border-brand-wood/15 pt-2 flex justify-between items-center text-sm font-semibold">
-                    <span className="text-[#2A2520]">Total Premium Paid</span>
+                    <span className="text-brand-bark">Total Premium Paid</span>
                     <span className="text-brand-bark font-sans font-bold">{formatNaira(product.price)}</span>
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                         placeholder="4000 1234 5678 9010"
                         value={cardNumber}
                         onChange={(e) => setCardNumber(e.target.value)}
-                        className="w-full pl-9 pr-4 py-2.5 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark font-mono"
+                        className="w-full pl-9 pr-4 py-2.5 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark font-mono"
                       />
                     </div>
                   </div>
@@ -281,7 +281,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                         placeholder="MM / YY"
                         value={cardExpiry}
                         onChange={(e) => setCardExpiry(e.target.value)}
-                        className="w-full px-3.5 py-2.5 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark font-mono"
+                        className="w-full px-3.5 py-2.5 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark font-mono"
                       />
                     </div>
 
@@ -296,7 +296,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                         placeholder="123"
                         value={cardCvv}
                         onChange={(e) => setCardCvv(e.target.value)}
-                        className="w-full px-3.5 py-2.5 bg-[#FDFCFA] rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark font-mono"
+                        className="w-full px-3.5 py-2.5 bg-brand-sand rounded-lg border border-brand-wood/25 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark font-mono"
                       />
                     </div>
                   </div>
@@ -306,12 +306,12 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
           </div>
 
           {/* Footer controls */}
-          <div className="p-6 border-t border-brand-wood/15 bg-[#F7F4EF]/35 flex items-center justify-between">
+          <div className="p-6 border-t border-brand-wood/15 bg-brand-sand/35 flex items-center justify-between">
             {step === 2 && (
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="text-xs uppercase tracking-wider text-[#8B6F52] hover:underline font-semibold leading-none cursor-pointer"
+                className="text-xs uppercase tracking-wider text-brand-wood hover:underline font-semibold leading-none cursor-pointer"
               >
                 Back To Recipient
               </button>
@@ -322,7 +322,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                 <button
                   type="submit"
                   form="recipient-form"
-                  className="px-6 py-3 bg-[#2A2520] hover:bg-brand-bark text-white text-xs font-medium uppercase tracking-widest rounded-xl transition-all flex items-center space-x-1.5 cursor-pointer"
+                  className="px-6 py-3 bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-xs font-medium uppercase tracking-widest rounded-xl transition-all flex items-center space-x-1.5 cursor-pointer"
                 >
                   <span>Continue To Payment</span>
                   <ChevronRight size={13} />
@@ -332,7 +332,7 @@ export default function GiftModal({ product, isOpen, onClose, onSubmitGift }: Gi
                   type="submit"
                   form="payment-form"
                   disabled={isSubmitting}
-                  className="px-6 py-3 bg-[#2A2520] hover:bg-emerald-700 text-white text-xs font-semibold uppercase tracking-widest rounded-xl transition-all flex items-center space-x-2 cursor-pointer shadow-sm disabled:opacity-50"
+                  className="px-6 py-3 bg-brand-bark hover:bg-brand-cranberry/90 text-brand-sand text-xs font-semibold uppercase tracking-widest rounded-xl transition-all flex items-center space-x-2 cursor-pointer shadow-sm disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <span>Processing Payment...</span>

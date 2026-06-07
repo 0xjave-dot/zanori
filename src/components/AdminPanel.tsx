@@ -50,7 +50,7 @@ export default function AdminPanel({
   const [projLocation, setProjLocation] = useState('');
   const [projDescription, setProjDescription] = useState('');
   const [projServices, setProjServices] = useState<string[]>([]);
-  const [projImageBg, setProjImageBg] = useState('linear-gradient(135deg, #E8E0D4 0%, #C4A882 100%)');
+  const [projImageBg, setProjImageBg] = useState('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)');
   const [projIsFeatured, setProjIsFeatured] = useState(false);
 
   // Form Field States - Product Builder
@@ -58,17 +58,17 @@ export default function AdminPanel({
   const [prodCategory, setProdCategory] = useState<ShopCategory>('Beds');
   const [prodPrice, setProdPrice] = useState<number>(100000);
   const [prodIconType, setProdIconType] = useState<Product['iconType']>('bed');
-  const [prodImageBg, setProdImageBg] = useState('linear-gradient(135deg, #F7F4EF 0%, #E8E0D4 100%)');
+  const [prodImageBg, setProdImageBg] = useState('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
   const [prodIsNew, setProdIsNew] = useState(true);
 
   // Common Luxe Gradient presets
   const GRADIENT_PRESETS = [
-    { name: 'Warm Warmth (Mahogany / Oak)', value: 'linear-gradient(135deg, #E8E0D4 0%, #C4A882 50%, #8B6F52 100%)' },
-    { name: 'Light Alabaster (Japandi / Clay)', value: 'linear-gradient(135deg, #F7F4EF 0%, #E8E0D4 100%)' },
-    { name: 'Earthy Forest (Iroko / Palm)', value: 'linear-gradient(135deg, #C4A882 0%, #8B6F52 100%)' },
-    { name: 'Smoked Charcoal (Dusk / Copper)', value: 'linear-gradient(135deg, #8B6F52 0%, #2A2520 100%)' },
-    { name: 'Coquina Bone (Sand / Travertine)', value: 'linear-gradient(135deg, #FDFCFA 0%, #C4A882 100%)' },
-    { name: 'Dramatic Obsidian (Velvet / Night)', value: 'linear-gradient(135deg, #2A2520 0%, #111111 100%)' }
+    { name: 'Warm Warmth (Mahogany / Oak)', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 50%, var(--color-brand-wood) 100%)' },
+    { name: 'Light Alabaster (Japandi / Clay)', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)' },
+    { name: 'Earthy Forest (Iroko / Palm)', value: 'linear-gradient(135deg, var(--color-brand-warm) 0%, var(--color-brand-wood) 100%)' },
+    { name: 'Smoked Charcoal (Dusk / Copper)', value: 'linear-gradient(135deg, var(--color-brand-wood) 0%, var(--color-brand-bark) 100%)' },
+    { name: 'Coquina Bone (Sand / Travertine)', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)' },
+    { name: 'Dramatic Obsidian (Velvet / Night)', value: 'linear-gradient(135deg, var(--color-brand-bark) 0%, var(--color-brand-dark) 100%)' }
   ];
 
   // Services available for multi-select
@@ -151,7 +151,7 @@ export default function AdminPanel({
     setProjLocation('');
     setProjDescription('');
     setProjServices(['Space Styling']);
-    setProjImageBg('linear-gradient(135deg, #E8E0D4 0%, #C4A882 100%)');
+    setProjImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)');
     setProjIsFeatured(false);
   };
 
@@ -248,7 +248,7 @@ export default function AdminPanel({
     setProdCategory('Beds');
     setProdPrice(150000);
     setProdIconType('bed');
-    setProdImageBg('linear-gradient(135deg, #F7F4EF 0%, #E8E0D4 100%)');
+    setProdImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
     setProdIsNew(true);
   };
 
@@ -339,18 +339,18 @@ export default function AdminPanel({
   if (!isAuthenticated) {
     return (
       <div id="admin-auth-page" className="min-h-screen bg-brand-warm/60 flex items-center justify-center p-6">
-        <div className="max-w-md w-full bg-[#FDFCFA] rounded-3xl border border-brand-wood/25 p-8 md:p-12 space-y-8 shadow-xs">
+        <div className="max-w-md w-full bg-brand-base/95 rounded-3xl border border-brand-wood/25 p-8 md:p-12 space-y-8 shadow-xs">
           
           <div className="text-center space-y-3">
-            <div className="w-12 h-12 mx-auto rounded-full bg-[#E8E0D4] flex items-center justify-center text-[#8B6F52] border border-brand-wood/10">
+            <div className="w-12 h-12 mx-auto rounded-full bg-brand-base/90 flex items-center justify-center text-brand-wood border border-brand-wood/10">
               <Lock size={18} />
             </div>
             <div className="space-y-1">
-              <span className="text-[10px] tracking-widest text-[#8B6F52] font-mono uppercase font-bold block">
+              <span className="text-[10px] tracking-widest text-brand-wood font-mono uppercase font-bold block">
                 ZANORI SYSTEM PORTAL
               </span>
               <h2 className="font-serif text-3xl font-light text-brand-dark">
-                Studio Director login
+                 Director login
               </h2>
             </div>
             <p className="text-xs text-brand-muted leading-relaxed font-sans font-light">
@@ -368,19 +368,19 @@ export default function AdminPanel({
                 placeholder="Enter passcode (Hint: admin)"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-[#FDFCFA] text-sm text-brand-dark font-sans"
+                className="w-full px-4 py-3 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-brand-base/95 text-sm text-brand-dark font-sans"
               />
             </div>
 
             {authError && (
-              <p className="text-xs text-red-650 font-mono bg-red-50 p-2.5 rounded-lg border border-red-100 text-center">
+              <p className="text-xs text-brand-cranberry font-mono bg-brand-cranberry/10 p-2.5 rounded-lg border border-brand-cranberry/20 text-center">
                 {authError}
               </p>
             )}
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-xl bg-[#2A2520] hover:bg-brand-bark text-white text-xs uppercase tracking-widest font-semibold transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-xs"
+              className="w-full py-3.5 rounded-xl bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-xs uppercase tracking-widest font-semibold transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-xs"
             >
               <span>Unlock Admin Panel</span>
               <ArrowRight size={13} />
@@ -409,9 +409,8 @@ export default function AdminPanel({
         
         {/* Dynamic Success alert banner */}
         {successMsg && (
-          <div className="fixed top-24 right-6 md:right-12 z-50 bg-[#2A2520] text-brand-base border border-brand-wood/20 p-4 rounded-xl shadow-xl flex items-center space-x-3 text-xs animate-feed-in font-sans">
-            <Check size={14} className="text-[#C4A882]" />
-            <span>{successMsg}</span>
+          <div className="fixed top-24 right-6 md:right-12 z-50 bg-brand-bark text-brand-base border border-brand-wood/20 p-4 rounded-xl shadow-xl flex items-center space-x-3 text-xs animate-feed-in font-sans">
+            <Check size={14} className="text-brand-wood" />
           </div>
         )}
 
@@ -422,8 +421,8 @@ export default function AdminPanel({
               <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
                 WORKSTATION CONSOLE
               </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-              <span className="text-[9px] uppercase tracking-wider text-green-700 font-mono font-bold bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-cranberry/70"></span>
+              <span className="text-[9px] uppercase tracking-wider text-brand-bark font-mono font-bold bg-brand-base/90 border border-brand-wood/15 px-2 py-0.5 rounded-full">
                 Authenticated
               </span>
             </div>
@@ -436,7 +435,7 @@ export default function AdminPanel({
             <button
               type="button"
               onClick={handleFactoryReset}
-              className="px-4 py-2.5 rounded-full border border-orange-200 hover:bg-orange-50 text-orange-700 text-xs font-mono flex items-center space-x-1.5 transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-full border border-brand-cranberry/20 hover:bg-brand-cranberry/10 text-brand-cranberry text-xs font-mono flex items-center space-x-1.5 transition-colors cursor-pointer"
               title="Restore initial static dataset and wipe edits"
             >
               <RefreshCw size={12} />
@@ -454,7 +453,7 @@ export default function AdminPanel({
             <button
               type="button"
               onClick={onNavigateHome}
-              className="px-5 py-2.5 bg-[#2A2520] hover:bg-brand-bark text-white text-xs uppercase tracking-wider font-semibold rounded-full transition-all flex items-center space-x-1.5 cursor-pointer"
+              className="px-5 py-2.5 bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-xs uppercase tracking-wider font-semibold rounded-full transition-all flex items-center space-x-1.5 cursor-pointer"
             >
               <Eye size={12} />
               <span>View Gallery</span>
@@ -480,7 +479,7 @@ export default function AdminPanel({
                   }}
                   className={`px-5 py-2 rounded-full text-xs font-light uppercase tracking-[0.1em] transition-all flex items-center space-x-2 ${
                     activeTab === 'projects'
-                      ? 'bg-[#2A2520] text-white font-medium shadow-xs'
+                      ? 'bg-brand-bark text-brand-sand font-medium shadow-xs'
                       : 'text-brand-muted hover:text-brand-dark'
                   }`}
                 >
@@ -496,7 +495,7 @@ export default function AdminPanel({
                   }}
                   className={`px-5 py-2 rounded-full text-xs font-light uppercase tracking-[0.1em] transition-all flex items-center space-x-2 ${
                     activeTab === 'products'
-                      ? 'bg-[#2A2520] text-white font-medium shadow-xs'
+                      ? 'bg-brand-bark text-brand-sand font-medium shadow-xs'
                       : 'text-brand-muted hover:text-brand-dark'
                   }`}
                 >
@@ -510,7 +509,7 @@ export default function AdminPanel({
                 <button
                   type="button"
                   onClick={initiateNewProject}
-                  className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-full text-xs font-sans font-medium uppercase tracking-wider flex items-center space-x-1.5 cursor-pointer"
+                  className="px-4 py-2 bg-brand-cranberry hover:bg-brand-bark text-brand-sand rounded-full text-xs font-sans font-medium uppercase tracking-wider flex items-center space-x-1.5 cursor-pointer"
                 >
                   <Plus size={13} />
                   <span>Add Case Study</span>
@@ -519,7 +518,7 @@ export default function AdminPanel({
                 <button
                   type="button"
                   onClick={initiateNewProduct}
-                  className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-full text-xs font-sans font-medium uppercase tracking-wider flex items-center space-x-1.5 cursor-pointer"
+                  className="px-4 py-2 bg-brand-cranberry hover:bg-brand-bark text-brand-sand rounded-full text-xs font-sans font-medium uppercase tracking-wider flex items-center space-x-1.5 cursor-pointer"
                 >
                   <Plus size={13} />
                   <span>Add Product</span>
@@ -555,7 +554,7 @@ export default function AdminPanel({
                           key={proj.id}
                           className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                             isActiveEd 
-                              ? 'bg-brand-warm border-[#C4A882]/80 ring-1 ring-[#C4A882]/40' 
+                              ? 'bg-brand-warm border-brand-wood/40 ring-1 ring-brand-wood/20' 
                               : 'bg-brand-warm/30 rounded-xl border-brand-wood/10 hover:border-brand-wood/25'
                           }`}
                         >
@@ -569,7 +568,7 @@ export default function AdminPanel({
                                 {proj.location}
                               </span>
                               {proj.isFeatured && (
-                                <span className="bg-[#2A2520] text-brand-base text-[8px] font-mono px-2 py-0.5 rounded-md uppercase font-bold tracking-widest leading-none">
+                                <span className="bg-brand-bark text-brand-base text-[8px] font-mono px-2 py-0.5 rounded-md uppercase font-bold tracking-widest leading-none">
                                   Case Study
                                 </span>
                               )}
@@ -580,7 +579,7 @@ export default function AdminPanel({
                             </p>
                             <div className="flex flex-wrap gap-1 pt-1">
                               {proj.servicesUsed.map((srv, _i) => (
-                                <span key={_i} className="text-[8px] font-mono bg-[#E8E0D4] px-2 py-0.5 rounded-sm text-[#2A2520]/80">
+                                <span key={_i} className="text-[8px] font-mono bg-brand-sand/70 px-2 py-0.5 rounded-sm text-brand-bark/80">
                                   {srv}
                                 </span>
                               ))}
@@ -600,7 +599,7 @@ export default function AdminPanel({
                             <button
                               type="button"
                               onClick={() => deleteProject(proj.id, proj.title)}
-                              className="p-2 border border-red-200 rounded-lg text-red-650 hover:bg-red-50 transition-colors"
+                              className="p-2 border border-brand-cranberry/30 rounded-lg text-brand-cranberry hover:bg-brand-cranberry/10 transition-colors"
                               title="Delete case study"
                             >
                               <Trash2 size={13} />
@@ -647,7 +646,7 @@ export default function AdminPanel({
                           key={prod.id}
                           className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                             isActiveEd 
-                              ? 'bg-brand-warm border-[#C4A882]/80 ring-1 ring-[#C4A882]/40' 
+                              ? 'bg-brand-warm border-brand-wood/80 ring-1 ring-brand-wood/40' 
                               : 'bg-brand-warm/30 rounded-xl border-brand-wood/10 hover:border-brand-wood/25'
                           }`}
                         >
@@ -663,7 +662,7 @@ export default function AdminPanel({
                                   {prod.category}
                                 </span>
                                 {prod.isNew && (
-                                  <span className="bg-emerald-100 text-emerald-800 text-[8px] font-mono px-1.5 py-0.2 rounded-sm uppercase">
+                                  <span className="bg-brand-base/80 text-brand-bark text-[8px] font-mono px-1.5 py-0.2 rounded-sm uppercase">
                                     New
                                   </span>
                                 )}
@@ -710,12 +709,12 @@ export default function AdminPanel({
           </div>
 
           {/* Right Editor Panel Frame (Dynamic based on selected action) */}
-          <div className="lg:col-span-4 bg-[#FDFCFA] rounded-2xl border border-brand-wood/15 p-6 md:p-8 shadow-sm relative overflow-hidden space-y-6">
+          <div className="lg:col-span-4 bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 md:p-8 shadow-sm relative overflow-hidden space-y-6">
             
             {/* If neither creating nor editing, show instructions placeholder */}
             {!isCreatingProject && !editingProject && !isCreatingProduct && !editingProduct ? (
               <div className="min-h-[350px] flex flex-col items-center justify-center text-center p-6 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-brand-warm/60 text-[#8B6F52] flex items-center justify-center border border-brand-wood/10">
+                <div className="w-12 h-12 rounded-full bg-brand-warm/60 text-brand-wood flex items-center justify-center border border-brand-wood/10">
                   <Database size={16} />
                 </div>
                 <div className="space-y-1.5">
@@ -732,7 +731,7 @@ export default function AdminPanel({
               <>
                 {/* Form header */}
                 <div className="flex items-center justify-between pb-3 border-b border-brand-wood/10">
-                  <span className="text-[10px] tracking-widest text-[#8B6F52] uppercase font-mono font-bold block">
+                  <span className="text-[10px] tracking-widest text-brand-wood uppercase font-mono font-bold block">
                     {editingProject || editingProduct ? 'Curate Workspace Edit' : 'Append New Curation'}
                   </span>
                   <button
@@ -858,7 +857,7 @@ export default function AdminPanel({
                         type="checkbox"
                         checked={projIsFeatured}
                         onChange={(e) => setProjIsFeatured(e.target.checked)}
-                        className="rounded text-brand-bark focus:ring-[#C4A882]"
+                        className="rounded text-brand-bark focus:ring-brand-wood/50"
                       />
                     </div>
 
@@ -888,7 +887,7 @@ export default function AdminPanel({
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 py-2.5 bg-[#2A2520] hover:bg-brand-bark text-white rounded-full text-xs font-sans font-semibold uppercase tracking-wider cursor-pointer text-center"
+                        className="flex-1 py-2.5 bg-brand-bark hover:bg-brand-bark/90 text-brand-sand rounded-full text-xs font-sans font-semibold uppercase tracking-wider cursor-pointer text-center"
                       >
                         Save Curation
                       </button>
@@ -1010,7 +1009,7 @@ export default function AdminPanel({
                         type="checkbox"
                         checked={prodIsNew}
                         onChange={(e) => setProdIsNew(e.target.checked)}
-                        className="rounded text-brand-bark focus:ring-[#C4A882]"
+                        className="rounded text-brand-bark focus:ring-brand-wood/40"
                       />
                     </div>
 
@@ -1025,22 +1024,20 @@ export default function AdminPanel({
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 py-2.5 bg-[#2A2520] hover:bg-brand-bark text-white rounded-full text-xs font-sans font-semibold uppercase tracking-wider cursor-pointer text-center"
+                        className="flex-1 py-2.5 bg-brand-bark hover:bg-brand-bark/90 text-brand-sand rounded-full text-xs font-sans font-semibold uppercase tracking-wider cursor-pointer text-center"
                       >
                         Save Product
                       </button>
                     </div>
-
                   </form>
                 )}
               </>
             )}
-
           </div>
-
         </div>
-
       </div>
     </div>
-  );
-}
+    );
+  }
+
+

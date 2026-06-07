@@ -94,7 +94,7 @@ export default function Shop({
             </h1>
           </div>
           <p className="max-w-md text-sm text-brand-muted leading-relaxed font-light font-sans">
-            Minimalist Scandinavian forms optimized with authentic Nigerian textures. All pieces are locally upholstered in Lagos, built using beautiful mahogany and tailored woven fabrics.
+            Quality pieces you'll keep forever, without the price tag that makes you regret it.
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export default function Shop({
                   onClick={() => setActiveTab(category)}
                   className={`py-1.5 px-4 rounded-full text-xs font-light uppercase tracking-[0.12em] transition-all duration-300 ${
                     activeTab === category
-                      ? 'text-brand-dark font-medium bg-[#E8E0D4] border border-brand-wood/25 shadow-xs'
+                      ? 'text-brand-dark font-medium bg-brand-sand border border-brand-wood/25 shadow-xs'
                       : 'text-brand-muted hover:text-brand-dark bg-transparent border border-transparent'
                   }`}
                 >
@@ -153,7 +153,7 @@ export default function Shop({
 
           {/* Collapsible/Extended Budget Controller Slider */}
           <div className="pt-4 border-t border-brand-wood/10 flex flex-col sm:flex-row items-baseline sm:items-center justify-between gap-4">
-            <span className="text-[10px] font-mono tracking-widest text-[#8B6F52] uppercase font-bold flex items-center space-x-1.5">
+            <span className="text-[10px] font-mono tracking-widest text-brand-wood uppercase font-bold flex items-center space-x-1.5">
               <SlidersHorizontal size={12} />
               <span>Optimize Budget Allocation Limit</span>
             </span>
@@ -165,9 +165,9 @@ export default function Shop({
                 step="25000"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                className="w-full accent-[#C4A882] bg-[#E8E0D4] h-1 rounded-full outline-hidden"
+                className="w-full accent-brand-wood bg-brand-sand h-1 rounded-full outline-hidden"
               />
-              <span className="text-xs font-mono bg-[#F7F4EF] border border-brand-wood/15 px-2 py-1 rounded-md text-brand-dark shrink-0 font-medium whitespace-nowrap">
+              <span className="text-xs font-mono bg-brand-sand border border-brand-wood/15 px-2 py-1 rounded-md text-brand-dark shrink-0 font-medium whitespace-nowrap">
                 Under {formatNairaVal(maxPrice)}
               </span>
             </div>
@@ -255,7 +255,7 @@ export default function Shop({
                         <button
                           type="button"
                           onClick={() => onOpenGiftCheckout(product)}
-                          className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-[#EADBC8] hover:bg-[#8B6F52] text-[#8B6F52] hover:text-white text-[9px] uppercase tracking-[0.11em] font-semibold transition-all duration-350 cursor-pointer"
+                          className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-brand-warm hover:bg-brand-wood text-brand-wood hover:text-white text-[9px] uppercase tracking-[0.11em] font-semibold transition-all duration-350 cursor-pointer"
                           title="Buy as Gift"
                         >
                           <Gift size={9} />

@@ -5,19 +5,24 @@
   --font-serif: "Cormorant Garamond", serif;
   --font-sans: "DM Sans", sans-serif;
 
-  --color-brand-base: #F9F6F0;
-  --color-brand-warm: #D9C3B0;
-  --color-brand-sand: #EAE0D7;
-  --color-brand-wood: #8B807A;
+  --color-brand-base: #D9C3B0;
+  --color-brand-warm: #C4A98E;
+  --color-brand-sand: #F2E9DE;
+  --color-brand-ivory: #F8F5EE;
+  --color-brand-wood: #8B6F52;
   --color-brand-bark: #2C1E18;
   --color-brand-dark: #2C1E18;
-  --color-brand-muted: #8B807A;
+  --color-brand-muted: #8B6F52;
   --color-brand-cranberry: #9E1B32;
+  --color-testimonial-card-bg: #3D2820;
+  --color-testimonial-icons: #8B807A;
+  --color-testimonial-gold: #F5A320;
 }
 
 @layer base {
+  html,
   body {
-    background-color: var(--color-brand-base);
+    background-color: #241713;
     color: var(--color-brand-dark);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -29,13 +34,18 @@
   .text-brand-cranberry { color: var(--color-brand-cranberry); }
   .border-brand-cranberry { border-color: var(--color-brand-cranberry); }
   .bg-brand-ivory { background-color: var(--color-brand-base); }
+  .text-brand-ivory { color: var(--color-brand-ivory); }
+  .text-brand-ivory\/80 { color: rgba(248,245,238,0.8); }
   .bg-brand-beige { background-color: var(--color-brand-warm); }
   .bg-brand-taupe { background-color: var(--color-brand-wood); }
-}
-
-/* Custom scrollbars and marquee animations */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+   .bg-testimonial-card { background-color: var(--color-testimonial-card-bg); }
+   .text-testimonial-gold { color: var(--color-testimonial-gold); }
+   .text-testimonial-icons { color: var(--color-testimonial-icons); }
+   .film-grain {
+     background-image: 
+       repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+       repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+   }
 }
 .no-scrollbar {
   -ms-overflow-style: none;
@@ -94,4 +104,11 @@
   animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+ @keyframes floatBob {
+   0%, 100% { transform: translateY(0px); }
+   50% { transform: translateY(-8px); }
+ }
 
+ .animate-float-bob {
+   animation: floatBob 3s ease-in-out infinite;
+ }

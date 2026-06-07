@@ -212,7 +212,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
         </div>
 
         {/* Detailed Service Specifications Sections (Flesh out deliverables) */}
-        <div className="bg-[#F7F4EF]/50 rounded-3xl border border-brand-wood/15 p-8 md:p-12 space-y-10">
+        <div className="bg-brand-base/50 rounded-3xl border border-brand-wood/15 p-8 md:p-12 space-y-10">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
             <span className="text-[10px] tracking-[0.25em] text-brand-wood uppercase font-mono block">OUR DESIGN STANDARD</span>
             <h2 className="font-serif text-3xl font-light text-brand-dark">How we manage your physical space transformation</h2>
@@ -243,7 +243,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
         {/* INCREDIBLE INTERACTIVE FEATURE - Lagos Design Fee Estimator */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-brand-bark rounded-3xl overflow-hidden shadow-lg text-brand-base border border-brand-wood/20">
           
-          <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between space-y-8 bg-[#1F1B18]">
+          <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between space-y-8 bg-brand-bark/95">
             <div className="space-y-4">
               <div className="inline-flex items-center space-x-2 bg-brand-wood/20 border border-brand-wood/20 text-brand-wood px-3.5 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-mono">
                 <Calculator size={12} />
@@ -328,7 +328,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                     setSpaceSize(parseInt(e.target.value));
                     setCalculatorDone(false);
                   }}
-                  className="w-full accent-[#8B807A] bg-brand-wood/20 h-1 rounded-lg outline-hidden"
+                  className="w-full accent-brand-wood bg-brand-wood/20 h-1 rounded-lg outline-hidden"
                 />
                 <div className="flex justify-between text-[9px] text-brand-wood font-mono uppercase">
                   <span>15 M² </span>
@@ -350,7 +350,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                         setNeed3D(e.target.checked);
                         setCalculatorDone(false);
                       }}
-                      className="w-full accent-[#8B807A] rounded-sm h-4 w-4 bg-[#2C1E18] border-brand-wood"
+                      className="w-full accent-brand-wood rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
                     />
                     <span>Include 3D walkthrough rendering plans (+250k NGN)</span>
                   </label>
@@ -363,7 +363,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                         setNeedSourcing(e.target.checked);
                         setCalculatorDone(false);
                       }}
-                      className="accent-[#8B807A] rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
+                      className="accent-brand-wood rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
                     />
                     <span>Heirloom catalog procurement and installation scheduling (15%)</span>
                   </label>
@@ -376,7 +376,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                         setNeedSupervision(e.target.checked);
                         setCalculatorDone(false);
                       }}
-                      className="accent-[#8B807A] rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
+                      className="accent-brand-wood rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
                     />
                     <span>On-Site physical carpentry & styling oversight in Lagos (+10%)</span>
                   </label>
@@ -387,7 +387,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               {!calculatorDone ? (
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-brand-cranberry text-brand-base text-xs uppercase tracking-widest font-semibold font-mono hover:bg-[#7a1728] transition-all cursor-pointer"
+                  className="w-full py-3.5 rounded-xl bg-brand-cranberry text-brand-base text-xs uppercase tracking-widest font-semibold font-mono hover:bg-brand-bark/90 transition-all cursor-pointer"
                 >
                   Generate direct design fee estimate
                 </button>
@@ -423,7 +423,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                   <button
                     type="button"
                     onClick={handleApplyBriefToForm}
-                    className="w-full py-3.5 rounded-xl bg-brand-cranberry hover:bg-[#7a1728] text-brand-base text-xs uppercase tracking-widest font-semibold font-mono transition-all cursor-pointer text-center"
+                    className="w-full py-3.5 rounded-xl bg-brand-cranberry hover:bg-brand-cranberry/90 text-brand-base text-xs uppercase tracking-widest font-semibold font-mono transition-all cursor-pointer text-center"
                   >
                     Apply this estimate as my consultation brief ✓
                   </button>

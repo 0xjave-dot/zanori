@@ -56,13 +56,13 @@ export default function Hero() {
               <span></span>
             </span>
             <div className="h-[1px] w-full bg-brand-wood/25"></div>
-            <h1 className="font-serif text-5xl md:text-6xl font-light leading-[1.1] text-brand-base">
+            <h1 className="font-serif text-5xl md:text-6xl font-light leading-[1.1] text-brand-ivory">
               Spaces designed around the way <span className="italic">you live.</span>
             </h1>
             <div className="h-[1px] w-full bg-brand-wood/25"></div>
           </div>
 
-          <p className="text-sm font-light leading-relaxed text-brand-base/80 uppercase tracking-[0.1em]">
+          <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.1em]">
             Space Styling · Design Consultation · Curated Furniture 
           </p>
 
@@ -70,7 +70,7 @@ export default function Hero() {
             <button
               id="cta-book-hero"
               onClick={(e) => handleCtaClick(e, 'contact-section')}
-              className="pointer-events-auto px-8 py-3.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-[#7a1728] hover:text-brand-base text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
+              className="pointer-events-auto px-8 py-3.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-brand-bark/90 hover:text-brand-base text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
             >
               Book a consultation
             </button>

@@ -68,7 +68,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
           <a
             href="#/"
             onClick={(e) => handleLinkClick(e, '#/')}
-            className="font-serif text-2xl font-light tracking-[0.2em] text-brand-dark hover:opacity-80 transition-opacity"
+            className="font-serif text-2xl font-light tracking-[0.2em] text-brand-ivory hover:opacity-80 transition-opacity"
           >
             ZANORI SPACES
           </a>
@@ -79,7 +79,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               href="#/work"
               onClick={(e) => handleLinkClick(e, '#/work')}
               className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
-                currentPage === 'work' ? 'text-brand-bark font-medium' : ''
+                currentPage === 'work' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               Work
@@ -92,7 +92,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               href="#/services"
               onClick={(e) => handleLinkClick(e, '#/services')}
               className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
-                currentPage === 'services' ? 'text-brand-bark font-medium' : ''
+                currentPage === 'services' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               Services
@@ -105,7 +105,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               href="#/shop"
               onClick={(e) => handleLinkClick(e, '#/shop')}
               className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
-                currentPage === 'shop' ? 'text-brand-bark font-medium' : ''
+                currentPage === 'shop' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               Shop
@@ -118,7 +118,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               href="#/ai-renderer"
               onClick={(e) => handleLinkClick(e, '#/ai-renderer')}
               className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
-                currentPage === 'ai-renderer' ? 'text-brand-bark font-medium' : ''
+                currentPage === 'ai-renderer' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               <span>My Space</span>
@@ -131,7 +131,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               href="#/account"
               onClick={(e) => handleLinkClick(e, '#/account')}
               className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
-                currentPage === 'account' ? 'text-brand-bark font-medium' : ''
+                currentPage === 'account' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               <span>{user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account'}</span>
@@ -155,7 +155,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, '#/', 'contact-section')}
-              className="px-6 py-2.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-[#7a1728] hover:text-brand-base text-xs uppercase tracking-[0.15em] transition-all duration-300"
+              className="px-6 py-2.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-brand-bark/90 hover:text-brand-base text-xs uppercase tracking-[0.15em] transition-all duration-300"
             >
               Get in touch
             </a>
@@ -176,7 +176,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               type="button"
               id="hamburger-btn"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-brand-dark hover:opacity-75 transition-opacity"
+              className="text-brand-ivory hover:opacity-75 transition-opacity"
               aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -199,7 +199,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             <a
               href="#/work"
               onClick={(e) => handleLinkClick(e, '#/work')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'work' ? 'text-brand-bark font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
+              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'work' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
             >
               Work
             </a>
@@ -207,7 +207,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             <a
               href="#/services"
               onClick={(e) => handleLinkClick(e, '#/services')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'services' ? 'text-brand-bark font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
+              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'services' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
             >
               Services
             </a>
@@ -215,7 +215,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             <a
               href="#/shop"
               onClick={(e) => handleLinkClick(e, '#/shop')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'shop' ? 'text-brand-bark font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
+              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'shop' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
             >
               Shop
             </a>
@@ -223,7 +223,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             <a
               href="#/ai-renderer"
               onClick={(e) => handleLinkClick(e, '#/ai-renderer')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'ai-renderer' ? 'text-brand-bark font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
+              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'ai-renderer' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
             >
               My Space
             </a>
@@ -231,7 +231,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             <a
               href="#/account"
               onClick={(e) => handleLinkClick(e, '#/account')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'account' ? 'text-brand-bark font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
+              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'account' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
             >
               {user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account'}
             </a>

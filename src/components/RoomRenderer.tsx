@@ -179,19 +179,19 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
       title: "Atmospheric Japandi Loft",
       desc: "An ultra-restorative blend of raw Japanese wabi-sabi and minimal Danish cozy design textures. Built around low-slung platform beds and textured paper lamps.",
       materials: "Nordic Ash, Organic Flax, Shoji Paper",
-      imageBg: "linear-gradient(135deg, #F5EFEB 0%, #D8C3B1 100%)"
+      imageBg: "linear-gradient(135deg, var(--color-brand-base) 0%, var(--color-brand-warm) 100%)"
     },
     {
       title: "Warm Lagos Modernism",
       desc: "Bold bespoke spaces. Combines rich dark Nigerian mahogany framing with spacious ventilation screens and premium high-contrast sand walls.",
       materials: "Durable Iroko, Polished Coquina, Bouclé Fabrics",
-      imageBg: "linear-gradient(135deg, #EADBC8 0%, #DAC0A3 100%)"
+      imageBg: "linear-gradient(135deg, var(--color-brand-warm) 0%, var(--color-brand-base) 100%)"
     },
     {
       title: "Deep Dramatic Lounge",
       desc: "For space styling seeking confidence in the evening shadows. Built with deep rich charcoal wall finishes paired with brass accent lights.",
       materials: "Smoked Oak, Brushed Brass, Italian Leather",
-      imageBg: "linear-gradient(135deg, #332C27 0%, #1F1B18 100%)"
+      imageBg: "linear-gradient(135deg, var(--color-brand-wood) 0%, var(--color-brand-bark) 100%)"
     }
   ];
 
@@ -209,7 +209,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
   ];
 
   return (
-    <div id="ai-renderer-page" className="w-full py-24 md:py-32 bg-[#F7F4EF] min-h-screen">
+    <div id="ai-renderer-page" className="w-full py-24 md:py-32 bg-brand-sand min-h-screen">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24">
         
         {/* Page Header */}
@@ -232,7 +232,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
           {/* Left Column - Copy Panel */}
           <div className="lg:col-span-5 space-y-6">
             <div className="space-y-2">
-              <span className="text-[10px] tracking-[0.25em] text-brand-[#8B6F52] uppercase font-mono block">
+              <span className="text-[10px] tracking-[0.25em] text-brand-wood uppercase font-mono block">
                 AN OFF-LINE EXPERIMENT
               </span>
               <h2 className="font-serif text-3xl md:text-4xl font-light text-brand-dark leading-tight italic">
@@ -262,7 +262,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
           </div>
 
           {/* Right Column - Tool Workspace */}
-          <div className="lg:col-span-7 bg-[#FDFCFA] rounded-2xl border border-brand-wood/15 p-6 md:p-8 shadow-sm relative overflow-hidden">
+          <div className="lg:col-span-7 bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 md:p-8 shadow-sm relative overflow-hidden">
             
             {/* Animating wood-tone progress bar */}
             <AnimatePresence>
@@ -272,7 +272,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                   animate={{ width: '100%' }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1.8, ease: 'easeInOut' }}
-                  className="absolute top-0 left-0 h-1 bg-[#C4A882]"
+                  className="absolute top-0 left-0 h-1 bg-brand-wood"
                 />
               )}
             </AnimatePresence>
@@ -314,7 +314,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                       className={`relative min-h-[220px] rounded-xl border-2 border-dashed flex flex-col items-center justify-center p-6 text-center transition-all duration-300 ${
                         image 
                           ? 'border-brand-wood/40 bg-zinc-50/50' 
-                          : 'border-brand-bark/30 hover:border-brand-bark bg-[#F7F4EF]/55 hover:bg-[#F7F4EF]/80 cursor-pointer'
+                          : 'border-brand-bark/30 hover:border-brand-bark bg-brand-sand/55 hover:bg-brand-sand/80 cursor-pointer'
                       }`}
                     >
                       <input 
@@ -335,19 +335,19 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                           />
                           <button
                             onClick={handleRemoveImage}
-                            className="absolute top-2 right-2 p-1.5 rounded-full bg-[#2A2520]/80 hover:bg-[#2A2520] text-white transition-colors shadow-md"
+                            className="absolute top-2 right-2 p-1.5 rounded-full bg-brand-bark/80 hover:bg-brand-bark text-brand-sand transition-colors shadow-md"
                             title="Remove image"
                           >
                             <X size={14} />
                           </button>
                         </div>
                       ) : (
-                        <div className="space-y-3">
-                          <div className="w-10 h-10 mx-auto rounded-full bg-[#E8E0D4] flex items-center justify-center text-[#8B6F52]">
+                          <div className="space-y-3">
+                          <div className="w-10 h-10 mx-auto rounded-full bg-brand-sand flex items-center justify-center text-brand-wood">
                             <Upload size={18} />
                           </div>
                           <div>
-                            <p className="text-xs font-semibold text-[#2A2520] tracking-wide">
+                            <p className="text-xs font-semibold text-brand-bark tracking-wide">
                               Drop a room photo here, or click to browse
                             </p>
                             <p className="text-[10px] text-brand-muted mt-1">
@@ -380,9 +380,9 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                               setSelectedStyle(style);
                               setTooltip(null);
                             }}
-                            className={`px-3 py-2.5 rounded-lg border text-xs tracking-wider font-light text-center transition-all duration-300 cursor-pointer ${
+                              className={`px-3 py-2.5 rounded-lg border text-xs tracking-wider font-light text-center transition-all duration-300 cursor-pointer ${
                               isActive
-                                ? 'bg-[#2A2520] text-[#FDFCFA] border-[#2A2520] font-medium shadow-sm'
+                                ? 'bg-brand-bark text-brand-sand border-brand-bark font-medium shadow-sm'
                                 : 'bg-transparent text-brand-dark/80 border-brand-wood/30 hover:border-brand-bark hover:text-brand-dark'
                             }`}
                           >
@@ -408,8 +408,8 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                       disabled={isGenerating}
                       className={`w-full py-4 rounded-xl font-serif text-sm uppercase tracking-[0.15em] transition-all duration-300 flex items-center justify-center space-x-2.5 ${
                         isGenerating
-                          ? 'bg-[#2A2520]/80 text-[#FDFCFA]/90 cursor-wait'
-                          : 'bg-[#2A2520] hover:bg-brand-bark text-[#FDFCFA] active:scale-[0.99] cursor-pointer shadow-sm'
+                          ? 'bg-brand-bark/80 text-brand-sand/90 cursor-wait'
+                          : 'bg-brand-bark hover:bg-brand-bark/90 text-brand-sand active:scale-[0.99] cursor-pointer shadow-sm'
                       }`}
                     >
                       <RefreshCw size={14} className={isGenerating ? 'animate-spin' : ''} />
@@ -470,8 +470,8 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                     
                     {/* Left Frame: original uploaded snapshot */}
                     <div className="rounded-lg bg-zinc-50 border border-brand-wood/10 flex flex-col justify-between overflow-hidden">
-                      <div className="p-2 border-b border-brand-wood/10 flex justify-between items-center bg-[#F7F4EF]/30">
-                        <span className="text-[9px] uppercase tracking-widest text-[#8B6F52] font-semibold">Your room snapshot</span>
+                      <div className="p-2 border-b border-brand-wood/10 flex justify-between items-center bg-brand-sand/30">
+                        <span className="text-[9px] uppercase tracking-widest text-brand-wood font-semibold">Your room snapshot</span>
                         <span className="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>
                       </div>
                       <div className="flex-1 flex items-center justify-center p-4">
@@ -491,18 +491,18 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                       initial={{ x: 20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.15, duration: 0.5 }}
-                      className="rounded-lg bg-[#F7F4EF]/40 border border-[#C4A882]/30 p-5 space-y-5 flex flex-col justify-between"
+                      className="rounded-lg bg-brand-sand/40 border border-brand-wood/30 p-5 space-y-5 flex flex-col justify-between"
                     >
-                      <div className="flex justify-between items-center text-[9px] uppercase tracking-widest text-[#8B6F52] font-semibold border-b border-brand-wood/10 pb-2">
+                        <div className="flex justify-between items-center text-[9px] uppercase tracking-widest text-brand-wood font-semibold border-b border-brand-wood/10 pb-2">
                         <span>Reimagined by Zanori Spaces</span>
                         <span className="flex items-center space-x-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#C4A882] animate-pulse" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-wood animate-pulse" />
                           <span className="text-[8px] tracking-normal font-mono font-light uppercase">Synthesized</span>
                         </span>
                       </div>
 
                       {/* Header headline */}
-                      <p className="font-serif text-[15px] italic text-[#2A2520] font-light leading-relaxed">
+                      <p className="font-serif text-[15px] italic text-brand-bark font-light leading-relaxed">
                         "{result?.headline}"
                       </p>
 
@@ -511,14 +511,14 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                         <span className="block text-[8px] uppercase tracking-widest text-brand-muted font-mono font-medium">
                           Inspired Palette
                         </span>
-                        <div className="grid grid-cols-4 gap-1.5">
+                              <div className="grid grid-cols-4 gap-1.5">
                           {result?.palette.map((color, idx) => (
                             <div key={idx} className="group cursor-pointer">
                               <div 
                                 className="h-6 rounded-md shadow-xs border border-brand-wood/20 transition-transform group-hover:scale-105 duration-200" 
                                 style={{ backgroundColor: color }} 
                               />
-                              <span className="block text-[8px] text-[#2A2520]/80 font-mono mt-1 font-semibold truncate leading-tight">
+                              <span className="block text-[8px] text-brand-bark/80 font-mono mt-1 font-semibold truncate leading-tight">
                                 {result.palette_names[idx] || 'Accent'}
                               </span>
                               <span className="block text-[7px] text-brand-muted font-mono uppercase truncate leading-tight">
@@ -530,7 +530,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                       </div>
 
                       {/* Designer structured quote */}
-                      <blockquote className="pl-3.5 border-l-2 border-[#C4A882] text-[11px] leading-relaxed font-light text-[#8B6F52] italic font-sans">
+                      <blockquote className="pl-3.5 border-l-2 border-brand-wood text-[11px] leading-relaxed font-light text-brand-wood italic font-sans">
                         {result?.designer_note}
                       </blockquote>
                     </motion.div>
@@ -544,7 +544,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                     <div className="space-y-2.5">
                       {result?.furniture_suggestions.map((suggestion, idx) => (
                         <div key={idx} className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between text-xs py-1 border-b border-dashed border-brand-wood/10">
-                          <span className="font-serif italic font-medium text-[#2A2520] shrink-0 sm:w-1/3">
+                          <span className="font-serif italic font-medium text-brand-bark shrink-0 sm:w-1/3">
                             {suggestion.piece}
                           </span>
                           <span className="text-brand-dark/75 font-sans font-light leading-snug sm:w-2/3 mt-0.5 sm:mt-0 text-left sm:text-right text-[11px]">
@@ -560,7 +560,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                     <button
                       type="button"
                       onClick={handleResetStyleOnly}
-                      className="w-full sm:w-auto px-5 py-3 rounded-xl border border-[#C4A882] hover:bg-[#F7F4EF] text-[#8B6F52] text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer text-center font-sans"
+                      className="w-full sm:w-auto px-5 py-3 rounded-xl border border-brand-wood hover:bg-brand-sand text-brand-wood text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer text-center font-sans"
                     >
                       Try another style
                     </button>
@@ -580,11 +580,11 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                         }}
                         className={`w-full sm:w-auto px-5 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center space-x-1.5 cursor-pointer border font-sans ${
                           hasBeenSaved 
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-350 cursor-not-allowed' 
-                            : 'bg-brand-warm text-brand-dark border-brand-wood/40 hover:bg-[#F7F4EF]'
+                            ? 'bg-brand-base/80 text-brand-bark border-brand-wood/30 cursor-not-allowed' 
+                            : 'bg-brand-warm text-brand-dark border-brand-wood/40 hover:bg-brand-sand'
                         }`}
                       >
-                        <Bookmark size={12} className={hasBeenSaved ? 'fill-emerald-800 text-emerald-800' : ''} />
+                        <Bookmark size={12} className={hasBeenSaved ? 'text-brand-bark' : ''} />
                         <span>{isSaving ? 'Saving Design...' : hasBeenSaved ? 'Saved Design ✓' : 'Save as Brief'}</span>
                       </button>
                     ) : (
@@ -593,7 +593,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                         onClick={() => {
                           window.location.hash = '#/account';
                         }}
-                        className="w-full sm:w-auto px-5 py-3 rounded-xl bg-brand-warm hover:bg-[#F7F4EF] border border-brand-wood/40 text-brand-muted text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 cursor-pointer font-sans"
+                        className="w-full sm:w-auto px-5 py-3 rounded-xl bg-brand-warm hover:bg-brand-sand border border-brand-wood/40 text-brand-muted text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 cursor-pointer font-sans"
                         title="Sign in to save this design"
                       >
                         <Lock size={12} />
@@ -604,14 +604,14 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                     <button
                       type="button"
                       onClick={handleScrollToContact}
-                      className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#2A2520] hover:bg-brand-bark text-white text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 cursor-pointer font-sans"
+                      className="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 cursor-pointer font-sans"
                     >
                       <span>Book a consultation</span>
                       <ArrowRight size={12} />
                     </button>
                   </div>
 
-                  <p className="text-[9px] text-[#8B6F52]/75 italic text-center leading-relaxed">
+                  <p className="text-[9px] text-brand-wood/75 italic text-center leading-relaxed">
                     * AI renders are for inspiration only. Your Zanori Spaces designer will produce a precise photorealistic render as part of your project. 
                     Your uploaded room photo + this design direction = your Zanori Spaces brief.
                   </p>
@@ -625,7 +625,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
         {/* Dynamic Static Inspiration Boarding row */}
         <div className="space-y-8 pt-8 border-t border-brand-wood/20">
           <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <span className="text-[10px] tracking-widest text-[#8B6F52] font-mono uppercase font-bold block">STYLE PRESETS</span>
+            <span className="text-[10px] tracking-widest text-brand-wood font-mono uppercase font-bold block">STYLE PRESETS</span>
             <h3 className="font-serif text-3xl font-light text-brand-dark">Atmospheric Design Directions</h3>
             <p className="text-xs text-brand-muted font-sans font-light">Explore the visual blueprints our AI model utilizes to process raw physical spaces.</p>
           </div>
@@ -641,10 +641,10 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                       {item.title.split(' ')[0]} Frame
                     </span>
                   </div>
-                  <h4 className="font-serif text-lg font-light text-[#2A2520]">{item.title}</h4>
+                  <h4 className="font-serif text-lg font-light text-brand-bark">{item.title}</h4>
                   <p className="text-xs text-brand-muted font-sans font-light leading-relaxed">{item.desc}</p>
                 </div>
-                <div className="pt-4 border-t border-brand-wood/10 mt-6 flex justify-between items-center text-[10px] font-mono text-[#8B6F52]">
+                <div className="pt-4 border-t border-brand-wood/10 mt-6 flex justify-between items-center text-[10px] font-mono text-brand-wood">
                   <span>VENEERING MATERIALS:</span>
                   <span className="font-semibold text-brand-dark">{item.materials}</span>
                 </div>
@@ -654,7 +654,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
         </div>
 
         {/* Dynamic Transformations Roll */}
-        <div className="bg-[#2A2520]/95 text-brand-base rounded-3xl p-8 md:p-12 space-y-8 border border-brand-wood/10">
+        <div className="bg-brand-bark/95 text-brand-base rounded-3xl p-8 md:p-12 space-y-8 border border-brand-wood/10">
           <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 border-b border-brand-wood/15 pb-6">
             <h3 className="font-serif text-3xl font-light italic text-white flex items-center gap-2">
               <span>Transformed Concepts Log</span>
@@ -665,7 +665,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 divide-y md:divide-y-0 md:divide-x divide-brand-wood/15">
             {recentTransformations.map((concept, idx) => (
               <div key={idx} className="space-y-5 pt-6 md:pt-0 md:px-6 first:pl-0">
-                <span className="inline-block text-[9px] uppercase font-mono tracking-widest text-[#C4A882] bg-[#8B6F52]/20 px-2.5 py-1 rounded-sm">
+                <span className="inline-block text-[9px] uppercase font-mono tracking-widest text-brand-wood bg-brand-wood/20 px-2.5 py-1 rounded-sm">
                   {concept.styleName} Preset
                 </span>
                 

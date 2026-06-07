@@ -6,7 +6,6 @@ import RoomRenderer from './components/RoomRenderer';
 import Portfolio from './components/Portfolio';
 import Shop from './components/Shop';
 import HowItWorks from './components/HowItWorks';
-import Testimonial from './components/Testimonial';
 import ContactForm from './components/ContactForm';
 import DesignerBio from './components/DesignerBio';
 import InteractiveGallery from './components/InteractiveGallery';
@@ -431,7 +430,7 @@ export default function App() {
   const totalInquiryItemsCount = inquiryItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="relative min-h-screen bg-brand-base antialiased text-brand-dark selection:bg-brand-wood selection:text-brand-dark">
+    <div className="relative min-h-screen bg-brand-bark/70 antialiased text-brand-dark selection:bg-brand-wood selection:text-brand-dark">
       
       {/* Dynamic Floating Action Ticker Indicator for items count (Persistent Bottom Right Drawer Trigger) */}
       {totalInquiryItemsCount > 0 && (
@@ -466,7 +465,6 @@ export default function App() {
             <InteractiveGallery />
             <DesignerBio />
             <HowItWorks />
-            <Testimonial />
           </div>
         )}
 
@@ -474,6 +472,7 @@ export default function App() {
         {currentPage === 'work' && (
           <div className="animate-feed-in">
             <Portfolio onProjectSelect={handleProjectSelect} projects={projects} />
+            <Testimonial />
           </div>
         )}
 
