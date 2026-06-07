@@ -482,7 +482,7 @@ export default function App() {
         
         {/* HOMEPAGE ROUTE */}
         {currentPage === 'home' && (
-          <div className="space-y-24">
+          <div className="space-y-0">
             <div className="reveal"><Hero /></div>
             <div className="reveal"><InteractiveGallery /></div>
             <div className="reveal"><DesignerBio /></div>

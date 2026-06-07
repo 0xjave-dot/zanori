@@ -125,7 +125,6 @@ export default function Portfolio({ onProjectSelect, projects }: PortfolioProps)
                     <h3 className="font-serif text-2xl lg:text-3xl text-white font-light group-hover:translate-y-[-4px] transition-transform duration-300">
                       {project.title}
                     </h3>
-                    <div className="h-[1px] w-0 bg-brand-wood group-hover:w-full transition-all duration-500 mt-3"></div>
                     <p className="max-h-0 overflow-hidden text-white/80 text-xs font-light mt-2 group-hover:max-h-16 transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100">
                       {project.description}
                     </p>

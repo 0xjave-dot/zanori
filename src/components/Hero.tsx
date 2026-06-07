@@ -55,15 +55,15 @@ export default function Hero() {
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark/80 flex items-center space-x-2">
               <span></span>
             </span>
-            <div className="h-[1px] w-full bg-brand-wood/25"></div>
+            
             <h1 className="font-serif text-5xl md:text-6xl font-light leading-[1.1] text-brand-ivory">
               Spaces designed around the way <span className="italic">you live.</span>
             </h1>
-            <div className="h-[1px] w-full bg-brand-wood/25"></div>
+            
           </div>
 
           <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.1em]">
-            Space Styling · Design Consultation · Curated Furniture 
+            Space Styling ï¿½ Design Consultation ï¿½ Curated Furniture 
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">

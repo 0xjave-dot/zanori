@@ -80,7 +80,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </h3>
               </div>
 
-              <div className="h-[1px] w-full bg-brand-wood/20"></div>
+              
 
               <div className="space-y-3">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-brand-bark block">
