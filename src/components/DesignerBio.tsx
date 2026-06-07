@@ -9,12 +9,12 @@ export default function DesignerBio() {
           
           {/* Portrait & Architectural Artifact Frame */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden border border-brand-wood/25 shadow-xl group">
+            <div className="relative rounded-3xl overflow-hidden border border-brand-wood/25 shadow-xl group bg-brand-bark">
               <img
                 src="https://i.ibb.co/qL2XrNxn/IMG-20260606-151745-913.jpg"
                 alt="Adejumoke - Creative Director"
                 referrerPolicy="no-referrer"
-                className="w-full h-[340px] sm:h-[420px] md:h-[480px] object-cover object-top filter grayscale hover:grayscale-0 transition-all duration-700 ease-in-out transform hover:scale-105"
+                className="w-full h-[340px] sm:h-[420px] md:h-[480px] object-contain object-center filter grayscale hover:grayscale-0 transition-all duration-700 ease-in-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent pointer-events-none"></div>
             </div>

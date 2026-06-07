@@ -63,7 +63,7 @@ export default function Hero() {
           </div>
 
           <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.1em]">
-            Space Styling � Design Consultation � Curated Furniture 
+            Space Styling . Design Consultation . Curated Furniture 
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -80,7 +80,7 @@ export default function Hero() {
         <button
           type="button"
           onClick={(e) => handleCtaClick(e, 'interactive-render-gallery')}
-          className="absolute right-6 z-30 inline-flex flex-col items-center pointer-events-auto text-brand-base/90 hover:text-brand-base transition-colors duration-300 lg:hidden"
+          className="absolute right-6 z-30 inline-flex flex-col items-center pointer-events-auto text-black hover:text-black transition-colors duration-300 lg:hidden"
           style={{ top: arrowTop }}
         >
           <span className="text-[10px] uppercase tracking-[0.25em] mb-2"></span>
