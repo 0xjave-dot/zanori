@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Compass, Info, Box, ExternalLink, HelpCircle, Eye } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight, Compass, Info, Box, ExternalLink, HelpCircle, Eye } from 'lucide-react';
 
 interface KuulaSpace {
   id: string;
@@ -8,6 +8,7 @@ interface KuulaSpace {
   description: string;
   url: string;
   conceptTag: string;
+  embed?: boolean;
 }
 
 const KUULA_SPACES: KuulaSpace[] = [
@@ -34,29 +35,57 @@ const KUULA_SPACES: KuulaSpace[] = [
     description: "An executive screen-free mental sanctuary. Showcases basalt countertops, custom recessed task spotlights, scorched cedar walls, and dynamic double-padded seating zones for focused thought.",
     url: "https://kuula.co/share/5H7Z7?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=0",
     conceptTag: "OBSIDIAN INTELLECTUAL SUITE"
+  },
+  {
+    id: "hb9t7-alt",
+    name: "Luxury Cafe",
+    location: "",
+    description: "An organic luxury sanctuary emphasizing warm clay-baked pigments, intricate woven West African heritage accents, custom ceiling light integration, and low-profile premium mahogany loungers.",
+    url: "https://kuula.co/share/5DQfs?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1",
+    conceptTag: "HERITAGE COUTURE RESIDENCE"
+  },
+  {
+    id: "5H7Z7-alt",
+    name: "Custom Wood-finish Livingroom",
+    location: "",
+    description: "An executive screen-free mental sanctuary. Showcases basalt countertops, custom recessed task spotlights, scorched cedar walls, and dynamic double-padded seating zones for focused thought.",
+    url: "https://kuula.co/share/5DQfs?logo=0&info=1&fs=1&vr=0&sd=1&thumbs=1",
+    conceptTag: "OBSIDIAN INTELLECTUAL SUITE"
   }
 ];
 
 export default function InteractiveGallery() {
   const [activeIdx, setActiveIdx] = useState<number>(0);
   const activeSpace = KUULA_SPACES[activeIdx];
+  const totalSpaces = KUULA_SPACES.length;
+  const kuulaEmbedRef = useRef<HTMLDivElement | null>(null);
+
+  const getCircularIndex = (index: number) => (index + totalSpaces) % totalSpaces;
+
+  useEffect(() => {
+    if (!activeSpace.embed || !kuulaEmbedRef.current) return;
+    if (kuulaEmbedRef.current.querySelector('script[src="https://static.kuula.io/embed.js"]')) return;
+
+    kuulaEmbedRef.current.innerHTML = '';
+    const script = document.createElement('script');
+    script.src = 'https://static.kuula.io/embed.js';
+    script.async = true;
+    script.dataset.kuula = activeSpace.url;
+    script.dataset.width = '100%';
+    script.dataset.height = '640px';
+    kuulaEmbedRef.current.appendChild(script);
+  }, [activeSpace]);
 
   return (
     <section id="interactive-render-gallery" className="py-24 md:py-32 bg-[#F7F4EF] border-b border-brand-wood/15 text-brand-dark">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-0">
         
         {/* Dynamic Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-brand-wood/15 pb-8">
-          <div className="space-y-3">
-            <span className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.3em] text-[#8B6F52] font-semibold">
-            
-            </span>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2 border-b border-brand-wood/15 pb-2">
+          <div className="space-y-0">
             <h2 className="font-serif text-4xl md:text-5xl font-light text-brand-dark leading-none">
-              Featured Spaces
+              Featured
             </h2>
-            <p className="text-xs text-brand-muted max-w-xl font-light leading-relaxed">
-              
-            </p>
           </div>
 
           <div className="flex items-center space-x-4 text-right">
@@ -76,41 +105,28 @@ export default function InteractiveGallery() {
           </div>
         </div>
 
-        {/* Master Selector Tabs for the 3 spaces */}
-        <div className="grid grid-cols-3 gap-4">
-          {KUULA_SPACES.map((space, idx) => (
-            <button
-              key={space.id}
-              onClick={() => setActiveIdx(idx)}
-              className={`p-5 rounded-2xl border text-left transition-all duration-300 flex items-start space-x-4 cursor-pointer relative group ${
-                activeIdx === idx
-                  ? 'bg-[#2A2520] text-brand-base border-transparent shadow-[#2A2520]/20 shadow-lg -translate-y-1'
-                  : 'bg-white/70 hover:bg-white text-brand-dark border-brand-wood/15 hover:border-brand-wood/40'
-              }`}
-            >
-              <div className={`p-2.5 rounded-xl text-center font-mono text-xs ${
-                activeIdx === idx ? 'bg-brand-wood/20 text-brand-wood' : 'bg-brand-warm text-brand-muted'
-              }`}>
-                0{idx + 1}
-              </div>
-              <div className="space-y-1">
-                <span className={`text-[9px] font-mono tracking-widest ${
-                  activeIdx === idx ? 'text-brand-sand' : 'text-brand-muted'
-                }`}>
-                  {space.location.toUpperCase()}
-                </span>
-                <h4 className="font-serif text-base font-light">
-                  {space.name}
-                </h4>
-              </div>
-              {activeIdx === idx && (
-                <span className="absolute top-4 right-4 flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-sand opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-sand"></span>
-                </span>
-              )}
-            </button>
-          ))}
+        {/* Navigation arrows for featured spaces */}
+        <div className="space-y-0">
+          <div className="relative h-[100px] overflow-hidden rounded-[28px] border border-brand-wood/15 bg-brand-base/95 flex items-center justify-center px-6">
+            <div className="flex items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => setActiveIdx(getCircularIndex(activeIdx - 1))}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-wood/15 bg-white/90 text-brand-dark shadow-sm transition hover:bg-brand-wood/5"
+                aria-label="Previous featured space"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveIdx(getCircularIndex(activeIdx + 1))}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-wood/15 bg-white/90 text-brand-dark shadow-sm transition hover:bg-brand-wood/5"
+                aria-label="Next featured space"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Display Frame Layout */}
@@ -137,20 +153,24 @@ export default function InteractiveGallery() {
                 <div className="w-16 h-8 bg-[#120F0D] rounded-md opacity-95"></div>
               </div>
 
-              {/* Native responsive iframe directly referencing requested Kuula panoramic tour URL */}
+              {/* Native responsive iframe or collection embed for selected featured space */}
               <div className="relative w-full h-full overflow-hidden">
-                <iframe
-                  key={activeSpace.id} // Ensure key refreshes iframe beautifully on switch
-                  src={activeSpace.url}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, display: 'block', pointerEvents: 'auto', touchAction: 'auto', position: 'absolute', top: '-32px', left: 0, height: 'calc(100% + 32px)' }}
-                  allowFullScreen
-                  allow="xr-spatial-tracking"
-                  title={`${activeSpace.name} - 3D Interactive Room Render`}
-                  referrerPolicy="no-referrer"
-                  className="w-full"
-                ></iframe>
+                {activeSpace.embed ? (
+                  <div ref={kuulaEmbedRef} className="w-full h-full"></div>
+                ) : (
+                  <iframe
+                    key={activeSpace.id} // Ensure key refreshes iframe beautifully on switch
+                    src={activeSpace.url}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, display: 'block', pointerEvents: 'auto', touchAction: 'auto', position: 'absolute', top: '-35px', left: 0, height: 'calc(100% + 32px)' }}
+                    allowFullScreen
+                    allow="xr-spatial-tracking"
+                    title={`${activeSpace.name} - 3D Interactive Room Render`}
+                    referrerPolicy="no-referrer"
+                    className="w-full"
+                  ></iframe>
+                )}
               </div>
 
               {/* Dark branding waterlines at footer */}

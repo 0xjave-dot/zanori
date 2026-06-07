@@ -67,7 +67,7 @@ export default function Testimonial() {
   return (
     <section
       id="testimonial-section"
-      className="relative min-h-[620px] overflow-hidden border-b border-brand-wood/10 bg-brand-base py-12 text-brand-dark sm:min-h-[720px] sm:py-20 md:min-h-[640px]"
+      className="relative overflow-hidden border-b border-brand-wood/10 bg-brand-base py-6 sm:min-h-[720px] sm:py-20 md:min-h-[640px] text-brand-dark"
     >
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -77,70 +77,56 @@ export default function Testimonial() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-3 sm:px-6 md:px-12">
         <div className="block sm:hidden">
-          <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-brand-wood/15 bg-brand-base/95 shadow-[0_18px_80px_rgba(44,30,24,0.16)]">
-            {mobileTestimonials.map((entry, idx) => {
-              const style = mobilePositionStyles[idx];
-              const isCenter = entry.offset === 0;
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIdx}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="rounded-[24px] bg-brand-base p-6 shadow-[0_12px_32px_rgba(0,0,0,0.08)] border border-brand-wood/10"
+            >
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <Stars size={16} />
+                <span className="inline-flex items-center gap-1 text-[8px] font-bold text-[#232742] whitespace-nowrap">
+                  <BadgeCheck size={11} className="fill-[#4F6AF5] text-white" />
+                  Testimonial
+                </span>
+              </div>
+              
+              <p className="text-[15px] leading-relaxed text-brand-dark/90 mb-6 min-h-[80px]">
+                "{current.quote}"
+              </p>
+              
+              <div className="flex items-center gap-3 border-t border-brand-wood/15 pt-4">
+                <img
+                  src={profileImage}
+                  alt={current.client}
+                  className="h-10 w-10 rounded-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+                <div>
+                  <p className="text-[13px] font-bold text-brand-dark">{current.client}</p>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
-              return (
-                <motion.article
-                  key={`${entry.item.client}-${entry.offset}`}
-                  initial={{ opacity: 0, scale: 0.92, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: idx * 0.03 }}
-                  onClick={() => setActiveIdx(getCircularIndex(activeIdx + entry.offset))}
-                  className={`absolute top-6 rounded-[24px] bg-brand-base p-4 shadow-[0_12px_32px_rgba(0,0,0,0.08)] transition-all duration-300 ${
-                    isCenter ? 'cursor-default' : 'cursor-pointer'
-                  }`}
-                  style={{
-                    left: style.left,
-                    transform: `translateX(${style.translateX}) scale(${style.scale})`,
-                    width: style.width,
-                    opacity: style.opacity,
-                    zIndex: style.zIndex
-                  }}
-                >
-                  <div className="mb-4 flex items-center justify-between">
-                    <Stars size={13} />
-                    <span className="inline-flex items-center gap-1 text-[8px] font-bold text-[#232742]">
-                      <BadgeCheck size={10} className="fill-[#4F6AF5] text-white" />
-                      Testimonial
-                    </span>
-                  </div>
-                  <p className="line-clamp-4 min-h-[74px] text-[11px] leading-relaxed text-brand-dark/90">
-                    {entry.item.quote}
-                  </p>
-                  <div className="mt-5 flex items-center gap-2 border-t border-brand-wood/15 pt-3">
-                    <img
-                      src={profileImage}
-                      alt={entry.item.client}
-                      className="h-8 w-8 rounded-full object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="min-w-0">
-                      <p className="truncate text-[10px] font-bold text-brand-dark">{entry.item.client}</p>
-                    </div>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
-
-          <div className="mt-5 flex flex-col items-center gap-4">
-            <div className="flex gap-3">
+          <div className="mt-6 flex flex-col items-center gap-3">
+            <div className="flex gap-2">
               {TESTIMONIALS_DATA.map((item, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setActiveIdx(idx)}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
-                    activeIdx === idx ? 'w-9 bg-white' : 'w-2.5 bg-white/45 hover:bg-white/70'
+                    activeIdx === idx ? 'w-7 bg-white' : 'w-2.5 bg-white/40 hover:bg-white/60'
                   }`}
                   aria-label={`Show testimonial from ${item.client}`}
                 />
               ))}
             </div>
-            <div className="h-1 w-full max-w-md overflow-hidden rounded-full bg-brand-wood/20">
+            <div className="h-0.5 w-full max-w-sm overflow-hidden rounded-full bg-brand-wood/20">
               <motion.div
                 key={activeIdx}
                 className="h-full rounded-full"
