@@ -34,10 +34,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-brand-dark text-brand-base pt-16 pb-12 overflow-hidden relative">
+    <footer className="bg-brand-bark text-brand-base pt-16 pb-12 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
         {/* Very top: Thin wood-tone hairline */}
-        <div className="h-[1px] w-full bg-brand-wood/30"></div>
+        <div className="h-[1px] w-full bg-brand-cranberry/15"></div>
 
         {/* Brand layout grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
@@ -105,14 +105,14 @@ export default function Footer() {
                 <a
                   href="#ig"
                   aria-label="Instagram Link"
-                  className="p-2 bg-brand-base/5 hover:bg-brand-wood hover:text-brand-dark rounded-full transition-all border border-brand-wood/15"
+                  className="p-2 bg-brand-base/70 hover:bg-brand-cranberry hover:text-brand-base rounded-full transition-all border border-brand-wood/15"
                 >
                   <Instagram size={14} />
                 </a>
                 <a
                   href="#tel"
                   aria-label="WhatsApp Link"
-                  className="p-2 bg-brand-base/5 hover:bg-brand-wood hover:text-brand-dark rounded-full transition-all border border-brand-wood/15"
+                  className="p-2 bg-brand-base/70 hover:bg-brand-cranberry hover:text-brand-base rounded-full transition-all border border-brand-wood/15"
                 >
                   <Phone size={14} />
                 </a>
@@ -132,7 +132,7 @@ export default function Footer() {
         {/* Lower copyright row */}
         <div className="pt-8 border-t border-brand-wood/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-brand-muted/70 tracking-widest font-light gap-4">
           <span>ZANORI SPACES</span>
-          <span>&copy; 2026 ZANORI SPACES STUDIO &bull; INC. ALL RIGHTS RESERVED &bull; <a href="#/admin" className="text-[#3F3932] hover:text-brand-sand/50 transition-colors duration-300">Admin</a></span>
+          <span>&copy; 2026 ZANORI SPACES STUDIO &bull; INC. ALL RIGHTS RESERVED &bull; <a href="#/admin" className="text-brand-sand/70 hover:text-brand-base transition-colors duration-300">Admin</a></span>
         </div>
       </div>
     </footer>

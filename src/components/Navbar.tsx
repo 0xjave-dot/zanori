@@ -59,7 +59,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
         id="nav-bar"
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'py-4 bg-brand-warm/95 backdrop-blur-md shadow-sm border-b border-brand-wood/20'
+            ? 'py-4 bg-brand-base/95 backdrop-blur-md shadow-sm border-b border-brand-wood/20'
             : 'py-6 bg-transparent border-b border-transparent'
         }`}
       >
@@ -155,7 +155,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, '#/', 'contact-section')}
-              className="px-6 py-2.5 bg-brand-dark text-brand-base rounded-full hover:bg-brand-wood hover:text-brand-dark text-xs uppercase tracking-[0.15em] transition-all duration-300"
+              className="px-6 py-2.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-[#7a1728] hover:text-brand-base text-xs uppercase tracking-[0.15em] transition-all duration-300"
             >
               Get in touch
             </a>
@@ -189,7 +189,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
       {isMobileMenuOpen && (
         <div
           id="mobile-menu-overlay"
-          className="fixed inset-0 z-30 bg-brand-warm flex flex-col justify-between p-12 transition-all duration-300"
+          className="fixed inset-0 z-30 bg-brand-base flex flex-col justify-between p-12 transition-all duration-300"
         >
           <div className="flex flex-col space-y-8 mt-24">
             <div className="text-[10px] uppercase tracking-[0.25em] text-brand-muted border-b border-brand-wood/20 pb-2">

@@ -153,32 +153,42 @@ export const PRODUCTS_DATA: Product[] = [
 
 export const TESTIMONIALS_DATA: TestimonialItem[] = [
   {
-    quote: "If you want real marketing that works and effective implementation — mobile app's got you covered.",
+    quote: "I walked into my living room on installation day and genuinely did not recognise it. In the best way possible. Every single thing was exactly where the render showed it would be.",
     client: 'Human Being',
     project: ''
   },
   {
-    quote: "I have been using this service for over a year now and I love it! I can't imagine life without it. It's so easy to use, and the customer service is great.",
+    quote: "I was sceptical about the 3D render — I thought it was just a sales gimmick. It wasn't. It saved me from two decisions I would have regretted, and I didn't spend a naira on anything I didn't already love.",
     client: 'Human Being',
     project: ''
   },
   {
-    quote: 'Would definitely recommend this to anyone. Will definitely be ordering again.',
+    quote: "Other designers I spoke to wanted to impose their taste on my space. Kryptonite actually listened. The result feels like me — just a significantly better version of me.",
     client: 'Human Being',
     project: ''
   },
   {
-    quote: 'If you are a business owner, you need this. Highly recommend you check it out.',
+    quote: "The furniture quality is something else. I've had the sofa for eight months and it still looks like it arrived yesterday. Worth every kobo.",
     client: 'Human Being',
     project: ''
   },
   {
-    quote: 'This platform has been so important for us as we continue to grow our company.',
+    quote: "I sent them a photo of my bedroom — dark, cluttered, nothing matching. Three weeks later I have a room I actively look forward to going to sleep in.",
     client: 'Human Being',
     project: ''
   },
   {
-    quote: 'Switching to this was the best decision we made this year. Results were immediate.',
+    quote: "What I appreciated most was the honesty. They told me what would work, what wouldn't, and why. No upselling, no filler pieces. Just a tight, beautiful space.",
+    client: 'Human Being',
+    project: ''
+  },
+  {
+    quote: "My office used to feel like somewhere I had to be. Now it feels like somewhere I want to be. That shift in feeling is hard to put a price on.",
+    client: 'Human Being',
+    project: ''
+  },
+  {
+    quote: "The brief they sent after our first call showed me they had actually paid attention. Every detail I mentioned — the light, the kids, the dog — was accounted for. That's rare.",
     client: 'Human Being',
     project: ''
   }

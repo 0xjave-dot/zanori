@@ -35,7 +35,7 @@ export default function Hero() {
   const kuulaHeroUrl = 'https://kuula.co/share/NjV1w?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1&gyro=0';
 
   return (
-    <section id="hero-section" className="relative pt-24 md:pt-32 md:pb-16 min-h-screen flex flex-col justify-between overflow-hidden">
+    <section id="hero-section" className="relative pt-24 md:pt-32 md:pb-16 min-h-screen flex flex-col justify-between overflow-hidden bg-brand-base">
       <div className="absolute inset-0 overflow-hidden">
         <iframe
           src={kuulaHeroUrl}
@@ -70,7 +70,7 @@ export default function Hero() {
             <button
               id="cta-book-hero"
               onClick={(e) => handleCtaClick(e, 'contact-section')}
-              className="pointer-events-auto px-8 py-3.5 bg-brand-dark text-brand-base rounded-full hover:bg-[#8B6F52] hover:text-white text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
+              className="pointer-events-auto px-8 py-3.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-[#7a1728] hover:text-brand-base text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
             >
               Book a consultation
             </button>
@@ -84,7 +84,7 @@ export default function Hero() {
           style={{ top: arrowTop }}
         >
           <span className="text-[10px] uppercase tracking-[0.25em] mb-2"></span>
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-base/40 bg-white/10 backdrop-blur-sm">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-base/40 bg-brand-base/90 backdrop-blur-sm">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5V19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
               <path d="M18 13L12 19L6 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />

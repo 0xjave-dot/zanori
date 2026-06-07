@@ -168,7 +168,7 @@ export default function InteractiveGallery() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-brand-dark px-5 py-2.5 text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-base shadow-lg shadow-black/20"
                 >
-                  Open viewer
+                  
                 </a>
               </div>
             </div>

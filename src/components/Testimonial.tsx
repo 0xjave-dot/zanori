@@ -49,11 +49,11 @@ export default function Testimonial() {
   }));
 
   const mobilePositionStyles = [
-    { left: '0%', translateX: '0%', scale: 0.78, zIndex: 10, opacity: 0.35, width: '56%' },
-    { left: '16%', translateX: '0%', scale: 0.88, zIndex: 20, opacity: 0.66, width: '62%' },
-    { left: '50%', translateX: '-50%', scale: 1, zIndex: 30, opacity: 1, width: '74%' },
-    { left: '84%', translateX: '-100%', scale: 0.88, zIndex: 20, opacity: 0.66, width: '62%' },
-    { left: '100%', translateX: '-100%', scale: 0.78, zIndex: 10, opacity: 0.35, width: '56%' }
+    { left: '0%', translateX: '0%', scale: 0.72, zIndex: 10, opacity: 0.3, width: '50%' },
+    { left: '12%', translateX: '0%', scale: 0.85, zIndex: 20, opacity: 0.65, width: '58%' },
+    { left: '50%', translateX: '-50%', scale: 1, zIndex: 30, opacity: 1, width: '72%' },
+    { left: '84%', translateX: '-100%', scale: 0.85, zIndex: 20, opacity: 0.65, width: '58%' },
+    { left: '100%', translateX: '-100%', scale: 0.72, zIndex: 10, opacity: 0.3, width: '50%' }
   ];
 
   const scattered = collageFrames.map((frame, idx) => {
@@ -67,17 +67,17 @@ export default function Testimonial() {
   return (
     <section
       id="testimonial-section"
-      className="relative min-h-[620px] overflow-hidden border-b border-brand-wood/10 bg-[#12131A] py-12 text-[#1F2330] sm:min-h-[720px] sm:py-20 md:min-h-[640px]"
+      className="relative min-h-[620px] overflow-hidden border-b border-brand-wood/10 bg-brand-base py-12 text-brand-dark sm:min-h-[720px] sm:py-20 md:min-h-[640px]"
     >
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       />
-      <div className="absolute inset-0 bg-black/42" />
+      <div className="absolute inset-0 bg-brand-bark/15" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-3 sm:px-6 md:px-12">
         <div className="block sm:hidden">
-          <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-[0_18px_80px_rgba(0,0,0,0.35)]">
+          <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-brand-wood/15 bg-brand-base/95 shadow-[0_18px_80px_rgba(44,30,24,0.16)]">
             {mobileTestimonials.map((entry, idx) => {
               const style = mobilePositionStyles[idx];
               const isCenter = entry.offset === 0;
@@ -89,7 +89,7 @@ export default function Testimonial() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: idx * 0.03 }}
                   onClick={() => setActiveIdx(getCircularIndex(activeIdx + entry.offset))}
-                  className={`absolute top-6 rounded-[24px] bg-white p-4 shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 ${
+                  className={`absolute top-6 rounded-[24px] bg-brand-base p-4 shadow-[0_12px_32px_rgba(0,0,0,0.08)] transition-all duration-300 ${
                     isCenter ? 'cursor-default' : 'cursor-pointer'
                   }`}
                   style={{
@@ -107,10 +107,10 @@ export default function Testimonial() {
                       Testimonial
                     </span>
                   </div>
-                  <p className="line-clamp-4 min-h-[74px] text-[11px] leading-relaxed text-[#202124]">
+                  <p className="line-clamp-4 min-h-[74px] text-[11px] leading-relaxed text-brand-dark/90">
                     {entry.item.quote}
                   </p>
-                  <div className="mt-5 flex items-center gap-2 border-t border-slate-100 pt-3">
+                  <div className="mt-5 flex items-center gap-2 border-t border-brand-wood/15 pt-3">
                     <img
                       src={profileImage}
                       alt={entry.item.client}
@@ -118,7 +118,7 @@ export default function Testimonial() {
                       referrerPolicy="no-referrer"
                     />
                     <div className="min-w-0">
-                      <p className="truncate text-[10px] font-bold text-[#1F2330]">{entry.item.client}</p>
+                      <p className="truncate text-[10px] font-bold text-brand-dark">{entry.item.client}</p>
                     </div>
                   </div>
                 </motion.article>
@@ -140,7 +140,7 @@ export default function Testimonial() {
                 />
               ))}
             </div>
-            <div className="h-1 w-full max-w-md overflow-hidden rounded-full bg-white/25">
+            <div className="h-1 w-full max-w-md overflow-hidden rounded-full bg-brand-wood/20">
               <motion.div
                 key={activeIdx}
                 className="h-full rounded-full"
@@ -163,7 +163,7 @@ export default function Testimonial() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.55, delay: idx * 0.04 }}
-                  className={`absolute rounded-[16px] bg-white p-4 shadow-[0_4px_24px_rgba(0,0,0,0.10)] ${frame}`}
+                  className={`absolute rounded-[16px] bg-brand-base p-4 shadow-[0_4px_24px_rgba(0,0,0,0.08)] ${frame}`}
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <Stars size={13} />
@@ -173,11 +173,11 @@ export default function Testimonial() {
                     </span>
                   </div>
 
-                  <p className="line-clamp-4 min-h-[74px] text-[11px] leading-relaxed text-[#202124]">
+                  <p className="line-clamp-4 min-h-[74px] text-[11px] leading-relaxed text-brand-dark/90">
                     {item.quote}
                   </p>
 
-                  <div className="mt-5 flex items-center gap-2 border-t border-slate-100 pt-3">
+                  <div className="mt-5 flex items-center gap-2 border-t border-brand-wood/15 pt-3">
                     <img
                       src={profileImage}
                       alt={item.client}
@@ -185,7 +185,7 @@ export default function Testimonial() {
                       referrerPolicy="no-referrer"
                     />
                     <div className="min-w-0">
-                      <p className="truncate text-[10px] font-bold text-[#1F2330]">{item.client}</p>
+                      <p className="truncate text-[10px] font-bold text-brand-dark">{item.client}</p>
                     </div>
                   </div>
                 </motion.article>
@@ -201,7 +201,7 @@ export default function Testimonial() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -140 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="rounded-[16px] bg-white p-5 shadow-[0_4px_24px_rgba(0,0,0,0.10)] sm:p-8 md:p-12"
+                className="rounded-[16px] bg-brand-base p-5 shadow-[0_4px_24px_rgba(0,0,0,0.06)] sm:p-8 md:p-12"
               >
                 <div className="flex items-start justify-between gap-6">
                   <img
@@ -210,7 +210,7 @@ export default function Testimonial() {
                     className="h-14 w-14 rounded-full object-cover sm:h-20 sm:w-20 md:h-24 md:w-24"
                     referrerPolicy="no-referrer"
                   />
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#F2F5FF] px-2 py-1 text-[8px] font-bold text-[#20254A] sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-[10px]">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-brand-base/95 px-2 py-1 text-[8px] font-bold text-brand-dark sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-[10px]">
                     <BadgeCheck size={14} className="fill-[#4F6AF5] text-white" />
                     Testimonial
                   </span>
@@ -220,7 +220,7 @@ export default function Testimonial() {
                   <Stars size={18} />
                 </div>
 
-                <blockquote className="mt-5 text-[1.05rem] font-bold leading-tight text-[#161820] sm:mt-8 sm:text-[1.35rem] md:text-[1.5rem]">
+                <blockquote className="mt-5 text-[1.05rem] font-bold leading-tight text-brand-dark sm:mt-8 sm:text-[1.35rem] md:text-[1.5rem]">
                   {current.quote}
                 </blockquote>
 
@@ -233,7 +233,7 @@ export default function Testimonial() {
                       referrerPolicy="no-referrer"
                     />
                     <div>
-                      <cite className="not-italic text-sm font-bold text-[#161820]">{current.client}</cite>
+                      <cite className="not-italic text-sm font-bold text-brand-dark">{current.client}</cite>
                     </div>
                   </div>
 
@@ -252,14 +252,14 @@ export default function Testimonial() {
                   type="button"
                   onClick={() => setActiveIdx(idx)}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
-                    activeIdx === idx ? 'w-9 bg-white' : 'w-2.5 bg-white/45 hover:bg-white/70'
+                    activeIdx === idx ? 'w-9 bg-brand-bark' : 'w-2.5 bg-brand-wood/40 hover:bg-brand-wood/60'
                   }`}
                   aria-label={`Show testimonial from ${item.client}`}
                 />
               ))}
             </div>
 
-            <div className="mt-4 h-1 overflow-hidden rounded-full bg-white/25">
+            <div className="mt-4 h-1 overflow-hidden rounded-full bg-brand-wood/20">
               <motion.div
                 key={activeIdx}
                 className="h-full rounded-full"

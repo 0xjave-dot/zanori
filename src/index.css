@@ -4,14 +4,15 @@
 @theme {
   --font-serif: "Cormorant Garamond", serif;
   --font-sans: "DM Sans", sans-serif;
-  
-  --color-brand-base: #FDFCFA;
-  --color-brand-warm: #F7F4EF;
-  --color-brand-sand: #E8E0D4;
-  --color-brand-wood: #C4A882;
-  --color-brand-bark: #8B6F52;
-  --color-brand-dark: #2A2520;
-  --color-brand-muted: #7A7168;
+
+  --color-brand-base: #F9F6F0;
+  --color-brand-warm: #D9C3B0;
+  --color-brand-sand: #EAE0D7;
+  --color-brand-wood: #8B807A;
+  --color-brand-bark: #2C1E18;
+  --color-brand-dark: #2C1E18;
+  --color-brand-muted: #8B807A;
+  --color-brand-cranberry: #9E1B32;
 }
 
 @layer base {
@@ -21,6 +22,15 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
+}
+
+@layer utilities {
+  .bg-brand-cranberry { background-color: var(--color-brand-cranberry); }
+  .text-brand-cranberry { color: var(--color-brand-cranberry); }
+  .border-brand-cranberry { border-color: var(--color-brand-cranberry); }
+  .bg-brand-ivory { background-color: var(--color-brand-base); }
+  .bg-brand-beige { background-color: var(--color-brand-warm); }
+  .bg-brand-taupe { background-color: var(--color-brand-wood); }
 }
 
 /* Custom scrollbars and marquee animations */

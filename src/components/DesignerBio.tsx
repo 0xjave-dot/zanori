@@ -29,7 +29,7 @@ export default function DesignerBio() {
           {/* Biography & Philosophy Details */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-4">
-              <span className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.3em] text-[#8B6F52] font-semibold">
+              <span className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.3em] text-brand-wood font-semibold">
                 <span>THE CREATIVE EYE</span>
               </span>
               <h2 className="font-serif text-4xl md:text-5xl font-light text-brand-dark leading-tight">
@@ -49,7 +49,7 @@ export default function DesignerBio() {
             {/* Three Pillars Core Value list */}
             <div className="grid grid-cols-3 gap-6 pt-4 border-t border-brand-wood/20">
               <div className="space-y-2">
-                <div className="flex items-center space-x-2 text-[#8B6F52]">
+                <div className="flex items-center space-x-2 text-brand-wood">
                   <Compass size={14} />
                   <span className="text-xs uppercase font-medium tracking-wider">Background</span>
                 </div>
@@ -59,7 +59,7 @@ export default function DesignerBio() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center space-x-2 text-[#8B6F52]">
+                <div className="flex items-center space-x-2 text-brand-wood">
                   <Award size={14} />
                   <span className="text-xs uppercase font-medium tracking-wider">Experience</span>
                 </div>
@@ -69,7 +69,7 @@ export default function DesignerBio() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center space-x-2 text-[#8B6F52]">
+                <div className="flex items-center space-x-2 text-brand-wood">
                   <Heart size={14} />
                   <span className="text-xs uppercase font-medium tracking-wider">Passion</span>
                 </div>
@@ -82,10 +82,10 @@ export default function DesignerBio() {
             {/* Personal signature */}
             <div className="pt-6 flex items-center justify-between">
               <div className="space-y-1">
-                <span className="block font-serif text-3xl font-light italic text-[#2A2520]">
+                <span className="block font-serif text-3xl font-light italic text-brand-dark">
                   Adejumoke
                 </span>
-                <span className="text-[10px] uppercase tracking-widest text-[#8B6F52] block font-medium">
+                <span className="text-[10px] uppercase tracking-widest text-brand-wood block font-medium">
                  
                 </span>
               </div>

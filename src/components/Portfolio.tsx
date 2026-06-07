@@ -56,7 +56,7 @@ export default function Portfolio({ onProjectSelect, projects }: PortfolioProps)
                 onClick={() => setActiveTab(category)}
                 className={`py-1.5 px-4 rounded-full text-xs font-light uppercase tracking-[0.12em] transition-all duration-300 relative ${
                   activeTab === category
-                    ? 'text-brand-dark font-medium bg-[#E8E0D4] border border-brand-wood/25 shadow-xs'
+                    ? 'text-brand-dark font-medium bg-brand-base border border-brand-wood/25 shadow-xs'
                     : 'text-brand-muted hover:text-brand-dark bg-transparent border border-transparent'
                 }`}
               >
@@ -106,7 +106,7 @@ export default function Portfolio({ onProjectSelect, projects }: PortfolioProps)
                   <div className="relative p-6 md:p-8 flex justify-between items-start z-20 w-full">
                     <div className="flex items-center space-x-2">
                       {project.isFeatured && (
-                        <span className="px-3 py-1 bg-brand-dark text-brand-base text-[9px] uppercase tracking-[0.2em] rounded-full shadow-xs">
+                        <span className="px-3 py-1 bg-brand-cranberry text-brand-base text-[9px] uppercase tracking-[0.2em] rounded-full shadow-xs">
                           Featured Case
                         </span>
                       )}

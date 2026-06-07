@@ -144,10 +144,10 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               className="bg-brand-warm/65 group rounded-3xl overflow-hidden border border-brand-wood/15 p-8 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/45"
             >
               <div>
-                <div className="h-[2.5px] w-12 bg-[#C4A882] mb-8 rounded-full"></div>
+                <div className="h-[2.5px] w-12 bg-brand-wood mb-8 rounded-full"></div>
 
                 <div className="flex justify-between items-start mb-6">
-                  <span className="font-mono text-xs tracking-wider text-[#8B6F52] font-semibold">
+                  <span className="font-mono text-xs tracking-wider text-brand-wood font-semibold">
                     {service.number}
                   </span>
                   {service.isSignature && (
@@ -167,20 +167,20 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
 
                 {/* Scope list bullets */}
                 <div className="space-y-2 pt-2 border-t border-brand-wood/10 pb-6">
-                  <span className="text-[10px] uppercase tracking-widest text-[#8B6F52] font-semibold font-mono block mb-2">
+                  <span className="text-[10px] uppercase tracking-widest text-brand-wood font-semibold font-mono block mb-2">
                     Key Deliverables:
                   </span>
                   <div className="grid grid-cols-1 gap-1.5 text-xs text-brand-dark/80 font-mono">
                     <div className="flex items-center space-x-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C4A882]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-wood"></span>
                       <span>Bespoke mood boarding & fabric samples</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C4A882]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-wood"></span>
                       <span>2D CAD spatial distribution outlines</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C4A882]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-wood"></span>
                       <span>Sustainably-sourced wood structural selections</span>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
 
               <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 pt-6 select-none border-t border-brand-wood/10 mt-auto">
                 <div
-                  className="h-10 w-28 rounded-lg shadow-sm border border-brand-wood/10 flex items-center justify-center text-[8px] tracking-wider text-[#8B6F52] bg-brand-base font-mono"
+                  className="h-10 w-28 rounded-lg shadow-sm border border-brand-wood/10 flex items-center justify-center text-[8px] tracking-wider text-brand-wood bg-brand-base font-mono"
                   style={{ background: service.imageBg }}
                 >
                   {service.name.split(' ')[0].toUpperCase()} WORKSPACE
@@ -203,7 +203,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                   <span>Inquire service</span>
                   <ArrowRight
                     size={14}
-                    className="transform transition-transform duration-300 group-hover:translate-x-2 text-[#C4A882]"
+                    className="transform transition-transform duration-300 group-hover:translate-x-2 text-brand-wood"
                   />
                 </button>
               </div>
@@ -214,7 +214,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
         {/* Detailed Service Specifications Sections (Flesh out deliverables) */}
         <div className="bg-[#F7F4EF]/50 rounded-3xl border border-brand-wood/15 p-8 md:p-12 space-y-10">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-[10px] tracking-[0.25em] text-[#8B6F52] uppercase font-mono block">OUR DESIGN STANDARD</span>
+            <span className="text-[10px] tracking-[0.25em] text-brand-wood uppercase font-mono block">OUR DESIGN STANDARD</span>
             <h2 className="font-serif text-3xl font-light text-brand-dark">How we manage your physical space transformation</h2>
             <p className="text-xs text-brand-muted font-light leading-relaxed font-sans">
               Unlike quick decorators, we execute physical shell evaluations to assess sunlight angles, acoustics, and air conditioning vents to make sure Lagos tropical heat matches calm Nordic layouts.
@@ -225,14 +225,14 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
             {serviceSpecs.map((spec, i) => (
               <div key={i} className="space-y-3 bg-brand-base p-6 rounded-2xl border border-brand-wood/10 shadow-xs flex flex-col justify-between">
                 <div>
-                  <div className="w-7 h-7 rounded-lg bg-[#E8E0D4] text-[#8B6F52] font-mono font-bold text-xs flex items-center justify-center mb-4">
+                  <div className="w-7 h-7 rounded-lg bg-brand-base text-brand-wood font-mono font-bold text-xs flex items-center justify-center mb-4">
                     0{i+1}
                   </div>
-                  <h4 className="font-serif text-[17px] font-medium text-[#2A2520] mb-2">{spec.title}</h4>
+                  <h4 className="font-serif text-[17px] font-medium text-brand-dark mb-2">{spec.title}</h4>
                   <p className="text-xs text-brand-muted font-sans font-light leading-relaxed">{spec.desc}</p>
                 </div>
                 <div className="pt-2 flex items-center space-x-1.5 text-[9px] font-mono text-brand-bark/80 uppercase font-semibold">
-                  <CheckCircle size={10} className="text-[#C4A882]" />
+                  <CheckCircle size={10} className="text-brand-wood" />
                   <span>Standard desk brief</span>
                 </div>
               </div>
@@ -241,11 +241,11 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
         </div>
 
         {/* INCREDIBLE INTERACTIVE FEATURE - Lagos Design Fee Estimator */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-[#2A2520] rounded-3xl overflow-hidden shadow-lg text-brand-base border border-brand-wood/20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-brand-bark rounded-3xl overflow-hidden shadow-lg text-brand-base border border-brand-wood/20">
           
           <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between space-y-8 bg-[#1F1B18]">
             <div className="space-y-4">
-              <div className="inline-flex items-center space-x-2 bg-[#8B6F52]/20 border border-[#C4A882]/20 text-[#C4A882] px-3.5 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-mono">
+              <div className="inline-flex items-center space-x-2 bg-brand-wood/20 border border-brand-wood/20 text-brand-wood px-3.5 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-mono">
                 <Calculator size={12} />
                 <span>Cost Estimator</span>
               </div>
@@ -259,13 +259,13 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
 
             <div className="space-y-4 pt-4 border-t border-brand-wood/10">
               <div className="flex items-start space-x-3 text-xs">
-                <ShieldCheck size={16} className="text-[#C4A882] mt-0.5 shrink-0" />
+                <ShieldCheck size={16} className="text-brand-wood mt-0.5 shrink-0" />
                 <span className="text-brand-sand/80 font-light leading-snug">
                   Draft calculated outputs are based strictly on premium recent vendor prices, artisan service fees, and consultation schedules.
                 </span>
               </div>
               <div className="flex items-start space-x-3 text-xs">
-                <HelpCircle size={16} className="text-[#C4A882] mt-0.5 shrink-0" />
+                <HelpCircle size={16} className="text-brand-wood mt-0.5 shrink-0" />
                 <span className="text-brand-sand/80 font-light leading-snug">
                   Need multiple villas or multi-property portfolios handled? Contact us directly.
                 </span>
@@ -278,7 +278,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               
               {/* Space Selection */}
               <div className="space-y-3">
-                <label className="text-[10px] uppercase font-mono tracking-widest text-[#C4A882] block font-bold">
+                <label className="text-[10px] uppercase font-mono tracking-widest text-brand-wood block font-bold">
                   01. Select Space Option
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -298,7 +298,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                       }}
                       className={`px-3 py-2.5 rounded-xl text-xs font-light tracking-wide text-center border transition-all ${
                         spaceType === space.id
-                          ? 'bg-[#C4A882] border-[#C4A882] text-[#2A2520] font-semibold'
+                          ? 'bg-brand-wood border-brand-wood text-brand-bark font-semibold'
                           : 'bg-transparent border-brand-wood/25 text-brand-sand hover:border-brand-sand'
                       }`}
                     >
@@ -311,10 +311,10 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               {/* Space Size Slider */}
               <div className="space-y-3">
                 <div className="flex justify-between items-baseline">
-                  <label className="text-[10px] uppercase font-mono tracking-widest text-[#C4A882] block font-bold">
+                  <label className="text-[10px] uppercase font-mono tracking-widest text-brand-wood block font-bold">
                     02. Rough Area
                   </label>
-                  <span className="text-xs bg-brand-wood/10 border border-brand-wood/25 px-2.5 py-1 rounded text-[#C4A882] font-mono">
+                  <span className="text-xs bg-brand-wood/10 border border-brand-wood/25 px-2.5 py-1 rounded text-brand-wood font-mono">
                     {spaceSize} M² (approx. {Math.round(spaceSize * 10.76)} sqft)
                   </span>
                 </div>
@@ -328,9 +328,9 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                     setSpaceSize(parseInt(e.target.value));
                     setCalculatorDone(false);
                   }}
-                  className="w-full accent-[#C4A882] bg-brand-wood/20 h-1 rounded-lg outline-hidden"
+                  className="w-full accent-[#8B807A] bg-brand-wood/20 h-1 rounded-lg outline-hidden"
                 />
-                <div className="flex justify-between text-[9px] text-[#8B6F52] font-mono uppercase">
+                <div className="flex justify-between text-[9px] text-brand-wood font-mono uppercase">
                   <span>15 M² </span>
                   <span>350 M² </span>
                 </div>
@@ -338,7 +338,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
 
               {/* Addons checkbox toggles */}
               <div className="space-y-3 pt-2">
-                <label className="text-[10px] uppercase font-mono tracking-widest text-[#C4A882] block font-bold">
+                <label className="text-[10px] uppercase font-mono tracking-widest text-brand-wood block font-bold">
                   03. Custom Integration Requirements
                 </label>
                 <div className="space-y-2.5">
@@ -350,7 +350,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                         setNeed3D(e.target.checked);
                         setCalculatorDone(false);
                       }}
-                      className="accent-[#C4A882] rounded-sm h-4 w-4 bg-[#2A2520] border-brand-wood"
+                      className="w-full accent-[#8B807A] rounded-sm h-4 w-4 bg-[#2C1E18] border-brand-wood"
                     />
                     <span>Include 3D walkthrough rendering plans (+250k NGN)</span>
                   </label>
@@ -363,7 +363,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                         setNeedSourcing(e.target.checked);
                         setCalculatorDone(false);
                       }}
-                      className="accent-[#C4A882] rounded-sm h-4 w-4 bg-[#2A2520] border-brand-wood"
+                      className="accent-[#8B807A] rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
                     />
                     <span>Heirloom catalog procurement and installation scheduling (15%)</span>
                   </label>
@@ -376,7 +376,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                         setNeedSupervision(e.target.checked);
                         setCalculatorDone(false);
                       }}
-                      className="accent-[#C4A882] rounded-sm h-4 w-4 bg-[#2A2520] border-brand-wood"
+                      className="accent-[#8B807A] rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
                     />
                     <span>On-Site physical carpentry & styling oversight in Lagos (+10%)</span>
                   </label>
@@ -387,13 +387,13 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               {!calculatorDone ? (
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-brand-base text-[#2A2520] text-xs uppercase tracking-widest font-semibold font-mono hover:bg-[#E8E0D4] transition-all cursor-pointer"
+                  className="w-full py-3.5 rounded-xl bg-brand-cranberry text-brand-base text-xs uppercase tracking-widest font-semibold font-mono hover:bg-[#7a1728] transition-all cursor-pointer"
                 >
                   Generate direct design fee estimate
                 </button>
               ) : (
-                <div className="bg-[#1F1B18] rounded-xl border border-[#C4A882]/30 p-5 space-y-4 animate-feed-in">
-                  <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-[#C4A882] font-mono font-medium pb-2 border-b border-brand-wood/15">
+                <div className="bg-brand-bark/95 rounded-xl border border-brand-wood/30 p-5 space-y-4 animate-feed-in">
+                  <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-brand-wood font-mono font-medium pb-2 border-b border-brand-wood/15">
                     <span>Draft Estimate Summary</span>
                     <span>VAT inclusive</span>
                   </div>
@@ -414,16 +414,16 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                       <span className="font-mono text-white">{formatNaira(calcResults?.logisticsFee || 0)}</span>
                     </div>
 
-                    <div className="pt-2 border-t border-brand-wood/15 flex justify-between text-sm font-semibold text-white">
+                    <div className="pt-2 border-t border-brand-wood/15 flex justify-between text-sm font-semibold text-brand-base">
                       <span>Total Estimated Draft Allocation:</span>
-                      <span className="font-mono text-[#C4A882] text-[#FDFCFA]">{formatNaira(calcResults?.total || 0)}</span>
+                      <span className="font-mono text-brand-base">{formatNaira(calcResults?.total || 0)}</span>
                     </div>
                   </div>
 
                   <button
                     type="button"
                     onClick={handleApplyBriefToForm}
-                    className="w-full py-3.5 rounded-xl bg-[#C4A882] hover:bg-[#ebd5ba] text-[#2A2520] text-xs uppercase tracking-widest font-semibold font-mono transition-all cursor-pointer text-center"
+                    className="w-full py-3.5 rounded-xl bg-brand-cranberry hover:bg-[#7a1728] text-brand-base text-xs uppercase tracking-widest font-semibold font-mono transition-all cursor-pointer text-center"
                   >
                     Apply this estimate as my consultation brief ✓
                   </button>
