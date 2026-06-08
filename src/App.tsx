@@ -607,11 +607,11 @@ export default function App() {
             <div className="reveal-section"><Hero onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
             <div className="reveal-section"><InteractiveGallery /></div>
             <div className="reveal-section"><WhyChooseUs /></div>
+            <div className="reveal-section"><WhatWeDo /></div>
             <div className="reveal-section"><DesignerBio /></div>
-            <div className="reveal-section"><HowItWorks /></div>
             <div className="reveal-section"><ConfidenceAssurance /></div>
             <div className="reveal-section"><Projects /></div>
-            <div className="reveal-section"><WhatWeDo /></div>
+            <div className="reveal-section"><HowItWorks /></div>
           </div>
         )}
 
