@@ -62,7 +62,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
     <>
       <nav
         id="nav-bar"
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
+        className={`sticky top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
           isScrolled
             ? 'py-4 bg-brand-base/95 backdrop-blur-md shadow-sm'
             : 'py-6 bg-transparent'
@@ -188,89 +188,73 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               type="button"
               id="hamburger-btn"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-brand-ivory hover:opacity-75 transition-opacity"
+              className="relative w-10 h-10 text-brand-ivory transition-all duration-300 ease-in-out hover:scale-[1.06]"
               aria-label="Toggle Menu"
+              aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
+                <Menu size={24} />
+              </span>
+              <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-90'}`}>
+                <X size={24} />
+              </span>
             </button>
           </div>
         </div>
       </nav>
 
       {/* Full screen mobile overlay menu */}
-      {isMobileMenuOpen && (
-        <div
-          id="mobile-menu-overlay"
-          className="fixed inset-0 z-30 bg-brand-base flex flex-col justify-between p-12 transition-all duration-300"
-        >
-          <div className="flex flex-col space-y-8 mt-24">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-brand-muted pb-2">
-              
-            </div>
-            
-            <a
-              href="#/work"
-              onClick={(e) => handleLinkClick(e, '#/work')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'work' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
-            >
-              Work
-            </a>
-            
-            <a
-              href="#/services"
-              onClick={(e) => handleLinkClick(e, '#/services')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'services' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
-            >
-              Services
-            </a>
-
-            <a
-              href="#/shop"
-              onClick={(e) => handleLinkClick(e, '#/shop')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'shop' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
-            >
-              Shop
-            </a>
-
-            <a
-              href="#/ai-renderer"
-              onClick={(e) => handleLinkClick(e, '#/ai-renderer')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'ai-renderer' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
-            >
-              My Space
-            </a>
-
-            <a
-              href="#/account"
-              onClick={(e) => handleLinkClick(e, '#/account')}
-              className={`text-xs uppercase tracking-[0.15em] font-light ${currentPage === 'account' ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
-            >
-              {user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account'}
-            </a>
+      <div
+        id="mobile-menu-overlay"
+        className={`fixed inset-0 z-30 bg-brand-base flex flex-col justify-between p-12 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-6 pointer-events-none'}`}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <div className="flex flex-col space-y-8 mt-24">
+          <div className="text-[10px] uppercase tracking-[0.25em] text-brand-muted pb-2">
+            MENU
           </div>
 
-          <div className="flex flex-col space-y-6">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                if (onOpenConsultationModal) {
-                  onOpenConsultationModal();
-                } else {
-                  handleLinkClick(e as any, '#/', 'contact-section');
-                }
-              }}
-              className="px-8 py-4 bg-brand-dark text-brand-base rounded-full hover:bg-brand-wood hover:text-brand-dark text-center text-xs uppercase tracking-[0.2em] transition-all duration-300"
+          {[
+            { label: 'Work', href: '#/work', current: currentPage === 'work' },
+            { label: 'Services', href: '#/services', current: currentPage === 'services' },
+            { label: 'Shop', href: '#/shop', current: currentPage === 'shop' },
+            { label: 'My Space', href: '#/ai-renderer', current: currentPage === 'ai-renderer' },
+            { label: user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account', href: '#/account', current: currentPage === 'account' }
+          ].map((item, idx) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={(e) => handleLinkClick(e, item.href)}
+              className={`mobile-menu-item text-xs uppercase tracking-[0.15em] font-light transition-all duration-300 ease-out ${item.current ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
+              style={{ transitionDelay: `${isMobileMenuOpen ? idx * 60 + 120 : 0}ms` }}
             >
-              Book a consultation
-            </button>
-            <div className="flex items-center justify-between text-[10px] text-brand-muted tracking-[0.1em] pt-4">
-              <span>LAGOS, NIGERIA</span>
-              <span>ZANORI SPACES © 2026</span>
-            </div>
+              {item.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="flex flex-col space-y-6">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              if (onOpenConsultationModal) {
+                onOpenConsultationModal();
+              } else {
+                handleLinkClick(e as any, '#/', 'contact-section');
+              }
+            }}
+            className="px-8 py-4 bg-brand-dark text-brand-base rounded-full hover:bg-brand-wood hover:text-brand-dark text-center text-xs uppercase tracking-[0.2em] transition-all duration-300"
+            style={{ transitionDelay: `${isMobileMenuOpen ? 420 : 0}ms` }}
+          >
+            Book a consultation
+          </button>
+          <div className="flex items-center justify-between text-[10px] text-brand-muted tracking-[0.1em] pt-4 opacity-80 transition-all duration-300" style={{ transitionDelay: `${isMobileMenuOpen ? 460 : 0}ms` }}>
+            <span>LAGOS, NIGERIA</span>
+            <span>ZANORI SPACES © 2026</span>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }
