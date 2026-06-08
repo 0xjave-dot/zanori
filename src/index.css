@@ -143,6 +143,25 @@
     gap: 18px;
   }
 
+  /* Mobile alignment: position the three service cards left, center, and right */
+  .wwd-services .svc {
+    justify-self: start;
+    max-width: 320px;
+    width: 100%;
+  }
+
+  .wwd-services .svc:nth-child(2) {
+    justify-self: center;
+  }
+
+  .wwd-services .svc:nth-child(3) {
+    justify-self: end;
+  }
+
+  .wwd-services .svc:nth-child(4) {
+    justify-self: center;
+  }
+
   .svc {
     padding: 32px 24px;
     border-right: none;

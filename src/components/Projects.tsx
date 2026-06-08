@@ -17,22 +17,26 @@ const PROJECTS: ProjectItem[] = [
     title: 'The Adunola Residence',
     tag: 'Project 01 · Space Styling',
     description:
-      "A warm, earthy living space designed around the owner's love for natural materials and quiet mornings. We layered rattan, linen, and handcrafted ceramics to create a home that breathes.",
+      "A warm, earthy living space designed around the owner's love for natural materials and quiet mornings. We layered warm colors, fabric, and handcrafted ceramics to create a home that truly breathes.",
     location: 'Lekki, Lagos',
     year: '2024',
     service: 'Space Styling',
-    images: ['img1a', 'img1b', 'img1c']
+    images: [
+      'https://i.pinimg.com/736x/50/c4/98/50c49834ecfa4556297715b427a0347c.jpg'
+    ]
   },
   {
     id: 'p2',
     title: 'Eko Heights Apartment',
     tag: 'Project 02 · Consultation',
     description:
-      'A compact city apartment transformed through thoughtful spatial planning. We advised on layout flow, colour temperature, and furniture scale to open up the space without touching a wall.',
+      'We had a compact city apartment transformed through thoughtful planning and efficient use of space. We advised on layout flow, colour temperature, and furniture scale to open up the space without touching a wall.',
     location: 'Victoria Island',
     year: '2024',
     service: 'Consultation',
-    images: ['img2a', 'img2b', 'img2c']
+    images: [
+      'https://cdn.home-designing.com/wp-content/uploads/2013/10/glass-wall.jpeg'
+    ]
   },
   {
     id: 'p3',
@@ -43,23 +47,41 @@ const PROJECTS: ProjectItem[] = [
     location: 'Abuja, FCT',
     year: '2023',
     service: 'Furniture',
-    images: ['img3a', 'img3b', 'img3c']
+    images: [
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTUlXrfEJM9G4h153a01e80LO6iNj2p5hUMVVc1rawiqLJn9D1IWN_5Fnx5Ym6tIIZ_29PjHLeftg96V_bykbw5TuzF1TjSzLXalHKTbaJVo9xrlkKJNFlM&usqp=CAc'
+    ]
   },
   {
     id: 'p4',
     title: 'Zuri Studio Office',
     tag: 'Project 04 · Space Styling',
     description:
-      'A creative studio redesigned to inspire. We brought warmth into a previously sterile open-plan office through curated styling, plants, statement lighting, and intentional colour blocking.',
+      ' We brought warmth into a creative studio, redesign it to give the inspirational effect it was always meant to have, with top-notch styling, real plants and proper lighting.',
     location: 'Ikoyi, Lagos',
     year: '2023',
     service: 'Space Styling',
-    images: ['img4a', 'img4b', 'img4c']
+    images: [
+      'https://greeneryunlimited.co/cdn/shop/articles/Electric-Garden-1.jpg?v=1539108682'
+    ]
   }
 ];
 
 function PlaceholderImage({ id }: { id: string }) {
-  // Simple SVG placeholder — in real project replace with <img src=...>
+  const isUrl = /^https?:\/\//i.test(id);
+
+  if (isUrl) {
+    return (
+      <div className="ip placeholder">
+        <img
+          src={id}
+          alt="Project preview"
+          className="w-full h-full object-cover"
+          style={{ display: 'block', width: '100%', height: '100%' }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="ip placeholder">
       <svg width="100%" height="100%" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice">
@@ -94,7 +116,7 @@ export default function Projects() {
     <section className="pg">
       <div className="proj-section">
         <div className="proj-header">
-          <span className="lbl">Our Work</span>
+          <span className="lbl"></span>
           <h2>Featured Projects</h2>
         </div>
 

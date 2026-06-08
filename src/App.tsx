@@ -27,6 +27,7 @@ import { PORTFOLIO_DATA, PRODUCTS_DATA } from './data';
 import AdminPanel from './components/AdminPanel';
 import AccountPanel from './components/AccountPanel';
 import GiftModal from './components/GiftModal';
+import Loader from './components/Loader';
 import { db, auth, OperationType, handleFirestoreError } from './firebase';
 import { collection, onSnapshot, doc, setDoc, addDoc, deleteDoc, query, where } from 'firebase/firestore';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
@@ -484,9 +485,93 @@ export default function App() {
   };
 
   const totalInquiryItemsCount = inquiryItems.reduce((sum, item) => sum + item.quantity, 0);
+  const [kuulaLoading, setKuulaLoading] = useState<boolean>(false);
+
+  // Robustly wait until Kuula iframes on the homepage have fired their load events
+  useEffect(() => {
+    if (currentPage !== 'home') {
+      setKuulaLoading(false);
+      return;
+    }
+
+    // Only show loader if we detect Kuula iframes that are not yet loaded
+    const initialIframes = Array.from(document.querySelectorAll('iframe[src*="kuula.co/share"]')) as HTMLIFrameElement[];
+    const needLoading = initialIframes.some((f) => f.dataset._kuulaLoaded !== '1');
+    if (!needLoading && initialIframes.length === 0) {
+      // no kuula iframes present — don't show loader
+      setKuulaLoading(false);
+    } else if (needLoading) {
+      setKuulaLoading(true);
+    }
+
+    let timeout = 0 as any;
+    let observer: MutationObserver | null = null;
+
+    const checkAndAttach = () => {
+      const kuulaIframes = Array.from(document.querySelectorAll('iframe[src*="kuula.co/share"]')) as HTMLIFrameElement[];
+      if (kuulaIframes.length === 0) return false;
+
+      let remaining = kuulaIframes.filter((f) => f.dataset._kuulaLoaded !== '1');
+      if (remaining.length === 0) {
+        setKuulaLoading(false);
+        return true;
+      }
+
+      remaining.forEach((ifr) => {
+        // mark to avoid double-binding
+        if (ifr.dataset._kuulaBound === '1') return;
+        ifr.dataset._kuulaBound = '1';
+        const onLoad = () => {
+          ifr.dataset._kuulaLoaded = '1';
+          // re-check all iframes
+          const still = Array.from(document.querySelectorAll('iframe[src*="kuula.co/share"]')).filter((f: any) => f.dataset._kuulaLoaded !== '1');
+          if (still.length === 0) {
+            setKuulaLoading(false);
+            if (observer) observer.disconnect();
+            clearTimeout(timeout);
+          }
+        };
+        ifr.addEventListener('load', onLoad, { once: true });
+      });
+
+      return false;
+    };
+
+    // Initial attempt
+    const doneNow = checkAndAttach();
+
+    // Watch for iframes being injected later
+    observer = new MutationObserver(() => {
+      checkAndAttach();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Safety fallback in case something never loads
+    timeout = window.setTimeout(() => {
+      setKuulaLoading(false);
+      if (observer) observer.disconnect();
+    }, 15000);
+
+    // If there are no kuula iframes at all after a short delay, hide loader
+    const shortCheck = window.setTimeout(() => {
+      const any = document.querySelectorAll('iframe[src*="kuula.co/share"]').length;
+      if (any === 0) {
+        setKuulaLoading(false);
+        if (observer) observer.disconnect();
+        clearTimeout(timeout);
+      }
+      clearTimeout(shortCheck);
+    }, 400);
+
+    return () => {
+      if (observer) observer.disconnect();
+      clearTimeout(timeout);
+      clearTimeout(shortCheck);
+    };
+  }, [currentPage]);
 
   return (
-    <div className="relative min-h-screen bg-brand-bark/70 antialiased text-brand-dark selection:bg-brand-wood selection:text-brand-dark">
+    <div className={"relative min-h-screen bg-brand-bark/70 antialiased text-brand-dark selection:bg-brand-wood selection:text-brand-dark" + (kuulaLoading ? ' overflow-hidden' : '')}>
       
       {/* Dynamic Floating Action Ticker Indicator for items count (Persistent Bottom Right Drawer Trigger) */}
       {totalInquiryItemsCount > 0 && (
@@ -626,6 +711,9 @@ export default function App() {
         )}
 
       </main>
+
+      {/* Full-page loader shown while Kuula feeds load on the homepage */}
+      {kuulaLoading && currentPage === 'home' && <Loader />}
 
       <ContactForm
         isOpen={isConsultationModalOpen}
