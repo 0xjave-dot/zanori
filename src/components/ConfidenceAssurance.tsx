@@ -2,28 +2,18 @@ import React from 'react';
 
 export default function ConfidenceAssurance() {
   return (
-    <section className="confidence-assurance bg-brand-ivory py-20">
-      <div className="max-w-6xl mx-auto px-6 md:px-12 text-center">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-brand-bark font-mono block mb-4">
-          TRUSTED EXPERTISE
-        </span>
-        <h2 className="font-serif text-4xl md:text-5xl font-semibold text-brand-dark mb-8">
-          Confident results you can depend on
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
-          <div className="confidence-card p-8 rounded-3xl border border-brand-wood/10 bg-white shadow-sm">
-            <p className="text-5xl font-serif text-brand-cranberry">4+</p>
-            <p className="mt-4 text-sm text-brand-dark font-medium uppercase tracking-[0.25em]">Years Experience</p>
-          </div>
-          <div className="confidence-card p-8 rounded-3xl border border-brand-wood/10 bg-white shadow-sm">
-            <p className="text-5xl font-serif text-brand-cranberry">20</p>
-            <p className="mt-4 text-sm text-brand-dark font-medium uppercase tracking-[0.25em]">Completed Projects</p>
-          </div>
-          <div className="confidence-card p-8 rounded-3xl border border-brand-wood/10 bg-white shadow-sm">
-            <p className="text-5xl font-serif text-brand-cranberry">50+</p>
-            <p className="mt-4 text-sm text-brand-dark font-medium uppercase tracking-[0.25em]">Satisfied Clients</p>
-          </div>
-        </div>
+    <section className="stats bg-brand-bark">
+      <div className="stat">
+        <span className="stat-number">4+</span>
+        <p><strong>Years of Experience:</strong> creating beautiful functional spaces and manufacturing high-end furniture pieces.</p>
+      </div>
+      <div className="stat">
+        <span className="stat-number">20</span>
+        <p><strong>Comprehensive Projects:</strong> where we designed and executed a complete interior overhaul for homes and offices.</p>
+      </div>
+      <div className="stat">
+        <span className="stat-number">50+</span>
+        <p><strong>Clients & Customers:</strong> who have bought our furniture pieces and patronized our interior design services.</p>
       </div>
     </section>
   );

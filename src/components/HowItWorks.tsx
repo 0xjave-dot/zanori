@@ -33,11 +33,11 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="process-section" className="py-20 md:py-24 bg-brand-base">
+    <section id="process-section" className="pt-12 pb-16 md:py-24 bg-[#f5f4f0] md:bg-brand-base">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Header */}
-        <div className="max-w-2xl mb-16 md:mb-24 space-y-4">
+        <div className="max-w-2xl mb-10 md:mb-24 space-y-4">
           <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
             
           </span>

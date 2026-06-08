@@ -115,9 +115,14 @@
 }
 
 .wwd-services {
-  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0;
+}
+
+@media (min-width: 768px) {
+  .wwd-services {
+    display: grid;
+  }
 }
 
 .svc {
@@ -375,13 +380,13 @@
 .bento svg{opacity:0.3;}
 
 /* Carousel styles for mobile */
-.project-carousel{display:flex;flex-direction:column;gap:8px;align-items:center;}
-.carousel-window{width:100%;height:220px;overflow:hidden;border-radius:6px;}
+.project-carousel{display:flex;flex-direction:column;gap:8px;align-items:stretch;}
+.carousel-window{width:100%;overflow:hidden;border-radius:12px;min-height:260px;}
 .carousel-controls{display:flex;gap:8px;justify-content:center;}
 .carousel-btn{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:6px 10px;border-radius:6px;font-size:18px}
 
 /* Visibility: show desktop bento by default, hide mobile carousel */
-.mobile-carousel{display:none}
+.mobile-carousel{display:none;width:100%;}
 
 /* Responsive adjustments for mobile: keep two-column desktop feel but scale down fonts/images; show carousel */
 @media (max-width: 768px) {
@@ -393,7 +398,7 @@
   .proj { gap: 24px; min-height: auto; }
   .bento { display: none; }
   .mobile-carousel { display: block; }
-  .carousel-window { height: 220px; }
+  .carousel-window { min-height: 320px; height: auto; }
   .proj-section { padding: 24px 20px 64px; }
   .proj-header h2 { font-size: 2rem; }
   .svc { padding: 28px 20px; }
@@ -479,5 +484,56 @@
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;
+  }
+}
+
+/* Stats / Confidence Assurance Section */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stat {
+  padding: 3rem 2.5rem;
+  border-right: 0.5px solid rgba(139, 128, 122, 0.27);
+}
+
+.stat:last-child {
+  border-right: none;
+}
+
+.stat-number {
+  display: block;
+  font-size: clamp(4rem, 7vw, 6rem);
+  font-weight: 800;
+  line-height: 1;
+  color: #FAF7F4;
+  margin-bottom: 2rem;
+}
+
+.stat p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #8B807A;
+  margin: 0;
+}
+
+.stat p strong {
+  color: #D9C3B0;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    border-right: none;
+    border-bottom: 0.5px solid rgba(139, 128, 122, 0.27);
+  }
+
+  .stat:last-child {
+    border-bottom: none;
   }
 }

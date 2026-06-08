@@ -105,10 +105,12 @@ function MobileCarousel({ images }: { images: string[] }) {
       <div className="carousel-window">
         <PlaceholderImage id={images[index]} />
       </div>
-      <div className="carousel-controls">
-        <button type="button" onClick={prev} aria-label="Previous" className="carousel-btn">‹</button>
-        <button type="button" onClick={next} aria-label="Next" className="carousel-btn">›</button>
-      </div>
+      {images.length > 1 && (
+        <div className="carousel-controls">
+          <button type="button" onClick={prev} aria-label="Previous" className="carousel-btn">‹</button>
+          <button type="button" onClick={next} aria-label="Next" className="carousel-btn">›</button>
+        </div>
+      )}
     </div>
   );
 }
