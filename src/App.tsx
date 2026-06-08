@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
+import ConfidenceAssurance from './components/ConfidenceAssurance';
 import RoomRenderer from './components/RoomRenderer';
 import Portfolio from './components/Portfolio';
 import Shop from './components/Shop';
@@ -373,8 +374,7 @@ export default function App() {
         setToastMessage('not done yet');
         window.location.hash = '#';
       } else if (hash.startsWith('#/services')) {
-        setToastMessage('not done yet');
-        window.location.hash = '#';
+        setCurrentPage('services');
       } else if (hash.startsWith('#/shop')) {
         setToastMessage('not done yet');
         window.location.hash = '#';
@@ -608,9 +608,9 @@ export default function App() {
             <div className="reveal-section"><InteractiveGallery /></div>
             <div className="reveal-section"><WhyChooseUs /></div>
             <div className="reveal-section"><DesignerBio /></div>
-            <div className="reveal-section"><WhatWeDo /></div>
             <div className="reveal-section"><HowItWorks /></div>
             <div className="reveal-section"><Projects /></div>
+            <div className="reveal-section"><WhatWeDo /></div>
           </div>
         )}
 
@@ -624,9 +624,14 @@ export default function App() {
 
         {/* SERVICES PAGE ROUTE */}
         {currentPage === 'services' && (
-          <div className="reveal-section">
-            <Services onSelectService={handleSelectServiceFromServices} />
-          </div>
+          <>
+            <div className="reveal-section">
+              <ConfidenceAssurance />
+            </div>
+            <div className="reveal-section">
+              <Services onSelectService={handleSelectServiceFromServices} />
+            </div>
+          </>
         )}
 
         {/* SHOP PAGE ROUTE */}

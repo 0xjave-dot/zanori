@@ -138,7 +138,7 @@ export default function Projects() {
             </div>
 
             {/* Single desktop image */}
-            <div className="bento desktop-bento">
+            <div className="bento desktop-bento featured-image">
               <PlaceholderImage id={p.images[0]} />
             </div>
 

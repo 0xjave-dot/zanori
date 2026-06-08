@@ -67,8 +67,8 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
   }
 
   return (
-    <div className="consultation-modal fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 md:p-8">
-      <div className="relative w-full max-w-6xl overflow-hidden rounded-[32px] bg-brand-base shadow-2xl">
+    <div className="consultation-modal fixed inset-0 z-50 overflow-y-auto bg-black/70 p-4 md:p-8">
+      <div className="relative mx-auto w-full max-w-6xl max-h-[calc(100vh-4rem)] overflow-hidden rounded-[32px] bg-brand-base shadow-2xl">
         <button
           type="button"
           onClick={onClose}

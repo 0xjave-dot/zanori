@@ -157,13 +157,20 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
                 Inquiry List ({inquiryCount})
               </button>
             )}
-            <a
-              href="#contact"
-              onClick={(e) => handleLinkClick(e, '#/', 'contact-section')}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                if (onOpenConsultationModal) {
+                  onOpenConsultationModal();
+                } else {
+                  handleLinkClick(e as any, '#/', 'contact-section');
+                }
+              }}
               className="px-6 py-2.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-brand-bark/90 hover:text-brand-base text-xs uppercase tracking-[0.15em] transition-all duration-300"
             >
               Get in touch
-            </a>
+            </button>
           </div>
 
           {/* Mobile controllers */}

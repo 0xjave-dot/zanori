@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 interface Step {
   num: string;
   name: string;
@@ -5,6 +7,8 @@ interface Step {
 }
 
 export default function HowItWorks() {
+  const [expandedMobile, setExpandedMobile] = useState<string | null>(null);
+  
   const steps: Step[] = [
     {
       num: '01',
@@ -48,8 +52,36 @@ export default function HowItWorks() {
         {/* Timeline representation */}
         <div className="relative">
 
-          {/* Staggered Steps */}
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12 relative z-10">
+          {/* Mobile: Only number cards in horizontal line */}
+          <div className="md:hidden flex gap-4 justify-center items-start">
+            {steps.map((step) => (
+              <button
+                key={step.num}
+                type="button"
+                onClick={() => setExpandedMobile(expandedMobile === step.num ? null : step.num)}
+                onMouseEnter={() => setExpandedMobile(step.num)}
+                onMouseLeave={() => setExpandedMobile(null)}
+                className="relative flex-shrink-0 h-16 w-16 rounded-full bg-brand-warm hover:bg-brand-dark hover:text-brand-base text-brand-dark border border-brand-wood/30 flex items-center justify-center font-serif text-lg tracking-wider transition-all duration-300 z-10 shadow-xs"
+              >
+                {step.num}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile: Expanded content below */}
+          {expandedMobile && (
+            <div className="md:hidden mt-8 p-6 bg-brand-warm/40 rounded-2xl border border-brand-wood/15 space-y-3">
+              <h3 className="font-serif text-lg font-light text-brand-dark">
+                {steps.find(s => s.num === expandedMobile)?.name}
+              </h3>
+              <p className="text-sm font-light text-brand-muted leading-relaxed font-sans">
+                {steps.find(s => s.num === expandedMobile)?.desc}
+              </p>
+            </div>
+          )}
+
+          {/* Desktop: Staggered Steps */}
+          <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12 relative z-10">
             {steps.map((step, idx) => (
               <div
                 key={step.num}
@@ -61,8 +93,6 @@ export default function HowItWorks() {
                   <div className="h-14 w-14 rounded-full bg-brand-warm group-hover:bg-brand-dark group-hover:text-brand-base text-brand-dark border border-brand-wood/30 flex items-center justify-center font-serif text-lg tracking-wider transition-all duration-300 z-10 shadow-xs">
                     {step.num}
                   </div>
-                  
-
                 </div>
 
                 {/* Step contents */}
@@ -83,4 +113,5 @@ export default function HowItWorks() {
     </section>
   );
 }
+
 
