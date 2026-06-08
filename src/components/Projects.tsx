@@ -66,8 +66,8 @@ const PROJECTS: ProjectItem[] = [
   }
 ];
 
-function PlaceholderImage({ id }: { id: string }) {
-  const isUrl = /^https?:\/\//i.test(id);
+function PlaceholderImage({ id }: { id?: string }) {
+  const isUrl = typeof id === 'string' && /^https?:\/\//i.test(id);
 
   if (isUrl) {
     return (
@@ -83,11 +83,13 @@ function PlaceholderImage({ id }: { id: string }) {
   }
 
   return (
-    <div className="ip placeholder">
-      <svg width="100%" height="100%" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice">
-        <rect width="100%" height="100%" fill="#f6f4f2" />
-        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="#bdb5ad" fontSize="20">{id}</text>
-      </svg>
+    <div className="ip placeholder" style={{ background: '#f6f4f2' }}>
+      {id ? (
+        <svg width="100%" height="100%" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice">
+          <rect width="100%" height="100%" fill="#f6f4f2" />
+          <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="#bdb5ad" fontSize="20">{id}</text>
+        </svg>
+      ) : null}
     </div>
   );
 }
@@ -135,16 +137,14 @@ export default function Projects() {
               <a href="#" className="proj-link">View Project</a>
             </div>
 
-            {/* Desktop bento */}
-            <div className="bento bento-3 desktop-bento">
-              <div className="ip b1"><PlaceholderImage id={p.images[0]} /></div>
-              <div className="ip b2"><PlaceholderImage id={p.images[1]} /></div>
-              <div className="ip b3"><PlaceholderImage id={p.images[2]} /></div>
+            {/* Single desktop image */}
+            <div className="bento desktop-bento">
+              <PlaceholderImage id={p.images[0]} />
             </div>
 
             {/* Mobile carousel — visible only on small screens via CSS */}
             <div className="mobile-carousel">
-              <MobileCarousel images={p.images} />
+              <MobileCarousel images={p.images.slice(0, 1)} />
             </div>
           </div>
         ))}

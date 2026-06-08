@@ -270,7 +270,7 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                   <Phone size={12} className="text-brand-bark" />
                   <span>+234 812 345 6789 (WhatsApp Direct)</span>
                 </a>
-                <a href="#ig" className="flex items-center space-x-2.5 hover:text-brand-dark transition-colors">
+                <a href="https://www.instagram.com/zanori_spaces/" target="_blank" rel="noreferrer noopener" className="flex items-center space-x-2.5 hover:text-brand-dark transition-colors">
                   <Instagram size={12} className="text-brand-bark" />
                   <span>@zanorispaces</span>
                 </a>

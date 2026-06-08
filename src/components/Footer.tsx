@@ -118,7 +118,9 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
               </span>
               <div className="flex items-center space-x-4 md:justify-end">
                 <a
-                  href="#ig"
+                  href="https://www.instagram.com/zanori_spaces/"
+                  target="_blank"
+                  rel="noreferrer noopener"
                   aria-label="Instagram Link"
                   className="p-2 bg-brand-base/70 hover:bg-brand-cranberry hover:text-brand-base rounded-full transition-all border border-brand-wood/15"
                 >
