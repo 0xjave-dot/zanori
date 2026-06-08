@@ -3,9 +3,10 @@ import { Instagram, Phone, ArrowUp } from 'lucide-react';
 
 interface FooterProps {
   onBlockedNavigation: () => void;
+  onOpenConsultationModal?: () => void;
 }
 
-export default function Footer({ onBlockedNavigation }: FooterProps) {
+export default function Footer({ onBlockedNavigation, onOpenConsultationModal }: FooterProps) {
   const handlesScrollUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -92,13 +93,20 @@ export default function Footer({ onBlockedNavigation }: FooterProps) {
               >
                 My Spaces
               </a>
-              <a
-                href="#contact"
-                onClick={(e) => handleLinkClick(e, '#/', 'contact-section')}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onOpenConsultationModal) {
+                    onOpenConsultationModal();
+                  } else {
+                    handleLinkClick(e as any, '#/', 'contact-section');
+                  }
+                }}
                 className="hover:text-white transition-colors duration-200 font-medium text-brand-wood font-mono"
               >
                 Get in touch
-              </a>
+              </button>
             </div>
           </div>
 

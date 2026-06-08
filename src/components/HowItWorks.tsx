@@ -29,13 +29,13 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="process-section" className="py-24 md:py-32 bg-brand-base">
+    <section id="process-section" className="py-20 md:py-24 bg-brand-base">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Header */}
-        <div className="max-w-2xl mb-16 md:mb-24 space-y-3">
+        <div className="max-w-2xl mb-16 md:mb-24 space-y-4">
           <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
-            OUR WORKFLOW
+            
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-light text-brand-dark leading-tight">
             How we do what we do
@@ -49,11 +49,11 @@ export default function HowItWorks() {
         <div className="relative">
 
           {/* Staggered Steps */}
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12 relative z-10">
             {steps.map((step, idx) => (
               <div
                 key={step.num}
-                className="space-y-6 group"
+                className="space-y-8 group"
                 style={{ animationDelay: `${idx * 150}ms` }}
               >
                 {/* Numbered Circle Header */}

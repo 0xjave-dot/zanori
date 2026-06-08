@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Jost:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;700&display=swap');
 @import "tailwindcss";
 
@@ -78,6 +79,112 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
+.pg {
+  background: #f4ede5;
+  color: #1f1a18;
+  font-family: 'Jost', sans-serif;
+}
+
+.lbl {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #74675f;
+}
+
+.wwd {
+  padding: 100px 48px;
+}
+
+.wwd-top {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.wwd-top .lbl {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.wwd-top h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.wwd-services {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+
+.svc {
+  padding: 56px 48px;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.svc:not(:last-child) {
+  border-right: 1px solid #e8e8e8;
+}
+
+@media (max-width: 900px) {
+  .wwd {
+    padding: 60px 24px;
+  }
+
+  .wwd-services {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .svc {
+    padding: 32px 24px;
+    border-right: none;
+  }
+
+  .svc:not(:last-child) {
+    border-bottom: 1px solid #e8e8e8;
+  }
+}
+
+.svc-icon {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  background: rgba(44, 30, 24, 0.06);
+}
+
+.svc-icon svg {
+  width: 42px;
+  height: 42px;
+  color: #2c1e18;
+}
+
+.svc h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.svc p {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.9;
+  font-weight: 300;
+  max-width: 220px;
+}
+
 @keyframes slideLeft {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
@@ -136,7 +243,7 @@
   gap: 12px;
   align-items: center;
   will-change: transform;
-  animation: infinite-scroll 40s linear infinite;
+  animation: infinite-scroll 20s linear infinite;
 }
 .infinite-gallery-section:hover .infinite-track {
   animation-play-state: paused;
@@ -165,10 +272,10 @@
 /* Covers to hide Kuula badges — now full-width top overlays */
 .kuula-cover {
   position: absolute;
-  top: -25px;
+  top: -30px;
   left: 0;
   right: 0;
-  height: 28px;
+  height: 33.5px;
   background: #0d0d0d;
   pointer-events: none;
   z-index: 20;
@@ -226,3 +333,140 @@
  .animate-float-bob {
    animation: floatBob 3s ease-in-out infinite;
  }
+
+/* PROJECTS */
+.proj-section{padding:0 48px 100px;}
+.proj-header{text-align:center;padding:80px 0 64px;}
+.proj-header .lbl{margin-bottom:16px;display:block;}
+.proj-header h2{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;}
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:500px;border-top:1px solid #e8e8e8;}
+.proj:last-child{border-bottom:1px solid #e8e8e8;}
+
+.proj-text{padding:60px 56px;display:flex;flex-direction:column;justify-content:center;gap:20px;}
+.proj-text .lbl{margin-bottom:4px;}
+.proj-text h3{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1.15;}
+.proj-text p{font-size:13px;color:#666;line-height:1.85;font-weight:300;max-width:340px;}
+.proj-meta{display:flex;gap:32px;margin-top:8px;}
+.meta-item .lbl{margin-bottom:4px;}
+.meta-item p{font-size:12px;color:#444;font-weight:400;}
+.proj-link{display:inline-block;border:1px solid #111;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:11px 22px;color:#111;text-decoration:none;width:fit-content;margin-top:12px;}
+.proj-link:hover{background:#111;color:#fff;}
+
+.bento{padding:24px;display:grid;gap:8px;background:#faf9f7;}
+
+.bento-3{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;}
+.bento-3 .b1{grid-row:1/3;}
+.bento-3 .b2,.bento-3 .b3{}
+
+.bento-4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;}
+.bento-4 .b3{grid-column:1/3;}
+
+.bento .ip{width:100%;height:100%;min-height:120px;}
+.bento svg{opacity:0.3;}
+
+/* Carousel styles for mobile */
+.project-carousel{display:flex;flex-direction:column;gap:8px;align-items:center;}
+.carousel-window{width:100%;height:220px;overflow:hidden;border-radius:6px;}
+.carousel-controls{display:flex;gap:8px;justify-content:center;}
+.carousel-btn{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:6px 10px;border-radius:6px;font-size:18px}
+
+/* Visibility: show desktop bento by default, hide mobile carousel */
+.mobile-carousel{display:none}
+
+/* Responsive adjustments for mobile: keep two-column desktop feel but scale down fonts/images; show carousel */
+@media (max-width: 768px) {
+  .proj { grid-template-columns: 1fr; gap: 18px; }
+  .proj-text { padding: 28px 20px; }
+  .proj-text h3 { font-size: 1.25rem; }
+  .proj-text p { font-size: 13px; max-width: 100%; }
+  .proj-meta { gap: 16px; }
+  .bento { display: none; }
+  .mobile-carousel { display: block; }
+  .carousel-window { height: 180px; }
+  .proj-section { padding: 24px 20px 64px; }
+  .proj-header h2 { font-size: 2rem; }
+  .svc { padding: 28px 20px; }
+  .svc-icon { width:56px; height:56px; }
+  .svc-icon svg { width:34px; height:34px; }
+}
+
+/* Smooth reveal animations for on-scroll appearance */
+:root {
+  --reveal-duration: 700ms;
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Initial hidden state for common header/title/text/icon elements */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal .lbl {
+  transform: translateX(-28px);
+  opacity: 0;
+  transition: transform var(--reveal-duration) var(--reveal-ease), opacity var(--reveal-duration) var(--reveal-ease);
+}
+
+.reveal p,
+.reveal .proj-text,
+.reveal .proj-meta,
+.reveal .svc p,
+.reveal .proj-link {
+  transform: translateY(12px);
+  opacity: 0;
+  transition: transform calc(var(--reveal-duration) + 100ms) var(--reveal-ease), opacity calc(var(--reveal-duration) + 100ms) var(--reveal-ease);
+}
+
+/* Icons, images and small visual items rise slightly and fade in */
+.reveal .svc-icon,
+.reveal .ip,
+.reveal svg,
+.reveal .bento .ip {
+  transform: translateY(18px) scale(.985);
+  opacity: 0;
+  transition: transform calc(var(--reveal-duration) + 80ms) var(--reveal-ease), opacity calc(var(--reveal-duration) + 80ms) var(--reveal-ease);
+}
+
+/* When the reveal container becomes visible, show children with smooth transitions */
+.reveal-visible h1,
+.reveal-visible h2,
+.reveal-visible h3,
+.reveal-visible .lbl,
+.reveal-visible p,
+.reveal-visible .proj-text,
+.reveal-visible .proj-meta,
+.reveal-visible .svc p,
+.reveal-visible .proj-link,
+.reveal-visible .svc-icon,
+.reveal-visible .ip,
+.reveal-visible svg {
+  transform: translateX(0) translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Slight stagger for service and project items to feel lively */
+.wwd-services .svc:nth-child(1) .svc-icon { transition-delay: 80ms; }
+.wwd-services .svc:nth-child(2) .svc-icon { transition-delay: 160ms; }
+.wwd-services .svc:nth-child(3) .svc-icon { transition-delay: 240ms; }
+
+.proj .proj-text { transition-delay: 80ms; }
+.proj .bento .ip { transition-delay: 140ms; }
+.proj:nth-child(1) .proj-text { transition-delay: 60ms; }
+.proj:nth-child(2) .proj-text { transition-delay: 120ms; }
+.proj:nth-child(3) .proj-text { transition-delay: 180ms; }
+.proj:nth-child(4) .proj-text { transition-delay: 240ms; }
+
+/* Accessibility: reduce motion respects user OS prefs */
+@media (prefers-reduced-motion: reduce) {
+  .reveal h1,
+  .reveal h2,
+  .reveal h3,
+  .reveal .lbl,
+  .reveal p,
+  .reveal .svc-icon,
+  .reveal .ip,
+  .reveal svg {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

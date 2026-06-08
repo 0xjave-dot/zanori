@@ -3,11 +3,13 @@ import { Send, CheckCircle, Phone, Mail, Instagram, MapPin } from 'lucide-react'
 import { InquiryFormData } from '../types';
 
 interface ContactFormProps {
+  isOpen: boolean;
+  onClose: () => void;
   serviceRequestPreset: string;
   briefPreset: string;
 }
 
-export default function ContactForm({ serviceRequestPreset, briefPreset }: ContactFormProps) {
+export default function ContactForm({ isOpen, onClose, serviceRequestPreset, briefPreset }: ContactFormProps) {
   const [formData, setFormData] = useState<InquiryFormData>({
     name: '',
     contact: '',
@@ -32,6 +34,12 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
     }
   }, [briefPreset]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setIsSuccess(false);
+    }
+  }, [isOpen]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.contact) return alert('Kindly provide your Name and Contact handle first.');
@@ -54,12 +62,26 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
     }, 1500);
   };
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <section id="contact-section" className="py-24 md:py-32 bg-brand-base">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+    <div className="consultation-modal fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 md:p-8">
+      <div className="relative w-full max-w-6xl overflow-hidden rounded-[32px] bg-brand-base shadow-2xl">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-dark text-brand-base hover:bg-brand-bark transition-colors"
+          aria-label="Close consultation form"
+        >
+          ×
+        </button>
+
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
         
         {/* Left Form Panel */}
-        <div className="lg:col-span-7 bg-brand-warm/40 border border-brand-wood/15 p-8 md:p-12 rounded-3xl space-y-8">
+        <div className="lg:col-span-7 bg-brand-warm/40 border border-brand-wood/15 p-10 md:p-14 rounded-3xl space-y-10">
           <div className="space-y-3">
             <span className="text-[10px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
               GET IN TOUCH 
@@ -189,9 +211,9 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
         </div>
 
         {/* Right Studio Information Column */}
-        <div className="lg:col-span-5 space-y-8 lg:pl-4">
+        <div className="lg:col-span-5 space-y-10 lg:pl-6">
           {/* Google Maps Embed */}
-          <div className="rounded-3xl h-[400px] overflow-hidden border border-brand-wood/15 shadow-lg">
+          <div className="rounded-3xl h-[520px] overflow-hidden border border-brand-wood/15 shadow-lg">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.6559410857254!2d3.455421!3d6.434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f7b5b8c8c8c8c8d%3A0x0!2sZanori%20Spaces!5e0!3m2!1sen!2sng!4v1234567890"
               width="100%"
@@ -258,7 +280,8 @@ export default function ContactForm({ serviceRequestPreset, briefPreset }: Conta
         </div>
 
       </div>
-    </section>
+      </div>
+    </div>
   );
 }
 

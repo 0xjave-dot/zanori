@@ -5,9 +5,10 @@ import { Project } from '../types';
 interface ProjectModalProps {
   project: Project | null;
   onClose: () => void;
+  onOpenConsultationModal?: () => void;
 }
 
-export default function ProjectModal({ project, onClose }: ProjectModalProps) {
+export default function ProjectModal({ project, onClose, onOpenConsultationModal }: ProjectModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -110,15 +111,19 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             <div className="pt-8 mt-8 flex flex-col sm:flex-row gap-4">
-              <a
-                href="#contact"
+              <button
+                type="button"
                 onClick={(e) => {
+                  e.preventDefault();
+                  if (onOpenConsultationModal) {
+                    onOpenConsultationModal();
+                  }
                   onClose();
                 }}
                 className="flex-1 text-center py-3 bg-brand-dark text-brand-base rounded-full hover:bg-brand-wood hover:text-brand-dark text-xs uppercase tracking-widest font-semibold transition-all"
               >
                 Inquire about similar layouts
-              </a>
+              </button>
               <button
                 type="button"
                 onClick={onClose}

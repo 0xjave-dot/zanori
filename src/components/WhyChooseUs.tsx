@@ -74,7 +74,7 @@ export default function WhyChooseUs() {
   return (
     <section
       id="why-choose-us-section"
-      className="py-24 md:py-32 text-white relative"
+      className="py-24 md:py-32 lg:pt-32 text-white relative"
       style={{
         backgroundImage: 'url("https://images.squarespace-cdn.com/content/v1/63aeb3477b2cb6535cef4570/bcf48934-d3b6-44d9-a91e-4db949227e03/Trauma+lily+okamoto+abstract+painting.JPG")',
         backgroundSize: 'cover',

@@ -20,9 +20,10 @@ interface RoomRendererProps {
   user: any;
   onSaveDesign: (report: DesignReport, imageUrl: string) => Promise<boolean>;
   savedDesigns: any[];
+  onOpenConsultationModal?: () => void;
 }
 
-export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomRendererProps) {
+export default function RoomRenderer({ user, onSaveDesign, savedDesigns, onOpenConsultationModal }: RoomRendererProps) {
   const [image, setImage] = useState<string | null>(null);
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -251,7 +252,14 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
                 className="pt-4"
               >
                 <button
-                  onClick={handleScrollToContact}
+                  type="button"
+                  onClick={() => {
+                    if (onOpenConsultationModal) {
+                      onOpenConsultationModal();
+                    } else {
+                      handleScrollToContact();
+                    }
+                  }}
                   className="group inline-flex items-center space-x-2 text-xs uppercase tracking-widest font-semibold text-brand-dark hover:opacity-85 transition-opacity duration-300 cursor-pointer"
                 >
                   <span>Love what you see? Book a consultation</span>
@@ -594,7 +602,13 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns }: RoomR
 
                     <button
                       type="button"
-                      onClick={handleScrollToContact}
+                      onClick={() => {
+                        if (onOpenConsultationModal) {
+                          onOpenConsultationModal();
+                        } else {
+                          handleScrollToContact();
+                        }
+                      }}
                       className="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 cursor-pointer font-sans"
                     >
                       <span>Book a consultation</span>

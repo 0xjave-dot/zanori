@@ -7,9 +7,10 @@ interface NavbarProps {
   currentPage: string;
   user?: any;
   onBlockedNavigation: () => void;
+  onOpenConsultationModal?: () => void;
 }
 
-export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage, user, onBlockedNavigation }: NavbarProps) {
+export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage, user, onBlockedNavigation, onOpenConsultationModal }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -242,13 +243,20 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
           </div>
 
           <div className="flex flex-col space-y-6">
-            <a
-              href="#contact"
-              onClick={(e) => handleLinkClick(e, '#/', 'contact-section')}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                if (onOpenConsultationModal) {
+                  onOpenConsultationModal();
+                } else {
+                  handleLinkClick(e as any, '#/', 'contact-section');
+                }
+              }}
               className="px-8 py-4 bg-brand-dark text-brand-base rounded-full hover:bg-brand-wood hover:text-brand-dark text-center text-xs uppercase tracking-[0.2em] transition-all duration-300"
             >
               Book a consultation
-            </a>
+            </button>
             <div className="flex items-center justify-between text-[10px] text-brand-muted tracking-[0.1em] pt-4">
               <span>LAGOS, NIGERIA</span>
               <span>ZANORI SPACES © 2026</span>

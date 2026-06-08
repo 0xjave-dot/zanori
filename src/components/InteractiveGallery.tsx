@@ -78,7 +78,7 @@ export default function InteractiveGallery() {
   }, [activeSpace]);
 
   return (
-    <section id="interactive-render-gallery" className="py-24 md:py-32 bg-brand-sand text-brand-dark">
+    <section id="interactive-render-gallery" className="py-0 bg-brand-sand text-brand-dark">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-0">
         
         {/* Dynamic Header */}

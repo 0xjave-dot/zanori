@@ -45,11 +45,6 @@ export default function InquiryDrawer({
         setSuccess(false);
         onProceedToInquiryForm();
         onClose();
-        // Scroll to contact form
-        const el = document.getElementById('contact-section');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
       }, 1500);
     }, 1800);
   };

@@ -6,6 +6,8 @@ import RoomRenderer from './components/RoomRenderer';
 import Portfolio from './components/Portfolio';
 import Shop from './components/Shop';
 import HowItWorks from './components/HowItWorks';
+import WhatWeDo from './components/WhatWeDo';
+import Projects from './components/Projects';
 import ContactForm from './components/ContactForm';
 import DesignerBio from './components/DesignerBio';
 import InteractiveGallery from './components/InteractiveGallery';
@@ -37,6 +39,7 @@ export default function App() {
   // Custom presets for the contact form
   const [servicePreset, setServicePreset] = useState<string>('');
   const [briefPreset, setBriefPreset] = useState<string>('');
+  const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
   
   // Custom toasts
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -310,8 +313,41 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<string>('home');
 
   useEffect(() => {
-    const revealElements = document.querySelectorAll<HTMLElement>('.reveal:not(.reveal-visible)');
-    if (revealElements.length === 0) return undefined;
+    const revealSections = document.querySelectorAll<HTMLElement>('.reveal-section');
+    if (revealSections.length === 0) return undefined;
+
+    const revealItemSelector = [
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'p',
+      'li',
+      'button',
+      'a',
+      'img',
+      'figure',
+      '.svc',
+      '.proj',
+      '.wwd-top',
+      '.svc-icon',
+      '.proj-text',
+      '.proj-meta',
+      '.proj-link',
+      '.testimonial-card',
+      '.ip'
+    ].join(', ');
+
+    const revealItems: HTMLElement[] = [];
+    revealSections.forEach((section) => {
+      section.querySelectorAll<HTMLElement>(revealItemSelector).forEach((item) => {
+        if (!item.classList.contains('reveal')) {
+          item.classList.add('reveal');
+        }
+        revealItems.push(item);
+      });
+    });
 
     const observer = new IntersectionObserver(
       (entries, obs) => {
@@ -325,7 +361,7 @@ export default function App() {
       { threshold: 0.15 }
     );
 
-    revealElements.forEach((element) => observer.observe(element));
+    revealItems.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
   }, [currentPage]);
 
@@ -431,11 +467,7 @@ export default function App() {
   const handleSelectServiceFromServices = (serviceName: string) => {
     setServicePreset(serviceName);
     setBriefPreset(`Hi, I am looking to schedule a workspace discussion primarily focusing on: ${serviceName}. Let's chat layouts.`);
-    
-    const contactSection = document.getElementById('contact-section');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    setIsConsultationModalOpen(true);
   };
 
   const handleProceedToInquiryPayload = () => {
@@ -448,6 +480,7 @@ export default function App() {
     setBriefPreset(
       `Hi, I have put together an initial acquisition draft from the Zanori Spaces shop index:\n${stringifiedItems}\n\nKindly provide local delivery schedules and freight specifications for Lagos.`
     );
+    setIsConsultationModalOpen(true);
   };
 
   const totalInquiryItemsCount = inquiryItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -477,6 +510,7 @@ export default function App() {
         currentPage={currentPage}
         user={user}
         onBlockedNavigation={showNavBlockedToast}
+        onOpenConsultationModal={() => setIsConsultationModalOpen(true)}
       />
 
       {/* Dynamic Routing Screen Page Views */}
@@ -485,32 +519,34 @@ export default function App() {
         {/* HOMEPAGE ROUTE */}
         {currentPage === 'home' && (
           <div className="space-y-0">
-            <div className="reveal"><Hero /></div>
-            <div className="reveal"><InteractiveGallery /></div>
-            <div className="reveal"><WhyChooseUs /></div>
-            <div className="reveal"><DesignerBio /></div>
-            <div className="reveal"><HowItWorks /></div>
+            <div className="reveal-section"><Hero onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
+            <div className="reveal-section"><InteractiveGallery /></div>
+            <div className="reveal-section"><WhyChooseUs /></div>
+            <div className="reveal-section"><DesignerBio /></div>
+            <div className="reveal-section"><WhatWeDo /></div>
+            <div className="reveal-section"><HowItWorks /></div>
+            <div className="reveal-section"><Projects /></div>
           </div>
         )}
 
         {/* WORK PAGE ROUTE */}
         {currentPage === 'work' && (
           <div className="space-y-24">
-            <div className="reveal"><Portfolio onProjectSelect={handleProjectSelect} projects={projects} /></div>
-            <div className="reveal"><Testimonial /></div>
+            <div className="reveal-section"><Portfolio onProjectSelect={handleProjectSelect} projects={projects} /></div>
+            <div className="reveal-section"><Testimonial /></div>
           </div>
         )}
 
         {/* SERVICES PAGE ROUTE */}
         {currentPage === 'services' && (
-          <div className="reveal">
+          <div className="reveal-section">
             <Services onSelectService={handleSelectServiceFromServices} />
           </div>
         )}
 
         {/* SHOP PAGE ROUTE */}
         {currentPage === 'shop' && (
-          <div className="reveal">
+          <div className="reveal-section">
             <Shop
               onAddProductToInquiry={handleAddProductToInquiryVal}
               onOpenInquiryDrawer={handleOpenInquiryDrawer}
@@ -525,7 +561,7 @@ export default function App() {
 
         {/* My Spaces / PRIVATE LOUNGE WORKSPACE */}
         {currentPage === 'ai-renderer' && (
-          <div className="reveal max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
+          <div className="reveal-section max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
                 ZANORI DIGITAL DESIGN WORKSPACE
@@ -539,13 +575,14 @@ export default function App() {
               user={user}
               onSaveDesign={handleSaveDesign}
               savedDesigns={savedDesigns}
+              onOpenConsultationModal={() => setIsConsultationModalOpen(true)}
             />
           </div>
         )}
 
         {/* ACCOUNT CLIENT SPACE */}
         {currentPage === 'account' && (
-          <div className="reveal max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
+          <div className="reveal-section max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
                 ZANORI SERVICES
@@ -577,7 +614,7 @@ export default function App() {
 
         {/* ADMIN WORKSTATION ROUTE */}
         {currentPage === 'admin' && (
-          <div className="reveal">
+          <div className="reveal-section">
             <AdminPanel
               projects={projects}
               setProjects={setProjects}
@@ -588,18 +625,17 @@ export default function App() {
           </div>
         )}
 
-        {/* Contact form is worthy of being presented across pages to collect user briefs or estimates */}
-        {(currentPage === 'home' || currentPage === 'ai-renderer') && (
-          <ContactForm
-            serviceRequestPreset={servicePreset}
-            briefPreset={briefPreset}
-          />
-        )}
-        
       </main>
 
+      <ContactForm
+        isOpen={isConsultationModalOpen}
+        onClose={() => setIsConsultationModalOpen(false)}
+        serviceRequestPreset={servicePreset}
+        briefPreset={briefPreset}
+      />
+
       {/* Primary Footer */}
-      <Footer onBlockedNavigation={showNavBlockedToast} />
+      <Footer onBlockedNavigation={showNavBlockedToast} onOpenConsultationModal={() => setIsConsultationModalOpen(true)} />
 
       {/* Luxury Gift Purchasing Drawer modal */}
       <GiftModal
@@ -613,6 +649,7 @@ export default function App() {
       <ProjectModal
         project={selectedProject}
         onClose={handleCloseProjectModal}
+        onOpenConsultationModal={() => setIsConsultationModalOpen(true)}
       />
 
       <InquiryDrawer

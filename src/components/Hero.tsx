@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-export default function Hero() {
+interface HeroProps {
+  onOpenConsultationModal?: () => void;
+}
+
+export default function Hero({ onOpenConsultationModal }: HeroProps) {
   const [arrowTop, setArrowTop] = useState<number>(0);
 
   useEffect(() => {
@@ -46,7 +50,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero-section" className="relative pt-24 md:pt-32 md:pb-16 min-h-screen flex flex-col justify-between overflow-hidden bg-brand-base">
+    <section id="hero-section" className="relative pt-24 md:pt-32 pb-0 min-h-screen flex flex-col justify-between overflow-hidden bg-brand-base">
       <div className="absolute inset-0 overflow-hidden">
         <iframe
           src={kuulaHeroUrl}
@@ -84,7 +88,14 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button
               id="cta-book-hero"
-              onClick={(e) => handleCtaClick(e, 'contact-section')}
+              onClick={(e) => {
+                e.preventDefault();
+                if (onOpenConsultationModal) {
+                  onOpenConsultationModal();
+                } else {
+                  handleCtaClick(e, 'contact-section');
+                }
+              }}
               className="pointer-events-auto px-8 py-3.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-brand-bark/90 hover:text-brand-base text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
             >
               Book a consultation
