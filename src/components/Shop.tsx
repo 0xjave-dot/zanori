@@ -90,7 +90,7 @@ export default function Shop({
               ZANORI HEIRLOOM BOUTIQUE
             </span>
             <h1 className="font-serif text-5xl md:text-6xl font-light text-brand-dark leading-tight">
-              Curated furniture pieces
+              Timeless Furniture pieces
             </h1>
           </div>
           <p className="max-w-md text-sm text-brand-muted leading-relaxed font-light font-sans">

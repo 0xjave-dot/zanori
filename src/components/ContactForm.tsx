@@ -145,7 +145,7 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                     <option value="">Select a service...</option>
                     <option value="Space Styling">Space Styling</option>
                     <option value="Design Consultation">Design Consultation</option>
-                    <option value="Curated Furniture Retail">Quality Furniture Only</option>
+                    <option value="Timeless Furniture Retail">Quality Furniture Only</option>
                     <option value="3D Interior Design">3D Interior Design</option>
                     <option value="Full Project">Full Comprehensive Project</option>
                   </select>

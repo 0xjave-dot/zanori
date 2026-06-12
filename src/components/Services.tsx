@@ -83,7 +83,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
 
     const total = designFee + procurementFee + logisticsFee;
 
-    const breakdownString = `Hi, I utilized the Zanori design fee calculator for a ${spaceName} of approximately ${spaceSize}M².\nRequired specs: ${need3D ? 'Include High-Fi Designs' : 'No 3D Required'}, ${needSourcing ? 'Include Sourcing & Curated Furniture Retail' : 'Self-procurement'}, ${needSupervision ? 'Active On-site Construction Supervision' : 'Consultancy only'}.\nDirect calculated estimate draft: ${formatNaira(total)} NGN. Let's arrange a consultation to seal specifications.`;
+    const breakdownString = `Hi, I utilized the Zanori design fee calculator for a ${spaceName} of approximately ${spaceSize}M².\nRequired specs: ${need3D ? 'Include High-Fi Designs' : 'No 3D Required'}, ${needSourcing ? 'Include Sourcing & Timeless Furniture Retail' : 'Self-procurement'}, ${needSupervision ? 'Active On-site Construction Supervision' : 'Consultancy only'}.\nDirect calculated estimate draft: ${formatNaira(total)} NGN. Let's arrange a consultation to seal specifications.`;
 
     setCalcResults({
       designFee,

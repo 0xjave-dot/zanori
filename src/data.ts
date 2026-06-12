@@ -18,7 +18,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: 'quality-furniture',
     number: '03',
-    name: 'Curated Furniture Retail',
+    name: 'Timeless Furniture Retail',
     description: 'A thoughtful collection of premium quality retail pieces — sofas, queen beds, bespoke shelving, and storage units designed for quiet luxury and enduring daily beauty.',
     imageBg: 'linear-gradient(135deg, #C4A882 0%, #8B6F52 100%)'
   },

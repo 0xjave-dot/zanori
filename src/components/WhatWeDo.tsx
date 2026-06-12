@@ -37,12 +37,13 @@ export default function WhatWeDo() {
     <section className="pg">
       <div className="wwd">
         <div className="wwd-top">
-          <span className="lbl">Our Services</span>
-          <h2>What We Do</h2>
+          <span className="lbl"></span>
+          <h2 className="text-[2.8rem] md:text-[3.8rem] leading-[0.95] font-sans font-bold text-[#1a1a1a]">
+            What We Do
+          </h2>
         </div>
 
-        {/* Mobile: Only icons in horizontal line */}
-        <div className="md:hidden flex gap-6 justify-center items-start mb-8">
+        <div className="flex flex-wrap gap-6 justify-center items-start mb-8">
           {services.map((svc, idx) => (
             <button
               key={idx}
@@ -50,20 +51,19 @@ export default function WhatWeDo() {
               onClick={() => setExpandedMobile(expandedMobile === idx ? null : idx)}
               onMouseEnter={() => setExpandedMobile(idx)}
               onMouseLeave={() => setExpandedMobile(null)}
-              className="flex-shrink-0 h-16 w-16 rounded-full bg-brand-warm hover:bg-brand-dark hover:text-brand-base text-brand-dark border border-brand-wood/30 flex items-center justify-center transition-all duration-300 shadow-xs"
+              className="flex-shrink-0 h-20 w-20 lg:h-24 lg:w-24 rounded-full bg-brand-warm hover:bg-brand-dark hover:text-brand-base text-brand-dark border border-brand-wood/30 flex items-center justify-center transition-all duration-300 shadow-xs"
             >
               {svc.lucideIcon ? (
-                <Box size={32} />
+                <Box size={36} />
               ) : (
-                <HugeiconsIcon icon={svc.icon} size={32} color="currentColor" strokeWidth={1.5} />
+                <HugeiconsIcon icon={svc.icon} size={36} color="currentColor" strokeWidth={1.5} />
               )}
             </button>
           ))}
         </div>
 
-        {/* Mobile: Expanded content below */}
         {expandedMobile !== null && (
-          <div className="md:hidden mb-8 p-6 bg-brand-warm/40 rounded-2xl border border-brand-wood/15 space-y-3">
+          <div className="mb-8 p-6 bg-brand-warm/40 rounded-2xl border border-brand-wood/15 space-y-3">
             <h3 className="font-serif text-lg font-light text-brand-dark">
               {services[expandedMobile].title}
             </h3>
@@ -72,23 +72,6 @@ export default function WhatWeDo() {
             </p>
           </div>
         )}
-
-        {/* Desktop: Standard grid layout */}
-        <div className="hidden md:grid wwd-services">
-          {services.map((svc, idx) => (
-            <div key={idx} className="svc">
-              <div className="svc-icon">
-                {svc.lucideIcon ? (
-                  <Box size={32} />
-                ) : (
-                  <HugeiconsIcon icon={svc.icon} size={32} color="currentColor" strokeWidth={1.5} />
-                )}
-              </div>
-              <h3>{svc.title}</h3>
-              <p>{svc.desc}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

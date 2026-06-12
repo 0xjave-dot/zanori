@@ -64,97 +64,98 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
         id="nav-bar"
         className={`sticky top-0 left-0 right-0 z-40 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'py-4 bg-brand-base/95 backdrop-blur-md shadow-sm'
-            : 'py-6 bg-transparent'
+            ? 'py-3 bg-brand-base/80 backdrop-blur-xl shadow-premium-md border-b border-brand-ivory/10'
+            : 'py-6 bg-transparent border-b border-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo with hover effect */}
           <a
             href="#/"
             onClick={(e) => handleLinkClick(e, '#/')}
-            className="font-serif text-2xl font-light tracking-[0.2em] text-brand-ivory hover:opacity-80 transition-opacity"
+            className="font-serif text-2xl font-light tracking-[0.2em] text-brand-ivory hover:text-brand-cranberry transition-all duration-300 transform hover:scale-105"
           >
-            ZANORI SPACES
+            ZANORI
           </a>
 
           {/* Center Links (Desktop) */}
-          <div className="hidden md:flex items-center space-x-10 text-xs uppercase tracking-[0.15em] font-light text-brand-muted">
+          <div className="hidden md:flex items-center space-x-12 text-xs uppercase tracking-[0.15em] font-light text-brand-ivory/70">
             <a
               href="#/work"
               onClick={(e) => handleLinkClick(e, '#/work')}
-              className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
+              className={`transition-all duration-300 relative py-1 group hover:text-brand-ivory ${
                 currentPage === 'work' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               Work
-              <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-brand-bark transition-transform duration-300 origin-left ${
-                currentPage === 'work' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
+                currentPage === 'work' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </a>
             
             <a
               href="#/services"
               onClick={(e) => handleLinkClick(e, '#/services')}
-              className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
+              className={`transition-all duration-300 relative py-1 group hover:text-brand-ivory ${
                 currentPage === 'services' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               Services
-              <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-brand-bark transition-transform duration-300 origin-left ${
-                currentPage === 'services' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
+                currentPage === 'services' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </a>
 
             <a
               href="#/shop"
               onClick={(e) => handleLinkClick(e, '#/shop')}
-              className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
+              className={`transition-all duration-300 relative py-1 group hover:text-brand-ivory ${
                 currentPage === 'shop' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               Shop
-              <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-brand-bark transition-transform duration-300 origin-left ${
-                currentPage === 'shop' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
+                currentPage === 'shop' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </a>
 
             <a
               href="#/ai-renderer"
               onClick={(e) => handleLinkClick(e, '#/ai-renderer')}
-              className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
+              className={`transition-all duration-300 relative py-1 group hover:text-brand-ivory ${
                 currentPage === 'ai-renderer' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               <span>My Space</span>
-              <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-brand-bark transition-transform duration-300 origin-left ${
-                currentPage === 'ai-renderer' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
+                currentPage === 'ai-renderer' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </a>
 
             <a
               href="#/account"
               onClick={(e) => handleLinkClick(e, '#/account')}
-              className={`hover:text-brand-dark transition-colors duration-300 relative py-1 group ${
+              className={`transition-all duration-300 relative py-1 group hover:text-brand-ivory ${
                 currentPage === 'account' ? 'text-brand-ivory font-medium' : ''
               }`}
             >
               <span>{user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account'}</span>
-              <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-brand-bark transition-transform duration-300 origin-left ${
-                currentPage === 'account' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
+                currentPage === 'account' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </a>
           </div>
 
           {/* Right Pillar */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-5">
             {inquiryCount > 0 && (
               <button
                 type="button"
                 onClick={onOpenInquiryDrawer}
-                className="text-xs uppercase tracking-[0.1em] text-brand-bark transition-colors py-1 cursor-pointer"
+                className="text-xs uppercase tracking-[0.1em] text-brand-ivory/70 hover:text-brand-cranberry transition-colors duration-300 py-1 cursor-pointer relative group"
               >
                 Inquiry List ({inquiryCount})
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand-cranberry group-hover:w-full transition-all duration-300"></span>
               </button>
             )}
             <button
@@ -167,7 +168,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
                   handleLinkClick(e as any, '#/', 'contact-section');
                 }
               }}
-              className="px-6 py-2.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-brand-bark/90 hover:text-brand-base text-xs uppercase tracking-[0.15em] transition-all duration-300"
+              className="px-6 py-2.5 bg-brand-cranberry text-brand-ivory hover:bg-brand-cranberry/80 rounded-lg text-xs uppercase tracking-[0.15em] transition-all duration-300 shadow-premium-md hover:shadow-premium-lg transform hover:scale-105 btn-animated"
             >
               Get in touch
             </button>
@@ -179,7 +180,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               <button
                 type="button"
                 onClick={onOpenInquiryDrawer}
-                className="text-xs font-light text-brand-bark underline underline-offset-4"
+                className="text-xs font-light text-brand-ivory underline underline-offset-4 hover:text-brand-cranberry transition-colors"
               >
                 Inquiry ({inquiryCount})
               </button>
@@ -188,15 +189,15 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               type="button"
               id="hamburger-btn"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="relative w-10 h-10 text-brand-ivory transition-all duration-300 ease-in-out hover:scale-[1.06]"
+              className="relative w-10 h-10 text-brand-ivory transition-all duration-300 ease-in-out hover:text-brand-cranberry"
               aria-label="Toggle Menu"
               aria-expanded={isMobileMenuOpen}
             >
-              <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
-                <Menu size={24} />
+              <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-0 scale-90 rotate-90' : 'opacity-100 scale-100'}`}>
+                <Menu size={24} strokeWidth={1.5} />
               </span>
-              <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-90'}`}>
-                <X size={24} />
+              <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-90 -rotate-90'}`}>
+                <X size={24} strokeWidth={1.5} />
               </span>
             </button>
           </div>
@@ -206,12 +207,12 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
       {/* Full screen mobile overlay menu */}
       <div
         id="mobile-menu-overlay"
-        className={`fixed inset-0 z-30 bg-brand-base flex flex-col justify-between p-12 transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-6 pointer-events-none'}`}
+        className={`fixed inset-0 z-30 bg-gradient-to-b from-brand-base via-brand-base to-brand-warm flex flex-col justify-between p-8 md:p-12 transition-all duration-400 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-8 pointer-events-none'}`}
         aria-hidden={!isMobileMenuOpen}
       >
-        <div className="flex flex-col space-y-8 mt-24">
-          <div className="text-[10px] uppercase tracking-[0.25em] text-brand-muted pb-2">
-            MENU
+        <div className="flex flex-col space-y-8 mt-12">
+          <div className="text-[10px] uppercase tracking-[0.3em] text-brand-ivory/60 pb-4 border-b border-brand-ivory/20">
+            NAVIGATION
           </div>
 
           {[
@@ -225,7 +226,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               key={item.label}
               href={item.href}
               onClick={(e) => handleLinkClick(e, item.href)}
-              className={`mobile-menu-item text-xs uppercase tracking-[0.15em] font-light transition-all duration-300 ease-out ${item.current ? 'text-brand-ivory font-medium' : 'text-brand-muted hover:text-brand-dark'}`}
+              className={`mobile-menu-item text-sm uppercase tracking-[0.12em] font-light transition-all duration-300 ease-out ${item.current ? 'text-brand-ivory font-semibold' : 'text-brand-ivory/70 hover:text-brand-ivory'}`}
               style={{ transitionDelay: `${isMobileMenuOpen ? idx * 60 + 120 : 0}ms` }}
             >
               {item.label}
@@ -244,12 +245,12 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
                 handleLinkClick(e as any, '#/', 'contact-section');
               }
             }}
-            className="px-8 py-4 bg-brand-dark text-brand-base rounded-full hover:bg-brand-wood hover:text-brand-dark text-center text-xs uppercase tracking-[0.2em] transition-all duration-300"
+            className="px-8 py-4 bg-brand-cranberry text-brand-ivory rounded-lg hover:bg-brand-cranberry/90 text-center text-xs uppercase tracking-[0.15em] transition-all duration-300 shadow-premium-md btn-animated"
             style={{ transitionDelay: `${isMobileMenuOpen ? 420 : 0}ms` }}
           >
             Book a consultation
           </button>
-          <div className="flex items-center justify-between text-[10px] text-brand-muted tracking-[0.1em] pt-4 opacity-80 transition-all duration-300" style={{ transitionDelay: `${isMobileMenuOpen ? 460 : 0}ms` }}>
+          <div className="flex flex-col gap-3 text-[9px] text-brand-ivory/50 tracking-[0.15em] pt-4 opacity-80 transition-all duration-300" style={{ transitionDelay: `${isMobileMenuOpen ? 460 : 0}ms` }}>
             <span>LAGOS, NIGERIA</span>
             <span>ZANORI SPACES © 2026</span>
           </div>
@@ -258,4 +259,3 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
     </>
   );
 }
-

@@ -224,7 +224,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns, onOpenC
             </h1>
           </div>
           <p className="max-w-md text-sm text-brand-muted leading-relaxed font-light font-sans">
-            Upload a snapshot of any home workspace — empty, furnished, or mid-renovation. Select a sensory mood direction, and our custom model calculates detailed layout arrangements, color schemes, and curated furniture guides.
+            Upload a snapshot of any home workspace — empty, furnished, or mid-renovation. Select a sensory mood direction, and our custom model calculates detailed layout arrangements, color schemes, and Timeless Furniture guides.
           </p>
         </div>
 

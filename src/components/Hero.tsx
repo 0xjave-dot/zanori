@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParallax } from '../hooks/useScrollReveal';
 
 interface HeroProps {
   onOpenConsultationModal?: () => void;
@@ -6,6 +7,8 @@ interface HeroProps {
 
 export default function Hero({ onOpenConsultationModal }: HeroProps) {
   const [arrowTop, setArrowTop] = useState<number>(0);
+  const [scrollY, setScrollY] = useState(0);
+  const parallaxRef = useParallax(0.4);
 
   useEffect(() => {
     const updateArrowTop = () => {
@@ -17,6 +20,14 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
     updateArrowTop();
     window.addEventListener('resize', updateArrowTop);
     return () => window.removeEventListener('resize', updateArrowTop);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleCtaClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>, targetId: string) => {
@@ -51,7 +62,8 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
 
   return (
     <section id="hero-section" className="relative pt-24 md:pt-32 pb-0 min-h-screen flex flex-col justify-between overflow-hidden bg-brand-base">
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Parallax background with iframe */}
+      <div className="absolute inset-0 overflow-hidden" ref={parallaxRef} style={{ willChange: 'transform' }}>
         <iframe
           src={kuulaHeroUrl}
           title="Zanori Spaces interactive interior tour"
@@ -62,30 +74,36 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
           referrerPolicy="no-referrer"
         />
       </div>
-      <div className="absolute inset-0 bg-brand-dark/30 pointer-events-none" />
       
+      {/* Premium gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60 pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black/70 to-transparent pointer-events-none" />
+      
+      {/* Content with animations */}
       <div className="relative flex flex-col justify-center space-y-8 z-10 px-6 md:px-12 py-8 flex-grow pointer-events-none">
         <div className="max-w-4xl mx-auto w-full space-y-8">
-          <div className="space-y-4">
-            <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark/80 flex items-center space-x-2">
-              <span></span>
+          <div className="space-y-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <span className="text-[11px] uppercase tracking-[0.3em] font-medium text-brand-ivory/70 flex items-center space-x-3 inline-flex">
+              <span className="w-3 h-px bg-brand-cranberry"></span>
+              <span>Premium Interior Design</span>
             </span>
             
-            <h1 className="font-serif text-5xl md:text-6xl font-light leading-[1.1] text-brand-ivory">
-              Spaces designed around the way you{' '}
-              <span className="italic">
-                <span key={verbs[verbIdx]} className="dynamic-verb drop-in text-brand-cranberry">{verbs[verbIdx]}</span>
+            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-light leading-[0.95] text-brand-ivory">
+              Spaces designed <br />
+              around the way you{' '}
+              <span className="italic relative inline-block">
+                <span key={verbs[verbIdx]} className="dynamic-verb drop-in text-brand-cranberry inline-block">{verbs[verbIdx]}</span>
               </span>
               .
             </h1>
             
+            <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.15em] max-w-2xl">
+              Elevate your living spaces with expert design consultation, timeless furniture curation, and immersive spatial experiences
+            </p>
           </div>
 
-          <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.1em]">
-            Space Styling . Design Consultation . Curated Furniture 
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          {/* CTA Buttons with animations */}
+          <div className="flex flex-col sm:flex-row gap-4 pt-6 animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <button
               id="cta-book-hero"
               onClick={(e) => {
@@ -96,24 +114,37 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
                   handleCtaClick(e, 'contact-section');
                 }
               }}
-              className="pointer-events-auto px-8 py-3.5 bg-brand-cranberry text-brand-base rounded-full hover:bg-brand-bark/90 hover:text-brand-base text-xs uppercase tracking-[0.15em] font-medium shadow-sm transition-all duration-300 text-center cursor-pointer"
+              className="pointer-events-auto px-8 py-4 bg-brand-cranberry text-brand-ivory hover:bg-brand-bark hover:text-brand-ivory text-xs uppercase tracking-[0.15em] font-semibold shadow-premium-md transition-all duration-400 text-center cursor-pointer rounded-lg btn-animated group relative overflow-hidden"
             >
-              Book a consultation
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Book a consultation
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </button>
+            
+            <button
+              onClick={(e) => handleCtaClick(e, 'interactive-render-gallery')}
+              className="pointer-events-auto px-8 py-4 border-2 border-brand-ivory/40 text-brand-ivory hover:border-brand-ivory hover:bg-brand-ivory/5 text-xs uppercase tracking-[0.15em] font-semibold transition-all duration-400 text-center cursor-pointer rounded-lg btn-animated backdrop-blur-sm"
+            >
+              Explore Gallery
             </button>
           </div>
         </div>
 
+        {/* Scroll indicator with animation */}
         <button
           type="button"
           onClick={(e) => handleCtaClick(e, 'interactive-render-gallery')}
-          className="absolute right-6 z-30 inline-flex flex-col items-center pointer-events-auto text-black hover:text-black transition-colors duration-300 lg:hidden"
+          className="absolute right-6 z-30 inline-flex flex-col items-center pointer-events-auto text-brand-ivory hover:text-brand-cranberry transition-colors duration-300 lg:hidden animate-bounce"
           style={{ top: arrowTop }}
         >
-          <span className="text-[10px] uppercase tracking-[0.25em] mb-2"></span>
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-base/40 bg-brand-base/90 backdrop-blur-sm">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 5V19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M18 13L12 19L6 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          <span className="text-[10px] uppercase tracking-[0.25em] mb-3 text-brand-ivory/60">Scroll</span>
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-brand-ivory/40 bg-brand-ivory/5 backdrop-blur-md hover:border-brand-cranberry/60 transition-all duration-300">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M18 13L12 19L6 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
         </button>

@@ -477,7 +477,7 @@ export default function App() {
       .map((item) => `- ${item.product.name} (Quantity: ${item.quantity})`)
       .join('\n');
     
-    setServicePreset('Curated Furniture Retail');
+    setServicePreset('Timeless Furniture Retail');
     setBriefPreset(
       `Hi, I have put together an initial acquisition draft from the Zanori Spaces shop index:\n${stringifiedItems}\n\nKindly provide local delivery schedules and freight specifications for Lagos.`
     );
