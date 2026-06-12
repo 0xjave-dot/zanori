@@ -2,22 +2,15 @@ import React from 'react';
 
 export default function Loader() {
   return (
-    <div
-      aria-hidden={false}
-      className="fixed inset-0 z-[9999]"
-      style={{
-        backgroundImage: 'url(/32cdcee6-1171-11ee-a9d3-97c6c8303a4c.gif)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        pointerEvents: 'none',
-        width: '100%',
-        height: '100%',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      }}
-    />
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85">
+      <div className="rounded-3xl bg-[#0b0b0b]/95 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.55)] border border-white/10 flex items-center justify-center">
+        <img
+          src="/32cdcee6-1171-11ee-a9d3-97c6c8303a4c.gif"
+          alt="Loading animation"
+          className="w-40 h-auto"
+          style={{ maxWidth: '100%', display: 'block' }}
+        />
+      </div>
+    </div>
   );
 }
