@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -10,7 +10,6 @@ import HowItWorks from './components/HowItWorks';
 import WhatWeDo from './components/WhatWeDo';
 import Projects from './components/Projects';
 import ContactForm from './components/ContactForm';
-import DesignerBio from './components/DesignerBio';
 import InteractiveGallery from './components/InteractiveGallery';
 import WhyChooseUs from './components/WhyChooseUs';
 import Testimonial from './components/Testimonial';
@@ -20,6 +19,7 @@ import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
 import InquiryDrawer from './components/InquiryDrawer';
 import Toast from './components/Toast';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 // Models
 import { Project, Product, InquiryItem, SavedDesign, WishlistItem, GiftPurchase } from './types';
@@ -486,11 +486,13 @@ export default function App() {
 
   const totalInquiryItemsCount = inquiryItems.reduce((sum, item) => sum + item.quantity, 0);
   const [kuulaLoading, setKuulaLoading] = useState<boolean>(false);
+  const loaderVisibleAtRef = useRef<number | null>(null);
 
   // Robustly wait until Kuula iframes on the homepage have fired their load events
   useEffect(() => {
     if (currentPage !== 'home') {
       setKuulaLoading(false);
+      loaderVisibleAtRef.current = null;
       return;
     }
 
@@ -500,8 +502,10 @@ export default function App() {
     if (!needLoading && initialIframes.length === 0) {
       // no kuula iframes present — don't show loader
       setKuulaLoading(false);
+      loaderVisibleAtRef.current = null;
     } else if (needLoading) {
       setKuulaLoading(true);
+      loaderVisibleAtRef.current ||= Date.now();
     }
 
     let safetyTimeout: number | null = null;
@@ -510,11 +514,15 @@ export default function App() {
 
     const finishLoading = () => {
       if (renderTimeout) window.clearTimeout(renderTimeout);
+      const elapsed = loaderVisibleAtRef.current ? Date.now() - loaderVisibleAtRef.current : 0;
+      const minimumDelay = 5000;
+      const delay = elapsed >= minimumDelay ? 0 : minimumDelay - elapsed;
       renderTimeout = window.setTimeout(() => {
         setKuulaLoading(false);
+        loaderVisibleAtRef.current = null;
         if (observer) observer.disconnect();
         if (safetyTimeout) window.clearTimeout(safetyTimeout);
-      }, 800);
+      }, delay);
     };
 
     const checkAndAttach = () => {
@@ -556,6 +564,7 @@ export default function App() {
     // Safety fallback in case something never loads
     safetyTimeout = window.setTimeout(() => {
       setKuulaLoading(false);
+      loaderVisibleAtRef.current = null;
       if (observer) observer.disconnect();
     }, 15000);
 
@@ -564,6 +573,7 @@ export default function App() {
       const any = document.querySelectorAll('iframe[src*="kuula.co/share"]').length;
       if (any === 0) {
         setKuulaLoading(false);
+        loaderVisibleAtRef.current = null;
         if (observer) observer.disconnect();
         if (safetyTimeout) window.clearTimeout(safetyTimeout);
       }
@@ -616,7 +626,6 @@ export default function App() {
             <div className="reveal-section"><InteractiveGallery /></div>
             <div className="reveal-section"><WhyChooseUs /></div>
             <div className="reveal-section"><WhatWeDo /></div>
-            <div className="reveal-section"><DesignerBio /></div>
             <div className="reveal-section"><ConfidenceAssurance /></div>
             <div className="reveal-section"><Projects /></div>
             <div className="reveal-section"><HowItWorks /></div>
@@ -658,7 +667,7 @@ export default function App() {
           <div className="reveal-section max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
-                ZANORI DIGITAL DESIGN WORKSPACE
+                ZANORI SPACES
               </span>
               <h1 className="font-serif text-4xl md:text-5xl font-light text-brand-dark">
                 My Space Studio AI
@@ -763,6 +772,9 @@ export default function App() {
         message={toastMessage}
         onClose={() => setToastMessage(null)}
       />
+
+      {/* Floating WhatsApp Button */}
+      <FloatingWhatsApp />
 
     </div>
   );

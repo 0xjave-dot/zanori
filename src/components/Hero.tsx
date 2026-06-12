@@ -90,7 +90,7 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
             
             <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-light leading-[0.95] text-brand-ivory">
               Spaces designed to reflect the
-              <span className="block mt-3 text-brand-cranberry">
+              <span className="text-brand-cranberry mx-2">
                 {rotatingWords[highlightIdx]}
               </span>
               of each client.
@@ -124,10 +124,10 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
             </button>
             
             <button
-              onClick={(e) => handleCtaClick(e, 'interactive-render-gallery')}
+              onClick={(e) => handleCtaClick(e, 'work-page')}
               className="pointer-events-auto px-8 py-4 border-2 border-brand-ivory/40 text-brand-ivory hover:border-brand-ivory hover:bg-brand-ivory/5 text-xs uppercase tracking-[0.15em] font-semibold transition-all duration-400 text-center cursor-pointer rounded-lg btn-animated backdrop-blur-sm"
             >
-              Explore Gallery
+              View Portfolio
             </button>
           </div>
         </div>

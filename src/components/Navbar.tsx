@@ -75,7 +75,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             onClick={(e) => handleLinkClick(e, '#/')}
             className="font-serif text-2xl font-light tracking-[0.2em] text-brand-ivory hover:text-brand-cranberry transition-all duration-300 transform hover:scale-105"
           >
-            ZANORI
+            ZANORI SPACES
           </a>
 
           {/* Center Links (Desktop) */}

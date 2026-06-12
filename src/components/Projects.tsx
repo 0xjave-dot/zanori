@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import type { MotionValue } from 'motion/react';
+import FadeIn from './FadeIn';
+import LiveProjectButton from './LiveProjectButton';
+import ProjectDetailModal from './ProjectDetailModal.tsx';
 
 type ProjectItem = {
   id: string;
@@ -8,149 +13,156 @@ type ProjectItem = {
   location: string;
   year: string;
   service: string;
-  images: string[]; // image placeholders or urls
+  images: string[];
 };
 
 const PROJECTS: ProjectItem[] = [
   {
-    id: 'p1',
+    id: '01',
     title: 'The Adunola Residence',
-    tag: 'Project 01 · Space Styling',
+    tag: 'Space Styling',
     description:
-      "A warm, earthy living space designed around the owner's love for natural materials and quiet mornings. We layered warm colors, fabric, and handcrafted ceramics to create a home that truly breathes.",
+      "A warm, earthy living space designed around the owner's love for natural materials and quiet mornings.",
     location: 'Lekki, Lagos',
     year: '2024',
     service: 'Space Styling',
     images: [
-      'https://i.pinimg.com/736x/50/c4/98/50c49834ecfa4556297715b427a0347c.jpg'
+      'https://i.pinimg.com/736x/50/c4/98/50c49834ecfa4556297715b427a0347c.jpg',
+      'https://images.unsplash.com/photo-1524758631624-e2822e304c36',
+      'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a'
     ]
   },
   {
-    id: 'p2',
+    id: '02',
     title: 'Eko Heights Apartment',
-    tag: 'Project 02 · Consultation',
-    description:
-      'We had a compact city apartment transformed through thoughtful planning and efficient use of space. We advised on layout flow, colour temperature, and furniture scale to open up the space without touching a wall.',
+    tag: 'Consultation',
+    description: 'Compact apartment reworked for flow and daylight.',
     location: 'Victoria Island',
     year: '2024',
     service: 'Consultation',
     images: [
-      'https://cdn.home-designing.com/wp-content/uploads/2013/10/glass-wall.jpeg'
+      'https://cdn.home-designing.com/wp-content/uploads/2013/10/glass-wall.jpeg',
+      'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5',
+      'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a'
     ]
   },
   {
-    id: 'p3',
+    id: '03',
     title: 'The Banwo Family Home',
-    tag: 'Project 03 · Furniture',
-    description:
-      'A full furniture sourcing project for a newly built family home. Every piece was selected for longevity, comfort, and harmony — from the dining set to the bedroom wardrobes.',
+    tag: 'Furniture',
+    description: 'Furniture sourcing for a growing family home.',
     location: 'Abuja, FCT',
     year: '2023',
     service: 'Furniture',
     images: [
-      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTUlXrfEJM9G4h153a01e80LO6iNj2p5hUMVVc1rawiqLJn9D1IWN_5Fnx5Ym6tIIZ_29PjHLeftg96V_bykbw5TuzF1TjSzLXalHKTbaJVo9xrlkKJNFlM&usqp=CAc'
-    ]
-  },
-  {
-    id: 'p4',
-    title: 'Zuri Studio Office',
-    tag: 'Project 04 · Space Styling',
-    description:
-      ' We brought warmth into a creative studio, redesign it to give the inspirational effect it was always meant to have, with top-notch styling, real plants and proper lighting.',
-    location: 'Ikoyi, Lagos',
-    year: '2023',
-    service: 'Space Styling',
-    images: [
-      'https://greeneryunlimited.co/cdn/shop/articles/Electric-Garden-1.jpg?v=1539108682'
+      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTUlXrfEJM9G4h153a01e80LO6iNj2p5hUMVVc1rawiqLJn9D1IWN_5Fnx5Ym6tIIZ_29PjHLeftg96V_bykbw5TuzF1TjSzLXalHKTbaJVo9xrlkKJNFlM&usqp=CAc',
+      'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a',
+      'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5'
     ]
   }
 ];
 
-function PlaceholderImage({ id }: { id?: string }) {
-  const isUrl = typeof id === 'string' && /^https?:\/\//i.test(id);
-
-  if (isUrl) {
-    return (
-      <div className="ip placeholder">
-        <img
-          src={id}
-          alt="Project preview"
-          className="w-full h-full object-cover"
-          style={{ display: 'block', width: '100%', height: '100%' }}
-        />
-      </div>
-    );
-  }
-
+function PlaceholderImage({ src, alt, height }: { src?: string; alt?: string; height?: string | number }) {
+  if (!src) return <div className="ip placeholder" style={{ background: '#111', height: height || 200 }} />;
   return (
-    <div className="ip placeholder" style={{ background: '#f6f4f2' }}>
-      {id ? (
-        <svg width="100%" height="100%" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice">
-          <rect width="100%" height="100%" fill="#f6f4f2" />
-          <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="#bdb5ad" fontSize="20">{id}</text>
-        </svg>
-      ) : null}
-    </div>
-  );
-}
-
-function MobileCarousel({ images }: { images: string[] }) {
-  const [index, setIndex] = useState(0);
-
-  const prev = () => setIndex((i) => (i - 1 + images.length) % images.length);
-  const next = () => setIndex((i) => (i + 1) % images.length);
-
-  return (
-    <div className="project-carousel">
-      <div className="carousel-window">
-        <PlaceholderImage id={images[index]} />
-      </div>
-      {images.length > 1 && (
-        <div className="carousel-controls">
-          <button type="button" onClick={prev} aria-label="Previous" className="carousel-btn">‹</button>
-          <button type="button" onClick={next} aria-label="Next" className="carousel-btn">›</button>
-        </div>
-      )}
+    <div className="ip placeholder" style={{ height: height || 200 }}>
+      <img src={src} alt={alt || ''} className="w-full h-full object-cover" />
     </div>
   );
 }
 
 export default function Projects() {
+  const list = PROJECTS.slice(0, 3);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const total = list.length;
+
+  const [modalProject, setModalProject] = useState<any | null>(null);
+
   return (
-    <section className="pg">
-      <div className="proj-section">
-        <div className="proj-header">
-          <span className="lbl"></span>
-          <h2>Featured Projects</h2>
+    <section className="proj-section">
+      <FadeIn delay={0} y={30}>
+        <div className="text-center mb-16 md:mb-24">
+          <h2 className="text-[clamp(2.5rem,8vw,4.5rem)] font-black uppercase tracking-tight leading-none text-white mb-4">
+            Featured Projects
+          </h2>
+          <p className="text-[#D7E2EA] text-sm md:text-base font-light tracking-wide uppercase max-w-2xl mx-auto">
+            
+          </p>
         </div>
+      </FadeIn>
 
-        {PROJECTS.map((p, idx) => (
-          <div className="proj" key={p.id}>
-            {/* Text */}
-            <div className="proj-text">
-              <span className="lbl">{p.tag}</span>
-              <h3>{p.title}</h3>
-              <p>{p.description}</p>
-              <div className="proj-meta">
-                <div className="meta-item"><span className="lbl">Location</span><p>{p.location}</p></div>
-                <div className="meta-item"><span className="lbl">Year</span><p>{p.year}</p></div>
-                <div className="meta-item"><span className="lbl">Service</span><p>{p.service}</p></div>
+      <div ref={ref} className="px-6 max-w-6xl mx-auto relative" style={{ paddingBottom: 140 }}>
+        {list.map((project, index) => {
+          const start = index / total;
+          const end = (index + 1) / total;
+          const targetScale = 1 - (total - 1 - index) * 0.04;
+          const scale = useTransform(scrollYProgress as MotionValue<number>, [start, end], [1, targetScale]);
+
+          return (
+            <div key={project.id} style={{ position: 'relative', zIndex: total - index }} className="mb-8">
+              <div className="sticky h-[85vh] flex items-start justify-center" style={{ top: `${index * 36 + 60}px` }}>
+                <motion.div
+                  onClick={() => {
+                    // open modal with richer image keys expected by the modal
+                    setModalProject({
+                      num: project.id,
+                      name: project.title,
+                      category: project.tag,
+                      description: project.description,
+                      location: project.location,
+                      year: project.year,
+                      service: project.service,
+                      images: {
+                        col1_1: project.images[0],
+                        col1_2: project.images[1],
+                        col2: project.images[2]
+                      }
+                    });
+                  }}
+                  className="w-full rounded-[40px] border-2 border-[#D7E2EA]/15 bg-[#0C0C0C] p-4 origin-top overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] cursor-pointer"
+                  style={{ scale }}
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="text-[#D7E2EA] font-black text-[clamp(2rem,6vw,72px)] leading-none">{project.id}</div>
+                    <div className="uppercase tracking-widest text-[#D7E2EA] opacity-60 font-mono text-xs">{project.tag}</div>
+                    <h3 className="flex-1 text-[#D7E2EA] font-semibold text-lg md:text-2xl">{project.title}</h3>
+                    <LiveProjectButton
+                      label=""
+                      onClick={() =>
+                        setModalProject({
+                              num: project.id,
+                              name: project.title,
+                              category: project.tag,
+                              description: project.description,
+                              location: project.location,
+                              year: project.year,
+                              service: project.service,
+                              images: {
+                                col1_1: project.images[0],
+                                col1_2: project.images[1],
+                                col2: project.images[2]
+                              }
+                            })
+                      }
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-[40%_60%] gap-3">
+                    <div className="flex flex-col gap-3">
+                      <PlaceholderImage src={project.images[0]} height={180} />
+                      <PlaceholderImage src={project.images[1]} height={220} />
+                    </div>
+                    <PlaceholderImage src={project.images[2]} height={420} />
+                  </div>
+                </motion.div>
               </div>
-              <a href="#" className="proj-link">View Project</a>
             </div>
-
-            {/* Single desktop image */}
-            <div className="bento desktop-bento featured-image">
-              <PlaceholderImage id={p.images[0]} />
-            </div>
-
-            {/* Mobile carousel — visible only on small screens via CSS */}
-            <div className="mobile-carousel">
-              <MobileCarousel images={p.images.slice(0, 1)} />
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+      {/* Project Detail Modal */}
+      <ProjectDetailModal project={modalProject} isOpen={!!modalProject} onClose={() => setModalProject(null)} />
     </section>
   );
 }

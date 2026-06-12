@@ -30,27 +30,6 @@ export default function DesignerBio() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center py-16 px-4 sm:px-6 lg:px-8">
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <h2 className="text-[2.8rem] md:text-[3.8rem] leading-[0.95]">
-                  <span className="block font-sans font-bold text text-[#1a1a1a]">We make spaces alive,</span>
-                  <span className="block font-serif italic font-light text-[#1a1a1a]">one square-foot at a</span>
-                  <span className="block font-serif italic font-light text-[#1a1a1a]">time.</span>
-                </h2>
-              </div>
-
-              <div className="border-t border-[#d0cfc9] border-b border-[#d0cfc9] py-8">
-                <p className="font-sans text-[14px] leading-relaxed text-[#444]">
-                 When you imagine a interior design done right, we want to be the first to come to mind. 
-
-Every project we take on, is a chance to make someone's everyday life a little more beautiful. 
-
-Here, we strive to be creative, quality-driven, and always personal.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
