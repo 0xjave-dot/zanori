@@ -55,7 +55,7 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
               ZANORI SPACES
             </h3>
             <p className="text-xs font-light text-brand-sand/60 italic font-mono uppercase tracking-wider leading-relaxed max-w-sm">
-              Spaces designed around the way you live.
+              The Interior & Exterior Design Gallery.
             </p>
           </div>
 
@@ -127,7 +127,9 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
                   <Instagram size={14} />
                 </a>
                 <a
-                  href="#tel"
+                  href="https://wa.me/2349130377554"
+                  target="_blank"
+                  rel="noreferrer noopener"
                   aria-label="WhatsApp Link"
                   className="p-2 bg-brand-base/70 hover:bg-brand-cranberry hover:text-brand-base rounded-full transition-all border border-brand-wood/15"
                 >

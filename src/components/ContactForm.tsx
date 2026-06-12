@@ -266,9 +266,9 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                   <Mail size={12} className="text-brand-bark" />
                   <span>design@zanorispaces.com</span>
                 </a>
-                <a href="#tel" className="flex items-center space-x-2.5 hover:text-brand-dark transition-colors">
+                <a href="https://wa.me/2349130377554" target="_blank" rel="noreferrer noopener" className="flex items-center space-x-2.5 hover:text-brand-dark transition-colors">
                   <Phone size={12} className="text-brand-bark" />
-                  <span>+234 812 345 6789 (WhatsApp Direct)</span>
+                  <span>+234 913 037 7554 (WhatsApp Direct)</span>
                 </a>
                 <a href="https://www.instagram.com/zanori_spaces/" target="_blank" rel="noreferrer noopener" className="flex items-center space-x-2.5 hover:text-brand-dark transition-colors">
                   <Instagram size={12} className="text-brand-bark" />

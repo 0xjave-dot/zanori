@@ -49,15 +49,15 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
 
   const kuulaHeroUrl = 'https://kuula.co/share/NjV1w?logo=0&info=0&fs=1&vr=0&sd=1&thumbs=1&gyro=0';
 
-  // Rotating verb settings
-  const verbs = ['feel', 'breathe', 'move', 'flow', 'love'];
-  const [verbIdx, setVerbIdx] = useState<number>(0);
+  const rotatingWords = ['Personality', 'Lifestyle', 'Taste', 'Vision'];
+  const [highlightIdx, setHighlightIdx] = useState<number>(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setVerbIdx((v) => (v + 1) % verbs.length);
+    const intervalId = window.setInterval(() => {
+      setHighlightIdx((current) => (current + 1) % rotatingWords.length);
     }, 2000);
-    return () => clearInterval(interval);
+
+    return () => window.clearInterval(intervalId);
   }, []);
 
   return (
@@ -85,20 +85,19 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
           <div className="space-y-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <span className="text-[11px] uppercase tracking-[0.3em] font-medium text-brand-ivory/70 flex items-center space-x-3 inline-flex">
               <span className="w-3 h-px bg-brand-cranberry"></span>
-              <span>Premium Interior Design</span>
+              <span></span>
             </span>
             
             <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-light leading-[0.95] text-brand-ivory">
-              Spaces designed <br />
-              around the way you{' '}
-              <span className="italic relative inline-block">
-                <span key={verbs[verbIdx]} className="dynamic-verb drop-in text-brand-cranberry inline-block">{verbs[verbIdx]}</span>
+              Spaces designed to reflect the
+              <span className="block mt-3 text-brand-cranberry">
+                {rotatingWords[highlightIdx]}
               </span>
-              .
+              of each client.
             </h1>
             
             <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.15em] max-w-2xl">
-              Elevate your living spaces with expert design consultation, timeless furniture curation, and immersive spatial experiences
+              SPACE STYLING. DESIGN POPULATION. TIMELESS FURNITURE
             </p>
           </div>
 

@@ -1,6 +1,6 @@
 {
   "name": "Zanori Spaces",
-  "description": "Interactive website mockup for Zanori Spaces — a Lagos-based interior design studio offering space styling, design consultation, quality furniture, and 3D interior design.",
+  "description": "ZANORI SPACES — The Interior & Exterior Design Gallery",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
