@@ -5,7 +5,7 @@ export default function WhyChooseUs() {
     <section id="about-us" className="bg-[#f5f4f0] pt-16 pb-16 lg:pt-24 lg:pb-24">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-[48%_52%] gap-10 lg:gap-16 items-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 gap-4 lg:gap-6">
             <div className="relative overflow-hidden rounded-[28px] h-[220px] sm:h-[260px] bg-[#d4cfc6] shadow-[0_30px_80px_rgba(44,30,24,0.12)]">
               <img
                 src="https://www.nawy.com/blog/wp-content/uploads/2022/07/interior-design.jpg"
@@ -20,7 +20,7 @@ export default function WhyChooseUs() {
                 className="w-full h-full object-cover object-center"
               />
             </div>
-            <div className="sm:col-span-2 relative overflow-hidden rounded-[32px] h-[300px] bg-[#a8a29a] shadow-[0_30px_80px_rgba(44,30,24,0.12)]">
+            <div className="col-span-2 relative overflow-hidden rounded-[32px] h-[300px] bg-[#a8a29a] shadow-[0_30px_80px_rgba(44,30,24,0.12)]">
               <img
                 src="https://cdn.prod.website-files.com/64a483b190bfff9cdf96e93b/66979dfec14a83ab8adf8176_BI_ASTRATECH_Reception%20(1).webp"
                 alt="Signature reception interior styling with bespoke finishes"
