@@ -504,16 +504,26 @@ export default function App() {
       setKuulaLoading(true);
     }
 
-    let timeout = 0 as any;
+    let safetyTimeout: number | null = null;
+    let renderTimeout: number | null = null;
     let observer: MutationObserver | null = null;
+
+    const finishLoading = () => {
+      if (renderTimeout) window.clearTimeout(renderTimeout);
+      renderTimeout = window.setTimeout(() => {
+        setKuulaLoading(false);
+        if (observer) observer.disconnect();
+        if (safetyTimeout) window.clearTimeout(safetyTimeout);
+      }, 800);
+    };
 
     const checkAndAttach = () => {
       const kuulaIframes = Array.from(document.querySelectorAll('iframe[src*="kuula.co/share"]')) as HTMLIFrameElement[];
       if (kuulaIframes.length === 0) return false;
 
-      let remaining = kuulaIframes.filter((f) => f.dataset._kuulaLoaded !== '1');
+      const remaining = kuulaIframes.filter((f) => f.dataset._kuulaLoaded !== '1');
       if (remaining.length === 0) {
-        setKuulaLoading(false);
+        finishLoading();
         return true;
       }
 
@@ -523,12 +533,9 @@ export default function App() {
         ifr.dataset._kuulaBound = '1';
         const onLoad = () => {
           ifr.dataset._kuulaLoaded = '1';
-          // re-check all iframes
           const still = Array.from(document.querySelectorAll('iframe[src*="kuula.co/share"]')).filter((f: any) => f.dataset._kuulaLoaded !== '1');
           if (still.length === 0) {
-            setKuulaLoading(false);
-            if (observer) observer.disconnect();
-            clearTimeout(timeout);
+            finishLoading();
           }
         };
         ifr.addEventListener('load', onLoad, { once: true });
@@ -538,7 +545,7 @@ export default function App() {
     };
 
     // Initial attempt
-    const doneNow = checkAndAttach();
+    checkAndAttach();
 
     // Watch for iframes being injected later
     observer = new MutationObserver(() => {
@@ -547,7 +554,7 @@ export default function App() {
     observer.observe(document.body, { childList: true, subtree: true });
 
     // Safety fallback in case something never loads
-    timeout = window.setTimeout(() => {
+    safetyTimeout = window.setTimeout(() => {
       setKuulaLoading(false);
       if (observer) observer.disconnect();
     }, 15000);
@@ -558,14 +565,15 @@ export default function App() {
       if (any === 0) {
         setKuulaLoading(false);
         if (observer) observer.disconnect();
-        clearTimeout(timeout);
+        if (safetyTimeout) window.clearTimeout(safetyTimeout);
       }
       clearTimeout(shortCheck);
     }, 400);
 
     return () => {
       if (observer) observer.disconnect();
-      clearTimeout(timeout);
+      if (safetyTimeout) window.clearTimeout(safetyTimeout);
+      if (renderTimeout) window.clearTimeout(renderTimeout);
       clearTimeout(shortCheck);
     };
   }, [currentPage]);
