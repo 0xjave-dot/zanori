@@ -2,85 +2,71 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import type { MotionValue } from 'motion/react';
 import FadeIn from './FadeIn';
-import LiveProjectButton from './LiveProjectButton';
 import ProjectDetailModal from './ProjectDetailModal.tsx';
 
 type ProjectItem = {
   id: string;
   title: string;
-  tag: string;
+  category: string;
   description: string;
   location: string;
   year: string;
   service: string;
-  images: string[];
+  col1_1: string;
+  col1_2: string;
+  col2: string;
 };
 
 const PROJECTS: ProjectItem[] = [
   {
     id: '01',
     title: 'The Adunola Residence',
-    tag: 'Space Styling',
-    description:
-      "A warm, earthy living space designed around the owner's love for natural materials and quiet mornings.",
+    category: 'Residential',
+    description: 'A warm, earthy living space designed around the owner’s love for natural materials and quiet mornings.',
     location: 'Lekki, Lagos',
     year: '2024',
     service: 'Space Styling',
-    images: [
-      'https://i.pinimg.com/736x/50/c4/98/50c49834ecfa4556297715b427a0347c.jpg',
-      'https://images.unsplash.com/photo-1524758631624-e2822e304c36',
-      'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a'
-    ]
+    col1_1: 'https://i.pinimg.com/736x/50/c4/98/50c49834ecfa4556297715b427a0347c.jpg',
+    col1_2: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36',
+    col2: 'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a'
   },
   {
     id: '02',
     title: 'Eko Heights Apartment',
-    tag: 'Consultation',
+    category: 'Residential',
     description: 'Compact apartment reworked for flow and daylight.',
     location: 'Victoria Island',
     year: '2024',
     service: 'Consultation',
-    images: [
-      'https://cdn.home-designing.com/wp-content/uploads/2013/10/glass-wall.jpeg',
-      'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5',
-      'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a'
-    ]
+    col1_1: 'https://cdn.home-designing.com/wp-content/uploads/2013/10/glass-wall.jpeg',
+    col1_2: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5',
+    col2: 'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a'
   },
   {
     id: '03',
     title: 'The Banwo Family Home',
-    tag: 'Furniture',
+    category: 'Residential',
     description: 'Furniture sourcing for a growing family home.',
     location: 'Abuja, FCT',
     year: '2023',
     service: 'Furniture',
-    images: [
-      'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTUlXrfEJM9G4h153a01e80LO6iNj2p5hUMVVc1rawiqLJn9D1IWN_5Fnx5Ym6tIIZ_29PjHLeftg96V_bykbw5TuzF1TjSzLXalHKTbaJVo9xrlkKJNFlM&usqp=CAc',
-      'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a',
-      'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5'
-    ]
+    col1_1: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTUlXrfEJM9G4h153a01e80LO6iNj2p5hUMVVc1rawiqLJn9D1IWN_5Fnx5Ym6tIIZ_29PjHLeftg96V_bykbw5TuzF1TjSzLXalHKTbaJVo9xrlkKJNFlM&usqp=CAc',
+    col1_2: 'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a',
+    col2: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5'
   }
 ];
-
-function PlaceholderImage({ src, alt, height }: { src?: string; alt?: string; height?: string | number }) {
-  if (!src) return <div className="ip placeholder" style={{ background: '#111', height: height || 200 }} />;
-  return (
-    <div className="ip placeholder" style={{ height: height || 200 }}>
-      <img src={src} alt={alt || ''} className="w-full h-full object-cover" />
-    </div>
-  );
-}
 
 export default function Projects() {
   const list = PROJECTS.slice(0, 3);
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const translateY = useTransform(scrollYProgress as MotionValue<number>, [0, 1], [0, -80]);
   const total = list.length;
 
   const [modalProject, setModalProject] = useState<any | null>(null);
 
   return (
-    <section className="proj-section">
+    <section ref={ref} className="proj-section relative overflow-hidden py-24" style={{ paddingBottom: 220 }}>
       <FadeIn delay={0} y={30}>
         <div className="text-center mb-16 md:mb-24">
           <h2 className="text-[clamp(2.5rem,8vw,4.5rem)] font-black uppercase tracking-tight leading-none text-white mb-4">
@@ -92,7 +78,7 @@ export default function Projects() {
         </div>
       </FadeIn>
 
-      <div ref={ref} className="px-6 max-w-6xl mx-auto relative" style={{ paddingBottom: 140 }}>
+      <motion.div className="px-6 max-w-6xl mx-auto relative" style={{ y: translateY }}>
         {list.map((project, index) => {
           const start = index / total;
           const end = (index + 1) / total;

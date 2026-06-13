@@ -93,11 +93,11 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
               <span className="text-brand-cranberry mx-2">
                 {rotatingWords[highlightIdx]}
               </span>
-              of each client.
+              of every client.
             </h1>
             
             <p className="text-sm font-light leading-relaxed text-brand-ivory/80 uppercase tracking-[0.15em] max-w-2xl">
-              SPACE STYLING. DESIGN POPULATION. TIMELESS FURNITURE
+              SPACE STYLING. DESIGN CONSULTATION. TIMELESS FURNITURE
             </p>
           </div>
 

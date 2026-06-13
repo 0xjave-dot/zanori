@@ -212,7 +212,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
       >
         <div className="flex flex-col space-y-8 mt-12">
           <div className="text-[10px] uppercase tracking-[0.3em] text-brand-ivory/60 pb-4 border-b border-brand-ivory/20">
-            NAVIGATION
+            
           </div>
 
           {[
