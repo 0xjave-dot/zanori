@@ -42,7 +42,14 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
   };
 
   return (
-    <footer className="bg-brand-bark text-brand-base pt-12 md:pt-16 pb-8 md:pb-12 overflow-hidden relative">
+    <footer 
+      className="bg-brand-bark text-brand-base pt-12 md:pt-16 pb-8 md:pb-12 overflow-hidden relative"
+      style={{
+        backgroundImage: `url('https://i.ibb.co/v6t4x8Yw/Untitled-design-14.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-8 md:space-y-12">
         {/* Very top: Thin wood-tone hairline */}
         <div className="h-[1px] w-full bg-brand-cranberry/15"></div>
