@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function FloatingWhatsApp() {
-  const whatsappNumber = '+2347038205015'; // Update with your WhatsApp number
+  const whatsappNumber = '+2349130377554'; // Update with your WhatsApp number
   const message = 'Hello! I would like to inquire about your interior design services.';
 
   const handleClick = () => {
