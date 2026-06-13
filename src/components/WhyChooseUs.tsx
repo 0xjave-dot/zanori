@@ -37,7 +37,7 @@ export default function WhyChooseUs() {
                   <span className="block font-serif italic font-light text-[#1a1a1a]">We make spaces alive,</span>
                   <span className="block font-serif italic font-light text-[#1a1a1a]">one square-foot at a time.</span>
                 </h2>
-                <p className="font-sans text-sm uppercase tracking-[0.32em] text-[#8b6f52]">Interior styling · Bespoke furniture · 3D visualization</p>
+                <p className="font-sans text-sm uppercase tracking-[0.32em] text-[#8b6f52]">Interior styling · TIMELESS FURNITURE · 3D visualization</p>
               </div>
 
               <div className="border-t border-[#d0cfc9] border-b border-[#d0cfc9] py-8">
@@ -46,7 +46,7 @@ export default function WhyChooseUs() {
 My name is Adejumoke, i am a Certified Space Stylist and Interior Designer, and the Founder & Lead Designer of Zanori Spaces.
                 </p>
                 <p className="font-sans text-base leading-relaxed text-[#444] mb-5">
-                  For me, design goes beyond aesthetics. It is about creating intentional spaces that seamlessly blend beauty, functionality, and curated luxury. It is the art of crafting timeless interiors and bespoke furniture that reflect the personality, lifestyle, and vision of each client.
+                  For me, design goes beyond aesthetics. It is about creating intentional spaces that seamlessly blend beauty, functionality, and curated luxury. It is the art of crafting timeless interiors and TIMELESS FURNITURE that reflect the personality, lifestyle, and vision of each client.
 
 My mission is simple: to create distinctive spaces where every detail is thoughtfully considered, every piece serves a purpose, and every corner tells a story.
                 </p>

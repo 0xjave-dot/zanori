@@ -62,7 +62,7 @@
     },
     "GiftPurchase": {
       "title": "GiftPurchase",
-      "description": "A bespoke furniture piece purchased as a gift for a third party",
+      "description": "A TIMELESS FURNITURE piece purchased as a gift for a third party",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
