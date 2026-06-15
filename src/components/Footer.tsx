@@ -33,9 +33,6 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
           });
         }
       }
-    } else if (targetHash !== '#/') {
-      e.preventDefault();
-      onBlockedNavigation();
     } else {
       window.location.hash = targetHash;
     }
@@ -92,13 +89,6 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
                 className="hover:text-white transition-colors duration-200"
               >
                 Shop
-              </a>
-              <a
-                href="#/ai-renderer"
-                onClick={(e) => handleLinkClick(e, '#/ai-renderer')}
-                className="hover:text-white transition-colors duration-200"
-              >
-                My Spaces
               </a>
               <button
                 type="button"
@@ -169,4 +159,3 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
     </footer>
   );
 }
-

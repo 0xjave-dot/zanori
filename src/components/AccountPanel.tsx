@@ -24,7 +24,6 @@ interface AccountPanelProps {
   onDeleteDesign: (id: string) => Promise<void>;
   onDeleteWishlist: (id: string) => Promise<void>;
   onAddProductToInquiry: (product: Product) => void;
-  onSetTab: (tab: 'Renderer' | 'Account') => void;
   activeAccountTab: 'profile' | 'designs' | 'wishlist' | 'gifts';
   setActiveAccountTab: (tab: 'profile' | 'designs' | 'wishlist' | 'gifts') => void;
 }
@@ -38,7 +37,6 @@ export default function AccountPanel({
   onDeleteDesign,
   onDeleteWishlist,
   onAddProductToInquiry,
-  onSetTab,
   activeAccountTab,
   setActiveAccountTab
 }: AccountPanelProps) {
@@ -281,12 +279,6 @@ export default function AccountPanel({
 
         <div className="flex items-center space-x-3">
           <button
-            onClick={() => onSetTab('Renderer')}
-            className="px-4 py-2 border border-brand-wood/40 hover:border-brand-wood text-brand-wood text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
-          >
-            AI Designer Board
-          </button>
-          <button
             onClick={handleSignOut}
             className="p-2.5 bg-red-950/20 hover:bg-red-950/50 text-red-400 hover:text-red-300 rounded-lg transition-colors cursor-pointer"
             title="Secure Sign Out"
@@ -329,7 +321,7 @@ export default function AccountPanel({
       {/* Profile views switch content */}
       <div className="min-h-[300px]">
         {activeAccountTab === 'profile' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div className="max-w-2xl mx-auto">
             <div className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 space-y-6">
               <h3 className="font-serif text-lg text-brand-dark italic">Design Identity & Credentials</h3>
               
@@ -350,24 +342,6 @@ export default function AccountPanel({
                   <span className="text-brand-muted uppercase tracking-wider font-light">Last Sign In</span>
                   <span className="text-brand-dark">Just now</span>
                 </div>
-              </div>
-            </div>
-
-            <div className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 space-y-4">
-              <h3 className="font-serif text-lg text-brand-dark italic flex items-center space-x-1.5">
-                <HelpCircle size={16} className="text-brand-bark" />
-                <span>Need Professional Interior Assistance?</span>
-              </h3>
-              <p className="text-xs text-brand-muted font-sans font-light leading-relaxed">
-                As a registered Studio Club Member, your inquiry list has direct priority. Submit an inquiry through the boutique shop, or generate an arrangement brief via our AI Rooms generator to initiate structured material board mockups for your space.
-              </p>
-              <div className="pt-2">
-                <button
-                  onClick={() => onSetTab('Renderer')}
-                  className="px-5 py-2.5 bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-[10px] font-semibold uppercase tracking-widest rounded-xl transition-all"
-                >
-                  Synthesize a Room Now
-                </button>
               </div>
             </div>
           </div>
@@ -436,14 +410,8 @@ export default function AccountPanel({
                 </div>
                 <h3 className="font-serif text-xl font-light text-brand-dark">No saved spaces curated</h3>
                 <p className="text-xs text-brand-muted max-w-xs mx-auto font-sans font-light leading-relaxed">
-                  Head over to the AI Lab section, upload a physical home workstation, specify design directions, and preserve the synthesized brief inside your private club library.
+                  Your curated design briefs and architectural transformations will appear here once saved from your consultations.
                 </p>
-                <button
-                  onClick={() => onSetTab('Renderer')}
-                  className="mt-2 px-5 py-2 hover:bg-brand-dark text-brand-dark hover:text-white border border-brand-bark/30 text-[10px] uppercase tracking-wider rounded-full transition-all cursor-pointer"
-                >
-                  Open AI Designer
-                </button>
               </div>
             )}
           </div>
@@ -597,4 +565,3 @@ export default function AccountPanel({
     </div>
   );
 }
-

@@ -122,7 +122,7 @@ export default function ProjectDetailModal({ project, isOpen, onClose }: Project
                   <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-2">
                     <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
                     <span className="font-mono text-[10px] text-white tracking-widest uppercase">
-                      4K Production Master Output
+                      
                     </span>
                   </div>
                 </div>

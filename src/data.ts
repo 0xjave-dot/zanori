@@ -5,29 +5,29 @@ export const SERVICES_DATA: ServiceItem[] = [
     id: 'space-styling',
     number: '01',
     name: 'Space Styling',
-    description: 'Bespoke finishing and styling that completes your room. From premium material curation to custom art and accessory placement, we style spaces that tell your unique story.',
-    imageBg: 'linear-gradient(135deg, #E8E0D4 0%, #C4A882 100%)'
+    description: 'We provide the final layer of design for your room. This includes the selection and placement of art and accessories. Our team ensures that every decorative element works with the overall layout and furniture.',
+    imageBg: "url('https://images.unsplash.com/photo-1616486341351-702534f40f0c?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'design-consultation',
     number: '02',
     name: 'Design Consultation',
-    description: 'Expert, unhurried design directions, material mapping, and color choreography. A dedicated session in Lagos to untangle layouts and discover your home\'s authentic voice.',
-    imageBg: 'linear-gradient(135deg, #F7F4EF 0%, #E8E0D4 100%)'
+    description: 'This is a professional assessment of your interior layout. We analyze lighting and floor plans to suggest improvements. The session covers material selection and color palettes to guide the technical direction of your project.',
+    imageBg: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'quality-furniture',
     number: '03',
     name: 'Timeless Furniture Retail',
-    description: 'A thoughtful collection of premium quality retail pieces — sofas, queen beds, bespoke shelving, and storage units designed for quiet luxury and enduring daily beauty.',
-    imageBg: 'linear-gradient(135deg, #C4A882 0%, #8B6F52 100%)'
+    description: 'We supply high quality furniture pieces from our catalog. Our service covers the full procurement process. This includes the management of transport and the physical assembly of items in your home or office.',
+    imageBg: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: '3d-design',
     number: '04',
     name: '3D Interior Design',
-    description: 'Our signature technical service. Full visual immersion of your space prior to implementation. Real textures, lighting configurations, and accurate furniture scales mapped flawlessly.',
-    imageBg: 'linear-gradient(135deg, #8B6F52 0%, #2A2520 100%)',
+    description: 'This is a technical service where we create a digital version of your space. It shows accurate furniture scales and lighting. You can see exactly how the design will look before you spend money on construction.',
+    imageBg: "url('https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=2000&auto=format&fit=crop') center/cover",
     isSignature: true
   }
 ];
@@ -39,8 +39,8 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Homes',
     location: 'Ikoyi, Lagos',
     servicesUsed: ['Space Styling', 'Quality Furniture', '3D Interior Design'],
-    description: 'A multi-generational residential suite redesigned to promote ease, natural Nigerian lighting, and minimalist Nordic functionality. Balanced with warm custom oak and local hand-woven textiles.',
-    imageBg: 'linear-gradient(135deg, #E8E0D4 0%, #C4A882 40%, #8B6F52 100%)',
+    description: 'This renovation updated a residential penthouse for a large family. The goal was to increase natural light and improve the flow between rooms. We installed custom oak joinery and used local textiles for the styling. 3D modeling verified all layout changes before construction began. The project included space styling and the supply of custom furniture.',
+    imageBg: "url('https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=2000&auto=format&fit=crop') center/cover",
     isFeatured: true
   },
   {
@@ -49,17 +49,17 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Commercial',
     location: 'Victoria Island, Lagos',
     servicesUsed: ['Space Styling', 'Design Consultation'],
-    description: 'An editorial workspace built for a leading visual brand. High ceilings are anchored by our dark charcoal custom storage layouts and functional timber meeting tables.',
-    imageBg: 'linear-gradient(135deg, #F7F4EF 0%, #E8E0D4 100%)'
+    description: 'This project involved the interior design of a workspace for a media agency. The high ceilings required specific storage solutions which we addressed with dark charcoal cabinets. We placed timber tables in the meeting areas. The layout supports both collaborative tasks and individual work. Our team provided design consultation to choose the final material and color palette.',
+    imageBg: "url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'proj-3',
-    title: 'Lekki Phase 1 Minimalist Villa',
+    title: 'Lekki Phase One Minimalist Villa',
     category: 'Homes',
     location: 'Lekki, Lagos',
     servicesUsed: ['3D Interior Design', 'Quality Furniture'],
-    description: 'A serene urban retreat with an emphasis on seamless physical transitions, custom low-slung master beds, and deep sand-matted walls that absorb Lagos tropical heat.',
-    imageBg: 'linear-gradient(135deg, #C4A882 0%, #2A2520 100%)'
+    description: 'We created a private home designed for a tropical climate. The interior uses low profile furniture and sand textured walls to reduce heat and light. Detailed 3D designs planned the furniture placement and window orientations for better comfort. The project featured our custom beds and shelving units to maintain a simple look.',
+    imageBg: "url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'proj-4',
@@ -67,17 +67,17 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Designs',
     location: 'Eko Atlantic, Lagos',
     servicesUsed: ['3D Interior Design', 'Design Consultation'],
-    description: 'A premium corporate concept utilizing advanced digital simulations of solar positions to optimize executive lounge layouts, furniture tones, and accent placements.',
-    imageBg: 'linear-gradient(135deg, #8B6F52 0%, #F7F4EF 100%)'
+    description: 'This corporate office suite development focused on executive comfort. We analyzed sun positions to determine the best placement for workstations and lounge areas. We selected furniture tones to match the exterior glass facade of the building. Digital simulations helped select all materials and lighting configurations for the space.',
+    imageBg: "url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'proj-5',
-    title: 'Banana Island Salon & Spa Lounge',
+    title: 'Banana Island Salon and Spa Lounge',
     category: 'Commercial',
     location: 'Banana Island, Lagos',
     servicesUsed: ['Space Styling', 'Quality Furniture'],
-    description: 'A commercial sanctuary utilizing Scandinavian sensory cues, monolithic travertine basins, and custom-styled modular storage units in light oak finishes.',
-    imageBg: 'linear-gradient(135deg, #FDFCFA 0%, #C4A882 100%)'
+    description: 'We outfitted a commercial wellness space for better functionality. The project used modular storage units and travertine basins. We used light oak finishes to create a calm environment for clients. Every furniture piece was selected for high durability to withstand constant use in a high traffic commercial setting.',
+    imageBg: "url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=2000&auto=format&fit=crop') center/cover"
   }
 ];
 

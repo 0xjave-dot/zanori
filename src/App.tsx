@@ -3,7 +3,6 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import ConfidenceAssurance from './components/ConfidenceAssurance';
-import RoomRenderer from './components/RoomRenderer';
 import Portfolio from './components/Portfolio';
 import Shop from './components/Shop';
 import HowItWorks from './components/HowItWorks';
@@ -56,9 +55,6 @@ export default function App() {
   const [savedDesigns, setSavedDesigns] = useState<SavedDesign[]>([]);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [giftPurchases, setGiftPurchases] = useState<GiftPurchase[]>([]);
-
-  // Sub-navigation view modes inside "My Space"
-  const [mySpaceTab, setMySpaceTab] = useState<'Renderer' | 'Account'>('Renderer');
   const [activeAccountTab, setActiveAccountTab] = useState<'profile' | 'designs' | 'wishlist' | 'gifts'>('profile');
 
   // Gift purchasing overlay state
@@ -371,22 +367,15 @@ export default function App() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       if (hash.startsWith('#/work')) {
-        setToastMessage('not done yet');
-        window.location.hash = '#';
+        setCurrentPage('work');
       } else if (hash.startsWith('#/services')) {
         setCurrentPage('services');
       } else if (hash.startsWith('#/shop')) {
-        setToastMessage('not done yet');
-        window.location.hash = '#';
-      } else if (hash.startsWith('#/ai-renderer')) {
-        setToastMessage('not done yet');
-        window.location.hash = '#';
+        setCurrentPage('shop');
       } else if (hash.startsWith('#/account')) {
-        setToastMessage('not done yet');
-        window.location.hash = '#';
+        setCurrentPage('account');
       } else if (hash.startsWith('#/admin')) {
-        setToastMessage('not done yet');
-        window.location.hash = '#';
+        setCurrentPage('admin');
       } else {
         setCurrentPage('home');
         if (hash.includes('home-')) {
@@ -662,27 +651,6 @@ export default function App() {
           </div>
         )}
 
-        {/* My Spaces / PRIVATE LOUNGE WORKSPACE */}
-        {currentPage === 'ai-renderer' && (
-          <div className="reveal-section max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
-            <div>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
-                ZANORI SPACES
-              </span>
-              <h1 className="font-serif text-4xl md:text-5xl font-light text-brand-dark">
-                My Space Studio AI
-              </h1>
-            </div>
-
-            <RoomRenderer 
-              user={user}
-              onSaveDesign={handleSaveDesign}
-              savedDesigns={savedDesigns}
-              onOpenConsultationModal={() => setIsConsultationModalOpen(true)}
-            />
-          </div>
-        )}
-
         {/* ACCOUNT CLIENT SPACE */}
         {currentPage === 'account' && (
           <div className="reveal-section max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
@@ -704,11 +672,6 @@ export default function App() {
               onDeleteDesign={handleDeleteDesign}
               onDeleteWishlist={handleDeleteWishlist}
               onAddProductToInquiry={handleAddProductToInquiryVal}
-              onSetTab={(tab) => {
-                if (tab === 'Renderer') {
-                  window.location.hash = '#/ai-renderer';
-                }
-              }}
               activeAccountTab={activeAccountTab}
               setActiveAccountTab={setActiveAccountTab}
             />

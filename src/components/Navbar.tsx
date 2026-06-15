@@ -50,9 +50,6 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
           });
         }
       }
-    } else if (targetHash !== '#/') {
-      e.preventDefault();
-      onBlockedNavigation();
     } else {
       window.location.hash = targetHash;
     }
@@ -116,19 +113,6 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
               Shop
               <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
                 currentPage === 'shop' ? 'w-full' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </a>
-
-            <a
-              href="#/ai-renderer"
-              onClick={(e) => handleLinkClick(e, '#/ai-renderer')}
-              className={`transition-all duration-300 relative py-1 group hover:text-brand-ivory ${
-                currentPage === 'ai-renderer' ? 'text-brand-ivory font-medium' : ''
-              }`}
-            >
-              <span>My Space</span>
-              <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
-                currentPage === 'ai-renderer' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </a>
 
@@ -219,7 +203,6 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
             { label: 'Work', href: '#/work', current: currentPage === 'work' },
             { label: 'Services', href: '#/services', current: currentPage === 'services' },
             { label: 'Shop', href: '#/shop', current: currentPage === 'shop' },
-            { label: 'My Space', href: '#/ai-renderer', current: currentPage === 'ai-renderer' },
             { label: user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account', href: '#/account', current: currentPage === 'account' }
           ].map((item, idx) => (
             <a
