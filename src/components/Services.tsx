@@ -111,10 +111,10 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
   };
 
   const serviceSpecs = [
-    { title: "3D Space Graphics", desc: "We generate high resolution 3D models to visualize the room layout. This includes realistic lighting and material textures to confirm design choices before physical implementation begins." },
-    { title: "Space Styling", desc: "Our team handles the final placement of art and decorative objects. We curate accessories that complement the architectural style and specific furniture dimensions within the space." },
-    { title: "Furniture Sourcing", desc: "We manage the selection and procurement of furniture from verified vendors. Our service includes tracking delivery and supervising the assembly of all pieces on site." },
-    { title: "Design Consultation", desc: "This involves a technical review of your space to determine the best floor plan. We provide expert advice on color schemes and material selection to optimize the functionality of the room." }
+    { title: "3D VISUALIZATION", desc: "We generate high resolution 3D models to visualize the room layout. This includes realistic lighting and material textures to confirm design choices before physical implementation begins." },
+    { title: "SPACE STYLING (SOFT FURNISHINGS)", desc: "Our team handles the final placement of art and decorative objects. We curate accessories that complement the architectural style and specific furniture dimensions within the space." },
+    { title: "FURNITURES ONLY", desc: "We manage the selection and procurement of furniture from verified vendors. Our service includes tracking delivery and supervising the assembly of all pieces on site." },
+    { title: "DESIGN CONSULTATION", desc: "This involves a technical review of your space to determine the best floor plan. We provide expert advice on color schemes and material selection to optimize the functionality of the room." }
   ];
 
   return (

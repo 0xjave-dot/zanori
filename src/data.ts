@@ -4,28 +4,28 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: 'space-styling',
     number: '01',
-    name: 'Space Styling',
+    name: 'SPACE STYLING (SOFT FURNISHINGS)',
     description: 'We provide the final layer of design for your room. This includes the selection and placement of art and accessories. Our team ensures that every decorative element works with the overall layout and furniture.',
     imageBg: "url('https://images.unsplash.com/photo-1616486341351-702534f40f0c?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'design-consultation',
     number: '02',
-    name: 'Design Consultation',
+    name: 'DESIGN CONSULTATION',
     description: 'This is a professional assessment of your interior layout. We analyze lighting and floor plans to suggest improvements. The session covers material selection and color palettes to guide the technical direction of your project.',
     imageBg: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'quality-furniture',
     number: '03',
-    name: 'Timeless Furniture Retail',
+    name: 'FURNITURES ONLY',
     description: 'We supply high quality furniture pieces from our catalog. Our service covers the full procurement process. This includes the management of transport and the physical assembly of items in your home or office.',
     imageBg: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: '3d-design',
     number: '04',
-    name: '3D Interior Design',
+    name: '3D VISUALIZATION',
     description: 'This is a technical service where we create a digital version of your space. It shows accurate furniture scales and lighting. You can see exactly how the design will look before you spend money on construction.',
     imageBg: "url('https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=2000&auto=format&fit=crop') center/cover",
     isSignature: true

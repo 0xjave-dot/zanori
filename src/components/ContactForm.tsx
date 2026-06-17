@@ -143,11 +143,12 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                     className="w-full px-4 py-3.5 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
                   >
                     <option value="">Select a service...</option>
-                    <option value="Space Styling">Space Styling</option>
-                    <option value="Design Consultation">Design Consultation</option>
-                    <option value="Timeless Furniture Retail">Quality Furniture Only</option>
-                    <option value="3D Interior Design">3D Interior Design</option>
-                    <option value="Full Project">Full Comprehensive Project</option>
+                    <option value="FULL COMPREHENSIVE INTERIOR DESIGN">FULL COMPREHENSIVE INTERIOR DESIGN</option>
+                    <option value="DESIGN CONSULTATION">DESIGN CONSULTATION</option>
+                    <option value="SPACE STYLING (SOFT FURNISHINGS)">SPACE STYLING (SOFT FURNISHINGS)</option>
+                    <option value="FURNITURES ONLY">FURNITURES ONLY</option>
+                    <option value="3D VISUALIZATION">3D VISUALIZATION</option>
+                    <option value="EXTERIOR DESIGN">EXTERIOR DESIGN</option>
                   </select>
                 </div>
 
@@ -284,4 +285,3 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
     </div>
   );
 }
-
