@@ -489,7 +489,7 @@
 /* Infinite sliding gallery styles */
 .infinite-gallery-section {
   width: 100%;
-  background: #0d0d0d;
+  background: transparent;
   padding: 60px 0;
   overflow: hidden;
 }
@@ -501,7 +501,7 @@
   gap: 12px;
   align-items: center;
   will-change: transform;
-  animation: infinite-scroll 20s linear infinite;
+  animation: infinite-scroll 14s linear infinite;
 }
 .infinite-gallery-section:hover .infinite-track {
   animation-play-state: paused;
