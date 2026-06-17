@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Cpu, Layers, Hourglass, Sparkles, AlertCircle, Quote } from 'lucide-react';
+import { X, Hourglass, AlertCircle } from 'lucide-react';
 
 interface Project {
   num: string;
@@ -163,23 +163,7 @@ export default function ProjectDetailModal({ project, isOpen, onClose }: Project
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 border border-[#D7E2EA]/10 p-4 rounded-3xl">
-                    <div className="flex items-start gap-2.5">
-                      <Cpu className="w-5 h-5 text-[#BBCCD7] shrink-0 mt-0.5" />
-                      <div className="flex flex-col">
-                        <span className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase tracking-wider">Software Stack</span>
-                        <span className="text-white text-xs font-medium uppercase tracking-wide">{specs.software}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-2.5">
-                      <Layers className="w-5 h-5 text-[#BBCCD7] shrink-0 mt-0.5" />
-                      <div className="flex flex-col">
-                        <span className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase tracking-wider">Geometry Density</span>
-                        <span className="text-white text-xs font-medium uppercase tracking-wide">{specs.geometry}</span>
-                      </div>
-                    </div>
-
+                  <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 bg-white/5 border border-[#D7E2EA]/10 p-4 rounded-3xl">
                     <div className="flex items-start gap-2.5">
                       <Hourglass className="w-5 h-5 text-[#BBCCD7] shrink-0 mt-0.5" />
                       <div className="flex flex-col">
@@ -187,37 +171,9 @@ export default function ProjectDetailModal({ project, isOpen, onClose }: Project
                         <span className="text-white text-xs font-medium uppercase tracking-wide">{specs.timeframe}</span>
                       </div>
                     </div>
-
-                    <div className="flex items-start gap-2.5">
-                      <Sparkles className="w-5 h-5 text-[#BBCCD7] shrink-0 mt-0.5" />
-                      <div className="flex flex-col">
-                        <span className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase tracking-wider">Master Quality</span>
-                        <span className="text-white text-xs font-medium uppercase tracking-wide">4K Volumetrics // EXR</span>
-                      </div>
-                    </div>
                   </div>
 
-                  <div className="flex flex-col gap-1">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#D7E2EA]/45">Technical Pipeline Process</span>
-                    <p className="text-xs sm:text-sm text-[#D7E2EA]/75 font-light leading-relaxed">
-                      {specs.process}
-                    </p>
-                  </div>
-
-                  <div className="border-l-2 border-[#BBCCD7] pl-4 py-1 flex items-start gap-3 mt-1 bg-white/[0.02] p-3 rounded-r-2xl">
-                    <Quote className="w-4 h-4 text-[#BBCCD7] shrink-0 mt-1 opacity-70" />
-                    <div>
-                      <p className="text-xs italic text-[#D7E2EA]/85 leading-relaxed">
-                        &ldquo;{specs.testimonial}&rdquo;
-                      </p>
-                      <span className="block font-mono text-[9px] text-[#BBCCD7] uppercase tracking-wider mt-1.5">
-                        &mdash; Project Reviewer Feedback
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/5 border border-yellow-500/20 px-3.5 py-3 rounded-2xl flex items-center gap-2 text-yellow-200/90 shrink-0 mt-4">
+                  <div className="bg-white/5 border border-yellow-500/20 px-3.5 py-3 rounded-2xl flex items-center gap-2 text-yellow-200/90 shrink-0 mt-4">
                   <AlertCircle className="w-4 h-4 stroke-[2]" />
                   <span className="font-mono text-[9px] uppercase tracking-widest leading-none">
                     Preview environment simulates high-fidelity active web3 nodes.
