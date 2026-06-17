@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Hourglass, AlertCircle } from 'lucide-react';
 
@@ -28,31 +28,22 @@ const getSpecs = (projectId: string) => {
     case '01':
     case '04':
       return {
-        software: 'Blender 3.6 LTS & Octane Render',
-        geometry: '1,450,000 Polygons (Subdiv-Ready)',
         timeframe: '3 Weeks Design to Master Render',
-        clientNotes: 'This project needed a striking, abstract spatial aesthetic to showcase dynamic depth. We integrated high-contrast dark metals with ambient cyan emission accents to establish an unforgettable high-tech atmosphere.',
-        process: 'Procedural space-voyage elements layered with physical glass shaders and volumetrics for deep space cloud aesthetics.',
-        testimonial: 'Raven\'s 3D work took our vision to an entire secondary atmosphere. Absolute visual genius!'
+        clientNotes:
+          "This project needed a striking, abstract spatial aesthetic to showcase dynamic depth.",
       };
     case '02':
     case '05':
       return {
-        software: 'Houdini FX, Redshift & Adobe After Effects',
-        geometry: '850,000 Polygons (Procedural Meshes)',
         timeframe: '2 Weeks Exploratory Phase',
-        clientNotes: 'A brand exploratory project centering on kinetic iridescence, procedural glass refractions, and bubble geometry. Crafted to show how dynamic refractions can transform digital static mockups.',
-        process: 'Procedural geometry generation based on a noise velocity field, using a highly complex custom absorption glass shader in Redshift.',
-        testimonial: 'Highly professional study in iridescence and color absorption that challenges standard web typography.'
+        clientNotes:
+          'A brand exploratory project centering on kinetic iridescence and procedural detail.',
       };
     default:
       return {
-        software: 'Autodesk Maya, Cinema 4D & Substance 3D Painter',
-        geometry: '2,200,000 Polygons (Heavy Particle Cache)',
         timeframe: '4 Weeks Production Cycle',
-        clientNotes: 'An organic, fluid core engine showcasing clean light beams. We built detailed robotic joints overlaid with marvelous designer soft body simulation templates.',
-        process: 'Rigged hydraulic pistons coupled with soft fabric collision. Hand-painted metallic scratches in Substance Painter for grit and high tactile fidelity.',
-        testimonial: 'Raven demonstrated master-class understanding of physics-based mechanical models. Highly recommended!'
+        clientNotes:
+          'An organic, fluid core engine showcasing clean light beams and handcrafted finishes.',
       };
   }
 };
@@ -61,11 +52,8 @@ export default function ProjectDetailModal({ project, isOpen, onClose }: Project
   const [activeImage, setActiveImage] = useState<string>('');
 
   useEffect(() => {
-    if (isOpen && project) {
-      setActiveImage(project.images.col2 || project.images.col1_1 || project.images.col1_2 || '');
-    } else {
-      setActiveImage('');
-    }
+    if (isOpen && project) setActiveImage(project.images.col2 || project.images.col1_1 || project.images.col1_2 || '');
+    else setActiveImage('');
   }, [project, isOpen]);
 
   if (!project) return null;
@@ -81,103 +69,58 @@ export default function ProjectDetailModal({ project, isOpen, onClose }: Project
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md cursor-pointer"
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md cursor-pointer"
           />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 30 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed inset-x-4 inset-y-8 sm:inset-x-8 sm:inset-y-12 md:inset-x-16 md:inset-y-16 lg:inset-x-24 lg:inset-y-20 z-50 bg-[#0C0C0C] border-2 border-[#D7E2EA]/15 rounded-[40px] p-6 md:p-10 flex flex-col justify-between overflow-y-auto max-w-6xl mx-auto"
-            style={{ boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)' }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: 'spring', damping: 22, stiffness: 200 }}
+            className="fixed inset-6 z-50 max-w-4xl mx-auto left-0 right-0 rounded-2xl bg-[#0C0C0C] border border-[#D7E2EA]/10 p-5 overflow-auto"
+            style={{ maxHeight: '85vh' }}
           >
-            <div className="flex justify-between items-center pb-4 border-b border-[#D7E2EA]/10 mb-6 md:mb-8 shrink-0">
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#D7E2EA]/50">
-                  {project.category} Core Render / Specs
-                </span>
-                <span className="h-1.5 w-1.5 bg-[#BBCCD7] rounded-full" />
-                <span className="font-mono text-xs text-white uppercase tracking-widest font-black">
-                  {project.num}
-                </span>
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <span className="font-mono text-xs uppercase text-[#D7E2EA]/50">{project.category} • {project.num}</span>
+                <h3 className="text-2xl font-black text-white mt-1">{project.name}</h3>
               </div>
-              <button
-                onClick={onClose}
-                className="p-2 text-[#D7E2EA] hover:text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer"
-              >
-                <X className="w-6 h-6" />
+              <button onClick={onClose} className="p-2 rounded-full text-[#D7E2EA] hover:bg-white/5">
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="flex-1 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6 md:gap-10 items-stretch min-h-0">
-              <div className="flex flex-col gap-4">
-                <div className="relative flex-1 bg-black/40 rounded-[28px] border border-[#D7E2EA]/10 overflow-hidden min-h-[220px] sm:min-h-[350px] flex items-center justify-center group">
-                  <img
-                    src={activeImage || project.images.col2}
-                    alt={`${project.name} Active Render`}
-                    className="w-full h-full object-cover rounded-[28px] transition-all duration-500 scale-100 group-hover:scale-105 pointer-events-none select-none"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-                    <span className="font-mono text-[10px] text-white tracking-widest uppercase">
-                      
-                    </span>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div className="rounded-xl overflow-hidden bg-black/40">
+                  <img src={activeImage || project.images.col2} alt={project.name} className="w-full h-64 object-cover" />
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 shrink-0">
-                  {[project.images.col2, project.images.col1_1, project.images.col1_2].map((imgUrl, idx) => {
-                    const isActive = activeImage === imgUrl || (!activeImage && idx === 0);
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveImage(imgUrl)}
-                        className={`relative aspect-video rounded-xl border-2 overflow-hidden transition-all bg-black cursor-pointer ${
-                          isActive
-                            ? 'border-[#D7E2EA]'
-                            : 'border-transparent opacity-60 hover:opacity-100'
-                        }`}
-                      >
-                        <img
-                          src={imgUrl}
-                          alt={`Thumbnail ${idx + 1}`}
-                          className="w-full h-full object-cover pointer-events-none select-none"
-                          referrerPolicy="no-referrer"
-                        />
-                      </button>
-                    );
-                  })}
+                <div className="grid grid-cols-3 gap-2">
+                  {[project.images.col2, project.images.col1_1, project.images.col1_2].map((src, i) => (
+                    <button key={i} onClick={() => setActiveImage(src)} className={`rounded-lg overflow-hidden ${activeImage === src || (!activeImage && i === 0) ? 'ring-2 ring-[#D7E2EA]' : 'opacity-70'}`}>
+                      <img src={src} alt={`thumb-${i}`} className="w-full h-20 object-cover" />
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              <div className="flex flex-col justify-between gap-6 overflow-y-auto pr-2">
-                <div className="flex flex-col gap-5 sm:gap-6">
-                  <div>
-                    <h2 className="hero-heading font-black text-3xl sm:text-4xl uppercase tracking-tight leading-none mb-2">
-                      {project.name}
-                    </h2>
-                    <p className="font-light text-[#D7E2EA]/85 text-sm sm:text-base leading-relaxed">
-                      {specs.clientNotes}
-                    </p>
-                  </div>
+              <div className="space-y-4">
+                <p className="text-sm text-[#D7E2EA]/85">{specs.clientNotes}</p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 bg-white/5 border border-[#D7E2EA]/10 p-4 rounded-3xl">
-                    <div className="flex items-start gap-2.5">
-                      <Hourglass className="w-5 h-5 text-[#BBCCD7] shrink-0 mt-0.5" />
-                      <div className="flex flex-col">
-                        <span className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase tracking-wider">Timeline</span>
-                        <span className="text-white text-xs font-medium uppercase tracking-wide">{specs.timeframe}</span>
-                      </div>
+                <div className="bg-white/5 border border-[#D7E2EA]/8 p-4 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Hourglass className="w-5 h-5 text-[#BBCCD7]" />
+                    <div>
+                      <div className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase">Timeline</div>
+                      <div className="text-sm font-medium uppercase">{specs.timeframe}</div>
                     </div>
                   </div>
+                </div>
 
-                  <div className="bg-white/5 border border-yellow-500/20 px-3.5 py-3 rounded-2xl flex items-center gap-2 text-yellow-200/90 shrink-0 mt-4">
+                <div className="bg-white/5 border border-yellow-500/20 px-3.5 py-3 rounded-2xl flex items-center gap-2 text-yellow-200/90">
                   <AlertCircle className="w-4 h-4 stroke-[2]" />
-                  <span className="font-mono text-[9px] uppercase tracking-widest leading-none">
-                    Preview environment simulates high-fidelity active web3 nodes.
-                  </span>
+                  <span className="font-mono text-[9px] uppercase tracking-widest leading-none">Preview environment simulates high-fidelity active web3 nodes.</span>
                 </div>
               </div>
             </div>
