@@ -10,12 +10,15 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ isOpen, onClose, serviceRequestPreset, briefPreset }: ContactFormProps) {
-  const [formData, setFormData] = useState<InquiryFormData>({
+  const [formData, setFormData] = useState({
     name: '',
     contact: '',
+    location: '',
     service: '',
+    purpose: '',
     budget: '',
-    brief: ''
+    brief: '',
+    timeline: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,9 +55,12 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
       setFormData({
         name: '',
         contact: '',
+        location: '',
         service: '',
+        purpose: '',
         budget: '',
-        brief: ''
+        brief: '',
+        timeline: ''
       });
       setTimeout(() => {
         setIsSuccess(false);
@@ -96,8 +102,8 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Full Name */}
                 <div className="space-y-2">
-                  <label htmlFor="user-name" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-medium">
-                    Your Name
+                  <label htmlFor="user-name" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
+                    1. Name
                   </label>
                   <input
                     type="text"
@@ -112,8 +118,8 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
 
                 {/* Contact Information */}
                 <div className="space-y-2">
-                  <label htmlFor="user-contact" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-medium">
-                    Email / WhatsApp
+                  <label htmlFor="user-contact" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
+                    2. WhatsApp or Email
                   </label>
                   <input
                     type="text"
@@ -124,17 +130,28 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                     placeholder="example@mail.com or +234..."
                     className="w-full px-4 py-3 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
                   />
-                  <span className="text-[9px] text-brand-bark/80 font-medium block">
-                    * We typically respond fastest via WhatsApp.
-                  </span>
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="user-location" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
+                  3. Project Address/ Location
+                </label>
+                <input
+                  type="text"
+                  id="user-location"
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  placeholder="Full address or neighborhood (e.g., Ikoyi, Lagos)"
+                  className="w-full px-4 py-3 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Service Dropdown */}
                 <div className="space-y-2">
-                  <label htmlFor="user-service" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-medium">
-                    Service Required
+                  <label htmlFor="user-service" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
+                    4. Design Packages
                   </label>
                   <select
                     id="user-service"
@@ -143,19 +160,38 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                     className="w-full px-4 py-3.5 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
                   >
                     <option value="">Select a service...</option>
-                    <option value="FULL COMPREHENSIVE INTERIOR DESIGN">FULL COMPREHENSIVE INTERIOR DESIGN</option>
-                    <option value="DESIGN CONSULTATION">DESIGN CONSULTATION</option>
-                    <option value="SPACE STYLING (SOFT FURNISHINGS)">SPACE STYLING (SOFT FURNISHINGS)</option>
-                    <option value="FURNITURES ONLY">FURNITURES ONLY</option>
-                    <option value="3D VISUALIZATION">3D VISUALIZATION</option>
-                    <option value="EXTERIOR DESIGN">EXTERIOR DESIGN</option>
+                    <option value="Virtual Consultation 50k per hour">Virtual Consultation (50k per hour)</option>
+                    <option value="Physical Consultation 150k within Lagos">Physical Consultation (150k within Lagos)</option>
+                    <option value="Physical Consultation outside Lagos 250k">Physical Consultation (outside Lagos - 250k)</option>
+                    <option value="3D Visualization & Moodboard from 200k">3D Visualization & Moodboard (from 200k)</option>
+                    <option value="2D Visualization & Moodboard from 100k">2D Visualization & Moodboard (from 100k)</option>
                   </select>
                 </div>
 
+                {/* Purpose of Design */}
+                <div className="space-y-2">
+                  <label htmlFor="user-purpose" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
+                    10. Purpose of design
+                  </label>
+                  <select
+                    id="user-purpose"
+                    value={formData.purpose}
+                    onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
+                    className="w-full px-4 py-3.5 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
+                  >
+                    <option value="">Select purpose...</option>
+                    <option value="Renovation">Renovation</option>
+                    <option value="New Building">New Building</option>
+                    <option value="Styling/ Furnishings">Styling/ Furnishings</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Budget Range */}
                 <div className="space-y-2">
-                  <label htmlFor="user-budget" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-medium">
-                    Estimated Budget Range (₦)
+                  <label htmlFor="user-budget" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
+                    14. Project Budget (₦)
                   </label>
                   <select
                     id="user-budget"
@@ -164,25 +200,41 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                     className="w-full px-4 py-3.5 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
                   >
                     <option value="">Select a range...</option>
-                    <option value="Under ₦2M">Under ₦2,000,000</option>
-                    <option value="₦2M — ₦5M">₦2,000,000 — ₦5,000,000</option>
-                    <option value="₦5M — ₦10M">₦5,000,000 — ₦10,000,000</option>
-                    <option value="₦10M+">₦10,000,000 +</option>
+                    <option value="< 1,000,000">&lt; 1,000,000</option>
+                    <option value="1,000,000 - 3,000,000">1,000,000 - 3,000,000</option>
+                    <option value="3,000,000 - 5,000,000">3,000,000 - 5,000,000</option>
+                    <option value="5,000,000 - 10,000,000">5,000,000 - 10,000,000</option>
+                    <option value="> 10,000,000">&gt; 10,000,000</option>
                   </select>
+                </div>
+
+                {/* Project Timeline */}
+                <div className="space-y-2">
+                  <label htmlFor="user-timeline" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
+                    21. Project Timeline/ Deadline
+                  </label>
+                  <input
+                    type="text"
+                    id="user-timeline"
+                    value={formData.timeline}
+                    onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                    placeholder="e.g. 3 months, or Dec 2026"
+                    className="w-full px-4 py-3 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
+                  />
                 </div>
               </div>
 
               {/* Space Description */}
               <div className="space-y-2">
-                <label htmlFor="user-brief" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-medium">
-                  Briefly describe your space...
+                <label htmlFor="user-brief" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold leading-relaxed">
+                  20. Please provide a detailed description of your preferred design style, color palette, inspiration, or Pinterest board. Also, include anything we should know about your vision, lifestyle, and expectations for the project.
                 </label>
                 <textarea
                   id="user-brief"
-                  rows={4}
+                  rows={5}
                   value={formData.brief}
                   onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
-                  placeholder="Tell us about the area limits, rooms, location, or desired products you wish to consult on..."
+                  placeholder="Describe your vision here..."
                   className="w-full px-4 py-3 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all resize-none"
                 ></textarea>
               </div>

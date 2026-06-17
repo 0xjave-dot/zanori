@@ -128,7 +128,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns, onOpenC
     setTooltip(null);
 
     try {
-      const response = await fetch('http://localhost:3000/api/reimagine', {
+      const response = await fetch('/api/reimagine', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -693,4 +693,3 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns, onOpenC
     </div>
   );
 }
-

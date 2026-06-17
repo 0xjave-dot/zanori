@@ -110,13 +110,6 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
     }
   };
 
-  const serviceSpecs = [
-    { title: "3D VISUALIZATION", desc: "We generate high resolution 3D models to visualize the room layout. This includes realistic lighting and material textures to confirm design choices before physical implementation begins." },
-    { title: "SPACE STYLING (SOFT FURNISHINGS)", desc: "Our team handles the final placement of art and decorative objects. We curate accessories that complement the architectural style and specific furniture dimensions within the space." },
-    { title: "FURNITURES ONLY", desc: "We manage the selection and procurement of furniture from verified vendors. Our service includes tracking delivery and supervising the assembly of all pieces on site." },
-    { title: "DESIGN CONSULTATION", desc: "This involves a technical review of your space to determine the best floor plan. We provide expert advice on color schemes and material selection to optimize the functionality of the room." }
-  ];
-
   return (
     <div id="services-page" className="py-24 md:py-32 bg-brand-base min-h-screen">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24">
@@ -207,35 +200,6 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Detailed Service Specifications Sections (Flesh out deliverables) */}
-        <div className="bg-brand-base/50 rounded-3xl border border-brand-wood/15 p-8 md:p-12 space-y-10">
-          <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-[10px] tracking-[0.25em] text-brand-wood uppercase font-mono block">OUR DESIGN STANDARD</span>
-            <h2 className="font-serif text-3xl font-light text-brand-dark">How we manage your physical space transformation</h2>
-            <p className="text-xs text-brand-muted font-light leading-relaxed font-sans">
-              Unlike quick decorators, we execute physical shell evaluations to assess sunlight angles, acoustics, and air conditioning vents to make sure Lagos tropical heat matches calm Nordic layouts.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {serviceSpecs.map((spec, i) => (
-              <div key={i} className="space-y-3 bg-brand-base p-6 rounded-2xl border border-brand-wood/10 shadow-xs flex flex-col justify-between">
-                <div>
-                  <div className="w-7 h-7 rounded-lg bg-brand-base text-brand-wood font-mono font-bold text-xs flex items-center justify-center mb-4">
-                    0{i+1}
-                  </div>
-                  <h4 className="font-serif text-[17px] font-medium text-brand-dark mb-2">{spec.title}</h4>
-                  <p className="text-xs text-brand-muted font-sans font-light leading-relaxed">{spec.desc}</p>
-                </div>
-                <div className="pt-2 flex items-center space-x-1.5 text-[9px] font-mono text-brand-bark/80 uppercase font-semibold">
-                  <CheckCircle size={10} className="text-brand-wood" />
-                  <span>Standard desk brief</span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* INCREDIBLE INTERACTIVE FEATURE - Lagos Design Fee Estimator */}

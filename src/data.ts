@@ -3,32 +3,47 @@ import { ServiceItem, Project, Product, TestimonialItem } from './types';
 export const SERVICES_DATA: ServiceItem[] = [
   {
     id: 'space-styling',
-    number: '01',
+    number: '03',
     name: 'SPACE STYLING (SOFT FURNISHINGS)',
-    description: 'We provide the final layer of design for your room. This includes the selection and placement of art and accessories. Our team ensures that every decorative element works with the overall layout and furniture.',
+    description: 'We specialize in the meticulous selection and arrangement of soft furnishings, art, and decorative objects. This service enhances the aesthetic appeal and comfort of your space, ensuring every detail complements the overall design.',
     imageBg: "url('https://images.unsplash.com/photo-1616486341351-702534f40f0c?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'design-consultation',
     number: '02',
     name: 'DESIGN CONSULTATION',
-    description: 'This is a professional assessment of your interior layout. We analyze lighting and floor plans to suggest improvements. The session covers material selection and color palettes to guide the technical direction of your project.',
+    description: 'Receive expert advice on optimizing your space. Our consultations cover floor plan analysis, lighting strategies, color schemes, and material selection, providing you with a clear roadmap for your interior design project.',
     imageBg: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: 'quality-furniture',
-    number: '03',
-    name: 'FURNITURES ONLY',
-    description: 'We supply high quality furniture pieces from our catalog. Our service covers the full procurement process. This includes the management of transport and the physical assembly of items in your home or office.',
+    number: '04',
+    name: 'FURNITURE',
+    description: 'Explore our curated collection of high-quality furniture pieces. We offer sourcing, supply, and installation of bespoke and ready-made items, focusing on durability, comfort, and timeless design.',
     imageBg: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
     id: '3d-design',
-    number: '04',
+    number: '05',
     name: '3D VISUALIZATION',
-    description: 'This is a technical service where we create a digital version of your space. It shows accurate furniture scales and lighting. You can see exactly how the design will look before you spend money on construction.',
+    description: 'Experience your future space before it\'s built. Our 3D visualization service provides photorealistic renders and virtual walkthroughs, allowing you to confirm design choices, material textures, and lighting scenarios with precision.',
     imageBg: "url('https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=2000&auto=format&fit=crop') center/cover",
     isSignature: true
+  },
+  {
+    id: 'full-comprehensive-interior-design',
+    number: '01',
+    name: 'FULL COMPREHENSIVE INTERIOR DESIGN',
+    description: 'Our signature service covers every aspect of your interior project, from initial concept development and architectural planning to material selection, custom furniture design, and final installation. We manage the entire process to deliver a cohesive, luxurious, and fully functional space tailored to your vision.',
+    imageBg: "url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2000&auto=format&fit=crop') center/cover",
+    isSignature: true
+  },
+  {
+    id: 'exterior-design',
+    number: '06',
+    name: 'EXTERIOR DESIGN',
+    description: 'Extend your design aesthetic beyond the walls. Our exterior design service focuses on creating beautiful and functional outdoor spaces, including landscape planning, facade enhancements, and outdoor living area concepts.',
+    imageBg: "url('https://images.unsplash.com/photo-1519643381401-22c77e60520e?q=80&w=2000&auto=format&fit=crop') center/cover"
   }
 ];
 

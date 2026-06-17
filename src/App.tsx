@@ -466,7 +466,7 @@ export default function App() {
       .map((item) => `- ${item.product.name} (Quantity: ${item.quantity})`)
       .join('\n');
     
-    setServicePreset('FURNITURES ONLY');
+    setServicePreset('FURNITURE');
     setBriefPreset(
       `Hi, I have put together an initial acquisition draft from the Zanori Spaces shop index:\n${stringifiedItems}\n\nKindly provide local delivery schedules and freight specifications for Lagos.`
     );
@@ -579,6 +579,18 @@ export default function App() {
 
   return (
     <div className={"relative min-h-screen bg-brand-bark/70 antialiased text-brand-dark selection:bg-brand-wood selection:text-brand-dark" + (kuulaLoading ? ' overflow-hidden' : '')}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+        
+        :root {
+          --font-serif: 'Playfair Display', serif;
+          --font-sans: 'Playfair Display', serif;
+        }
+        
+        body, h1, h2, h3, h4, h5, h6, p, a, button, span, input, textarea, select {
+          font-family: 'Playfair Display', serif !important;
+        }
+      `}} />
       
       {/* Dynamic Floating Action Ticker Indicator for items count (Persistent Bottom Right Drawer Trigger) */}
       {totalInquiryItemsCount > 0 && (
