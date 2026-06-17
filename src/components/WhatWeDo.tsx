@@ -22,6 +22,7 @@ import {
   Box
 } from "lucide-react";
 import { motion, useScroll, useTransform, useInView, useSpring } from "motion/react";
+import InfiniteGallery from "./InfiniteGallery";
 
 export default function WhatWeDo() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -205,6 +206,11 @@ export default function WhatWeDo() {
                 transition={{ duration: 0.8, delay: 0.6 }}
               ></motion.div>
             </motion.div>
+
+            {/* Mobile-only Infinite Gallery */}
+            <div className="md:hidden w-full mt-6">
+              <InfiniteGallery />
+            </div>
           </div>
 
           {/* Right Column */}
@@ -229,7 +235,7 @@ export default function WhatWeDo() {
         {/* Stats Section */}
         <motion.div
           ref={statsRef}
-          className="mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="mt-16 md:mt-24 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-8"
           initial="hidden"
           animate={isStatsInView ? "visible" : "hidden"}
           variants={containerVariants}
@@ -329,7 +335,7 @@ function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
 
   return (
     <motion.div
-      className="bg-brand-base/80 backdrop-blur-sm p-6 rounded-2xl border border-brand-wood/10 flex flex-col items-center text-center group hover:bg-brand-base transition-colors duration-300 shadow-xs"
+      className="bg-brand-base/80 backdrop-blur-sm p-3 sm:p-4 md:p-6 rounded-xl md:rounded-2xl border border-brand-wood/10 flex flex-col items-center text-center group hover:bg-brand-base transition-colors duration-300 shadow-xs"
       variants={{
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -341,17 +347,17 @@ function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
     >
       <motion.div
-        className="w-14 h-14 rounded-full bg-brand-warm flex items-center justify-center mb-4 text-brand-wood group-hover:bg-brand-wood group-hover:text-brand-base transition-colors duration-300"
+        className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-full bg-brand-warm flex items-center justify-center mb-2 sm:mb-3 md:mb-4 text-brand-wood group-hover:bg-brand-wood group-hover:text-brand-base transition-colors duration-300"
         whileHover={{ rotate: 360, transition: { duration: 0.8 } }}
       >
         {icon}
       </motion.div>
-      <motion.div ref={countRef} className="text-3xl font-bold text-brand-dark flex items-center">
+      <motion.div ref={countRef} className="text-xl sm:text-2xl md:text-3xl font-bold text-brand-dark flex items-center">
         <motion.span>{displayValue}</motion.span>
-        <span>{suffix}</span>
+        <span className="text-sm md:text-base">{suffix}</span>
       </motion.div>
-      <p className="text-brand-dark font-medium text-sm mt-1">{label}</p>
-      <motion.div className="w-10 h-0.5 bg-brand-wood mt-3 group-hover:w-16 transition-all duration-300" />
+      <p className="text-brand-dark font-medium text-[11px] sm:text-xs md:text-sm mt-1">{label}</p>
+      <motion.div className="w-8 sm:w-10 h-0.5 bg-brand-wood mt-2 sm:mt-3 group-hover:w-12 sm:group-hover:w-16 transition-all duration-300" />
     </motion.div>
   );
 }

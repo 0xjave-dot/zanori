@@ -9,7 +9,6 @@ import HowItWorks from './components/HowItWorks';
 import WhatWeDo from './components/WhatWeDo';
 import Projects from './components/Projects';
 import ContactForm from './components/ContactForm';
-import InteractiveGallery from './components/InteractiveGallery';
 import WhyChooseUs from './components/WhyChooseUs';
 import Testimonial from './components/Testimonial';
 import Footer from './components/Footer';
@@ -624,7 +623,6 @@ export default function App() {
         {currentPage === 'home' && (
           <div className="space-y-0">
             <div className="reveal-section"><Hero onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
-            <div className="reveal-section"><InteractiveGallery /></div>
             <div className="reveal-section"><WhyChooseUs /></div>
             <div className="reveal-section"><WhatWeDo /></div>
             <div className="reveal-section"><ConfidenceAssurance /></div>
