@@ -93,7 +93,7 @@ export default function WhatWeDo({ onOpenConsultationModal }: WhatWeDoProps) {
     {
       icon: <PaintBucket className="w-6 h-6" />,
       secondaryIcon: <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-brand-wood" />,
-      title: "SPACE STYLING (SOFT FURNISHINGS)",
+      title: "SPACE STYLING / SOFT FURNISHINGS)",
       description:
         "The art of final curation—selecting textiles, accessories, and decorative elements to breathe life and personality into your existing layout.",
       position: "left",
@@ -103,7 +103,7 @@ export default function WhatWeDo({ onOpenConsultationModal }: WhatWeDoProps) {
     {
       icon: <HugeiconsIcon icon={BedDoubleIcon} size={24} />,
       secondaryIcon: <CheckCircle className="w-4 h-4 absolute -top-1 -right-1 text-brand-wood" />,
-      title: "FURNITURES ONLY",
+      title: "FURNITURE",
       description:
         "Access our exclusive boutique of high-grade Nigerian hardwoods and Scandinavian-inspired pieces tailored for comfort and timeless appeal.",
       position: "right",
@@ -256,7 +256,7 @@ export default function WhatWeDo({ onOpenConsultationModal }: WhatWeDoProps) {
             {services.map((service, index) => (
               <MobileServiceCard key={index} index={index} service={service} />
             ))}
-            
+
             {/* Magnetic/Interactive CTA at End */}
             <motion.div
               className="snap-center shrink-0 w-[82vw] max-w-[300px] rounded-2xl bg-brand-dark text-brand-sand border border-brand-wood/20 shadow-premium-md relative min-h-[350px] overflow-hidden flex flex-col justify-between p-6"
@@ -266,7 +266,7 @@ export default function WhatWeDo({ onOpenConsultationModal }: WhatWeDoProps) {
               transition={{ duration: 0.4 }}
             >
               {/* Subtle background overlay */}
-              <div 
+              <div
                 className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-10 pointer-events-none"
                 style={{ backgroundImage: `url(https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80)` }}
               />
@@ -351,7 +351,7 @@ interface MobileServiceCardProps {
 
 function MobileServiceCard({ index, service }: MobileServiceCardProps) {
   const formattedIndex = String(index + 1).padStart(2, '0');
-  
+
   return (
     <motion.div
       className="snap-center shrink-0 w-[82vw] max-w-[300px] rounded-2xl bg-brand-bark text-brand-sand border border-brand-wood/20 shadow-premium-md relative min-h-[350px] overflow-hidden flex flex-col justify-between p-6"
@@ -361,7 +361,7 @@ function MobileServiceCard({ index, service }: MobileServiceCardProps) {
       transition={{ duration: 0.4 }}
     >
       {/* Background imagery per card */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-15 pointer-events-none"
         style={{ backgroundImage: `url(${service.image})` }}
       />

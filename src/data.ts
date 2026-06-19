@@ -4,7 +4,7 @@ export const SERVICES_DATA: ServiceItem[] = [
   {
     id: 'space-styling',
     number: '03',
-    name: 'SPACE STYLING (SOFT FURNISHINGS)',
+    name: 'SPACE STYLING / SOFT FURNISHINGS)',
     description: 'We specialize in the meticulous selection and arrangement of soft furnishings, art, and decorative objects. This service enhances the aesthetic appeal and comfort of your space, ensuring every detail complements the overall design.',
     imageBg: "url('https://images.unsplash.com/photo-1616486341351-702534f40f0c?q=80&w=2000&auto=format&fit=crop') center/cover"
   },

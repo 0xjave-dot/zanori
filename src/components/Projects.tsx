@@ -22,9 +22,10 @@ const projects: Project[] = [
     name: 'The Adunola Residence',
     category: 'Residential',
     images: {
-      col1_1: 'https://i.pinimg.com/736x/50/c4/98/50c49834ecfa4556297715b427a0347c.jpg',
-      col1_2: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36',
-      col2: 'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a',
+      // Penthouse: warm luxury living room / open-plan kitchen / serene bedroom
+      col1_1: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+      col1_2: 'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=800&q=80',
+      col2:   'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80',
     },
   },
   {
@@ -32,9 +33,10 @@ const projects: Project[] = [
     name: 'Eko Heights Apartment',
     category: 'Residential',
     images: {
-      col1_1: 'https://cdn.home-designing.com/wp-content/uploads/2013/10/glass-wall.jpeg',
-      col1_2: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5',
-      col2: 'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a',
+      // Modern apartment: bright open plan / airy dining room / contemporary living
+      col1_1: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+      col1_2: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80',
+      col2:   'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80',
     },
   },
   {
@@ -42,9 +44,10 @@ const projects: Project[] = [
     name: 'The Banwo Family Home',
     category: 'Residential',
     images: {
-      col1_1: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTUlXrfEJM9G4h153a01e80LO6iNj2p5hUMVVc1rawiqLJn9D1IWN_5Fnx5Ym6tIIZ_29PjHLeftg96V_bykbw5TuzF1TjSzLXalHKTbaJVo9xrlkKJNFlM&usqp=CAc',
-      col1_2: 'https://images.unsplash.com/photo-1505691723518-36a87b0b3a4a',
-      col2: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5',
+      // Family home: cosy neutral lounge / minimalist study / warm bedroom
+      col1_1: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80',
+      col1_2: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80',
+      col2:   'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
     },
   },
 ];
