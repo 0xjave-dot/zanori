@@ -22,7 +22,6 @@ import {
   Box
 } from "lucide-react";
 import { motion, useScroll, useTransform, useInView, useSpring } from "motion/react";
-import InfiniteGallery from "./InfiniteGallery";
 
 export default function WhatWeDo() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -313,11 +312,6 @@ export default function WhatWeDo() {
             />
           </div>
 
-          {/* Mobile-only Infinite Gallery */}
-          <div className="w-full pt-4">
-            <h4 className="text-center font-mono text-[9px] tracking-widest text-brand-wood uppercase mb-2">Experience our 3D interactive spaces</h4>
-            <InfiniteGallery />
-          </div>
         </div>
 
         {/* Stats Section */}

@@ -7,6 +7,7 @@ import Portfolio from './components/Portfolio';
 import Shop from './components/Shop';
 import HowItWorks from './components/HowItWorks';
 import WhatWeDo from './components/WhatWeDo';
+import InfiniteGallery from './components/InfiniteGallery';
 import Projects from './components/Projects';
 import ContactForm from './components/ContactForm';
 import WhyChooseUs from './components/WhyChooseUs';
@@ -623,6 +624,11 @@ export default function App() {
         {currentPage === 'home' && (
           <div className="space-y-0">
             <div className="reveal-section"><Hero onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
+            {/* Mobile-only Infinite Gallery under the hero */}
+            <div className="reveal-section md:hidden bg-[#f5f4f0] pt-8 pb-2 border-b border-[#d0cfc9]/60">
+              <h4 className="text-center font-mono text-[9px] tracking-widest text-[#8b6f52] uppercase mb-2">Experience our 3D interactive spaces</h4>
+              <InfiniteGallery />
+            </div>
             <div className="reveal-section"><WhyChooseUs /></div>
             <div className="reveal-section"><WhatWeDo /></div>
             <div className="reveal-section"><ConfidenceAssurance /></div>
