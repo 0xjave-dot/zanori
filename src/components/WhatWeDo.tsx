@@ -27,6 +27,7 @@ import InfiniteGallery from "./InfiniteGallery";
 export default function WhatWeDo() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
   const isStatsInView = useInView(statsRef, { once: false, amount: 0.3 });
 
@@ -34,6 +35,10 @@ export default function WhatWeDo() {
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
+  });
+
+  const { scrollXProgress } = useScroll({
+    container: mobileScrollRef,
   });
 
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
@@ -69,6 +74,8 @@ export default function WhatWeDo() {
       description:
         "End-to-end design and execution for residential and commercial spaces, ensuring a cohesive and luxury finish from concept to completion.",
       position: "left",
+      image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+      tag: "Residential & Commercial",
     },
     {
       icon: <PenTool className="w-6 h-6" />,
@@ -77,6 +84,8 @@ export default function WhatWeDo() {
       description:
         "Professional guidance on floor plans, material selection, and palettes to give you absolute clarity and direction for your project.",
       position: "left",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
+      tag: "Consultancy",
     },
     {
       icon: <PaintBucket className="w-6 h-6" />,
@@ -85,6 +94,8 @@ export default function WhatWeDo() {
       description:
         "The art of final curation—selecting textiles, accessories, and decorative elements to breathe life and personality into your existing layout.",
       position: "left",
+      image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+      tag: "Styling & Curation",
     },
     {
       icon: <HugeiconsIcon icon={BedDoubleIcon} size={24} />,
@@ -93,6 +104,8 @@ export default function WhatWeDo() {
       description:
         "Access our exclusive boutique of high-grade Nigerian hardwoods and Scandinavian-inspired pieces tailored for comfort and timeless appeal.",
       position: "right",
+      image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80",
+      tag: "Bespoke Furniture",
     },
     {
       icon: <img src="https://cdn-icons-png.flaticon.com/512/2639/2639476.png" alt="3D" className="w-6 h-6 object-contain" />,
@@ -101,6 +114,8 @@ export default function WhatWeDo() {
       description:
         "High-fidelity photorealistic renders and virtual walkthroughs to see every detail of your space before construction begins.",
       position: "right",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      tag: "3D Technology",
     },
     {
       icon: <Home className="w-6 h-6" />,
@@ -109,6 +124,8 @@ export default function WhatWeDo() {
       description:
         "Crafting stunning outdoor environments that harmonize with your architecture, enhancing curb appeal and functionality.",
       position: "right",
+      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+      tag: "Exterior Spaces",
     },
   ];
 
@@ -149,7 +166,6 @@ export default function WhatWeDo() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Zap size={14} />
-            
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-serif font-light mb-4 text-center">What We Do</h2>
           <motion.div
@@ -160,11 +176,12 @@ export default function WhatWeDo() {
           ></motion.div>
         </motion.div>
 
-        <motion.p className="text-center max-w-2xl mx-auto mb-16 text-brand-bark font-normal leading-relaxed" variants={itemVariants}>
+        <motion.p className="text-center max-w-2xl mx-auto mb-12 md:mb-16 text-brand-bark font-normal leading-relaxed" variants={itemVariants}>
           Every space holds a story. At Zanori Spaces, we craft yours and make it timeless.
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        {/* Desktop Grid Layout (hidden on mobile) */}
+        <div className="hidden md:grid grid-cols-3 gap-8 relative">
           {/* Left Column */}
           <div className="space-y-16">
             {services
@@ -184,7 +201,7 @@ export default function WhatWeDo() {
           </div>
 
           {/* Center Image */}
-          <div className="flex justify-center items-center order-first md:order-none mb-8 md:mb-0">
+          <div className="flex justify-center items-center mb-0">
             <motion.div className="relative w-full max-w-xs" variants={itemVariants}>
               <motion.div
                 className="rounded-2xl overflow-hidden shadow-xl border border-brand-wood/10"
@@ -206,11 +223,6 @@ export default function WhatWeDo() {
                 transition={{ duration: 0.8, delay: 0.6 }}
               ></motion.div>
             </motion.div>
-
-            {/* Mobile-only Infinite Gallery */}
-            <div className="md:hidden w-full mt-6">
-              <InfiniteGallery />
-            </div>
           </div>
 
           {/* Right Column */}
@@ -229,6 +241,82 @@ export default function WhatWeDo() {
                   direction="right"
                 />
               ))}
+          </div>
+        </div>
+
+        {/* Mobile Horizontal Scrollable Panels Layout */}
+        <div className="block md:hidden space-y-6">
+          <div
+            ref={mobileScrollRef}
+            className="flex gap-4 overflow-x-auto px-4 snap-x snap-mandatory no-scrollbar pb-4 -mx-4"
+          >
+            {services.map((service, index) => (
+              <MobileServiceCard key={index} index={index} service={service} />
+            ))}
+            
+            {/* Magnetic/Interactive CTA at End */}
+            <motion.div
+              className="snap-center shrink-0 w-[82vw] max-w-[300px] rounded-2xl bg-brand-dark text-brand-sand border border-brand-wood/20 shadow-premium-md relative min-h-[350px] overflow-hidden flex flex-col justify-between p-6"
+              whileInView={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+              viewport={{ once: false, amount: 0.5 }}
+              initial={{ scale: 0.93, filter: "blur(2px)", opacity: 0.8 }}
+              transition={{ duration: 0.4 }}
+            >
+              {/* Subtle background overlay */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-10 pointer-events-none"
+                style={{ backgroundImage: `url(https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80)` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-brand-bark/50 via-brand-bark/85 to-brand-bark pointer-events-none" />
+
+              <div className="relative z-10 flex justify-between items-start w-full">
+                <span className="font-serif text-brand-wood/40 text-4xl font-light italic">
+                  →
+                </span>
+                <span className="bg-brand-cranberry/20 border border-brand-cranberry/30 text-brand-cranberry text-[9px] uppercase font-mono tracking-widest px-2.5 py-1 rounded-full font-semibold">
+                  COLLABORATE
+                </span>
+              </div>
+
+              <div className="relative z-10 mt-auto pt-8">
+                <h3 className="text-xl font-serif font-light text-brand-sand tracking-wide uppercase leading-tight mb-2">
+                  Let's Design Your Space
+                </h3>
+                <p className="text-xs text-brand-sand/75 font-normal leading-relaxed mb-6">
+                  Bring your vision to life. Schedule an exclusive consultation with the Zanori design team.
+                </p>
+                <motion.button
+                  onClick={() => {
+                    const contactSection = document.getElementById('contact-section');
+                    if (contactSection) {
+                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-full flex items-center justify-between bg-brand-cranberry hover:bg-brand-cranberry/90 text-brand-base text-xs font-mono uppercase tracking-widest px-4 py-3.5 rounded-xl transition-all cursor-pointer font-semibold"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span>Inquire Now</span>
+                  <ArrowRight size={14} className="text-brand-base" />
+                </motion.button>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Scroll Progress Bar */}
+          <div className="h-[2px] w-[calc(100%-1rem)] mx-2 bg-brand-wood/15 rounded-full overflow-hidden relative">
+            <motion.div
+              className="h-full bg-brand-wood origin-left absolute inset-0 w-full"
+              style={{
+                scaleX: scrollXProgress,
+              }}
+            />
+          </div>
+
+          {/* Mobile-only Infinite Gallery */}
+          <div className="w-full pt-4">
+            <h4 className="text-center font-mono text-[9px] tracking-widest text-brand-wood uppercase mb-2">Experience our 3D interactive spaces</h4>
+            <InfiniteGallery />
           </div>
         </div>
 
@@ -253,6 +341,65 @@ export default function WhatWeDo() {
         </motion.div>
       </motion.div>
     </section>
+  );
+}
+
+interface MobileServiceCardProps {
+  index: number;
+  service: {
+    icon: React.ReactNode;
+    secondaryIcon?: React.ReactNode;
+    title: string;
+    description: string;
+    image: string;
+    tag: string;
+  };
+}
+
+function MobileServiceCard({ index, service }: MobileServiceCardProps) {
+  const formattedIndex = String(index + 1).padStart(2, '0');
+  
+  return (
+    <motion.div
+      className="snap-center shrink-0 w-[82vw] max-w-[300px] rounded-2xl bg-brand-bark text-brand-sand border border-brand-wood/20 shadow-premium-md relative min-h-[350px] overflow-hidden flex flex-col justify-between p-6"
+      whileInView={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+      viewport={{ once: false, amount: 0.5 }}
+      initial={{ scale: 0.93, filter: "blur(2px)", opacity: 0.8 }}
+      transition={{ duration: 0.4 }}
+    >
+      {/* Background imagery per card */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-15 pointer-events-none"
+        style={{ backgroundImage: `url(${service.image})` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-bark/50 via-brand-bark/85 to-brand-bark pointer-events-none" />
+
+      {/* Floating labels / tag and index */}
+      <div className="relative z-10 flex justify-between items-start w-full">
+        <span className="font-serif text-brand-wood/40 text-4xl font-light italic">
+          {formattedIndex}
+        </span>
+        <span className="bg-brand-wood/25 border border-brand-wood/30 text-brand-wood text-[9px] uppercase font-mono tracking-widest px-2.5 py-1 rounded-full font-semibold">
+          {service.tag}
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 mt-auto pt-8">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="text-brand-base bg-brand-wood/25 p-2 rounded-lg relative border border-brand-wood/20 shrink-0">
+            {service.icon}
+            {service.secondaryIcon}
+          </div>
+          <h3 className="text-lg font-serif font-light text-brand-sand tracking-wide uppercase leading-tight">
+            {service.title}
+          </h3>
+        </div>
+        <p className="text-xs text-brand-sand/75 font-normal leading-relaxed">
+          {service.description}
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
