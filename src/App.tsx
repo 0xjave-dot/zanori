@@ -36,12 +36,12 @@ export default function App() {
   const [inquiryItems, setInquiryItems] = useState<InquiryItem[]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  
+
   // Custom presets for the contact form
   const [servicePreset, setServicePreset] = useState<string>('');
   const [briefPreset, setBriefPreset] = useState<string>('');
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
-  
+
   // Custom toasts
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const showNavBlockedToast = () => setToastMessage('not done cooking');
@@ -465,7 +465,7 @@ export default function App() {
     const stringifiedItems = inquiryItems
       .map((item) => `- ${item.product.name} (Quantity: ${item.quantity})`)
       .join('\n');
-    
+
     setServicePreset('FURNITURE');
     setBriefPreset(
       `Hi, I have put together an initial acquisition draft from the Zanori Spaces shop index:\n${stringifiedItems}\n\nKindly provide local delivery schedules and freight specifications for Lagos.`
@@ -579,7 +579,8 @@ export default function App() {
 
   return (
     <div className={"relative min-h-screen bg-brand-bark/70 antialiased text-brand-dark selection:bg-brand-wood selection:text-brand-dark" + (kuulaLoading ? ' overflow-hidden' : '')}>
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
         
         :root {
@@ -591,7 +592,7 @@ export default function App() {
           font-family: 'Playfair Display', serif !important;
         }
       `}} />
-      
+
       {/* Dynamic Floating Action Ticker Indicator for items count (Persistent Bottom Right Drawer Trigger) */}
       {totalInquiryItemsCount > 0 && (
         <button
@@ -619,18 +620,18 @@ export default function App() {
 
       {/* Dynamic Routing Screen Page Views */}
       <main className="pt-20">
-        
+
         {/* HOMEPAGE ROUTE */}
         {currentPage === 'home' && (
           <div className="space-y-0">
             <div className="reveal-section"><Hero onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
             {/* Mobile-only Infinite Gallery under the hero */}
             <div className="reveal-section md:hidden bg-[#f5f4f0] pt-8 pb-2 border-b border-[#d0cfc9]/60">
-              <h4 className="text-center font-mono text-[9px] tracking-widest text-[#8b6f52] uppercase mb-2">Experience our 3D interactive spaces</h4>
+              <h4 className="text-center font-mono text-[9px] tracking-widest text-[#8b6f52] uppercase mb-2"></h4>
               <InfiniteGallery />
             </div>
             <div className="reveal-section"><WhyChooseUs /></div>
-            <div className="reveal-section"><WhatWeDo /></div>
+            <div className="reveal-section"><WhatWeDo onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
             <div className="reveal-section"><ConfidenceAssurance /></div>
             <div className="reveal-section"><Projects /></div>
             <div className="reveal-section"><HowItWorks /></div>

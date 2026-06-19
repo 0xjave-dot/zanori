@@ -23,7 +23,11 @@ import {
 } from "lucide-react";
 import { motion, useScroll, useTransform, useInView, useSpring } from "motion/react";
 
-export default function WhatWeDo() {
+interface WhatWeDoProps {
+  onOpenConsultationModal?: () => void;
+}
+
+export default function WhatWeDo({ onOpenConsultationModal }: WhatWeDoProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -285,12 +289,7 @@ export default function WhatWeDo() {
                   Bring your vision to life. Schedule an exclusive consultation with the Zanori design team.
                 </p>
                 <motion.button
-                  onClick={() => {
-                    const contactSection = document.getElementById('contact-section');
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
+                  onClick={() => onOpenConsultationModal?.()}
                   className="w-full flex items-center justify-between bg-brand-cranberry hover:bg-brand-cranberry/90 text-brand-base text-xs font-mono uppercase tracking-widest px-4 py-3.5 rounded-xl transition-all cursor-pointer font-semibold"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
