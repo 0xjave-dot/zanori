@@ -288,274 +288,72 @@ export default function AccountPanel({
         </div>
       </div>
 
-      {/* Profile caskets switch tab */}
-      <div className="flex pb-2 overflow-x-auto gap-4">
-        {[
-          { key: 'profile', label: 'Client Profile', count: null },
-          { key: 'designs', label: 'My Saved Spaces', count: savedDesigns.length },
-          { key: 'wishlist', label: 'My Wishlist', count: wishlist.length },
-          { key: 'gifts', label: 'Gift Orders', count: giftPurchases.length },
-        ].map((t) => {
-          const isActive = activeAccountTab === t.key;
-          return (
-            <button
-              key={t.key}
-              onClick={() => setActiveAccountTab(t.key as any)}
-              className={`pb-2.5 text-xs uppercase tracking-widest font-mono border-b-2 text-left whitespace-nowrap transition-colors relative cursor-pointer ${isActive
-                  ? 'border-brand-bark text-brand-dark font-semibold'
-                  : 'border-transparent text-brand-muted hover:text-brand-dark'
-                }`}
-            >
-              <span>{t.label}</span>
-              {t.count !== null && (
-                <span className="ml-1.5 font-sans px-1.5 py-0.5 bg-brand-warm text-brand-muted font-bold text-[9px] rounded-full">
-                  {t.count}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      {/* Wishlist only content */}
+      <div className="min-h-[300px] space-y-6">
+        <div className="flex justify-between items-center pb-2 border-b border-brand-wood/15">
+          <h3 className="font-serif text-lg font-light text-brand-dark uppercase tracking-wider">
+            My Wishlist ({wishlist.length})
+          </h3>
+        </div>
 
-      {/* Profile views switch content */}
-      <div className="min-h-[300px]">
-        {activeAccountTab === 'profile' && (
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 space-y-6">
-              <h3 className="font-serif text-lg text-brand-dark italic">Design Identity & Credentials</h3>
+        {wishlist.length > 0 ? (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {wishlist.map((item) => {
+              const prod = getProductById(item.productId);
+              if (!prod) return null;
+              return (
+                <div key={item.id} className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-4 flex flex-col justify-between group shadow-xs relative">
+                  <button
+                    onClick={() => onDeleteWishlist(item.id)}
+                    className="absolute top-3 right-3 p-1.5 opacity-60 hover:opacity-100 text-brand-muted hover:text-red-650 transition-all cursor-pointer"
+                    title="Remove from wishlist"
+                  >
+                    <Trash2 size={13} />
+                  </button>
 
-              <div className="space-y-4 font-sans text-xs">
-                <div className="flex justify-between py-2">
-                  <span className="text-brand-muted uppercase tracking-wider font-light">Account Holder</span>
-                  <span className="font-medium text-brand-dark">{user.displayName || 'Unspecified'}</span>
+                  <div className="rounded-xl w-full h-[120px] flex items-center justify-center p-4 overflow-hidden relative" style={{ background: prod.imageBg }}>
+                    <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
+                    <div className="p-3 bg-brand-base/85 backdrop-blur-md rounded-full shadow-xs">
+                      <Heart size={14} className="text-red-500 fill-red-500" />
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex-1 flex flex-col justify-between">
+                    <div className="space-y-1">
+                      <span className="text-[9px] uppercase tracking-wider text-brand-muted block">{prod.category}</span>
+                      <h4 className="font-serif text-sm font-medium text-brand-bark group-hover:text-brand-bark transition-colors">{prod.name}</h4>
+                      <span className="text-xs font-semibold text-brand-dark font-sans block pt-1">{formatNaira(prod.price)}</span>
+                    </div>
+
+                    <div className="pt-3 mt-3 text-center">
+                      <button
+                        onClick={() => onAddProductToInquiry(prod)}
+                        className="w-full py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-white text-[9px] uppercase tracking-wider font-semibold transition-all cursor-pointer flex items-center justify-center space-x-1"
+                      >
+                        <ShoppingBag size={10} />
+                        <span>Add to inquiry</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-brand-muted uppercase tracking-wider font-light">Client Email</span>
-                  <span className="font-mono text-brand-dark">{user.email}</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-brand-muted uppercase tracking-wider font-light">Member Tag ID</span>
-                  <span className="font-mono text-brand-muted shrink-0 text-[10px]">{user.uid.substring(0, 12)}...</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-brand-muted uppercase tracking-wider font-light">Last Sign In</span>
-                  <span className="text-brand-dark">Just now</span>
-                </div>
-              </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
+            <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
+              <Heart size={16} />
             </div>
-          </div>
-        )}
-
-        {activeAccountTab === 'designs' && (
-          <div className="space-y-6">
-            {savedDesigns.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {savedDesigns.map((design) => (
-                  <div key={design.id} className="bg-brand-sand rounded-2xl overflow-hidden border border-brand-wood/15 flex flex-col justify-between group shadow-xs">
-                    <div className="relative h-44 bg-zinc-50 flex items-center justify-center overflow-hidden">
-                      {design.imageUrl ? (
-                        <img
-                          src={design.imageUrl}
-                          alt="Saved Space Render"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : null}
-                      <span className="absolute top-3 left-3 px-3 py-1 bg-brand-dark/80 backdrop-blur-md text-brand-wood text-[9px] uppercase tracking-[0.14em] rounded-sm font-medium">
-                        {design.styleName} Preset
-                      </span>
-                      <button
-                        onClick={() => onDeleteDesign(design.id)}
-                        className="absolute bottom-3 right-3 p-2 rounded-full bg-brand-bark/80 hover:bg-brand-cranberry/90 text-brand-sand transition-all shadow-md cursor-pointer hover:scale-105"
-                        title="Delete design"
-                      >
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-
-                    <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
-                      <div className="space-y-2">
-                        <blockquote className="font-serif text-[13.5px] italic text-brand-bark leading-relaxed">
-                          "{design.headline}"
-                        </blockquote>
-                        <p className="text-[11px] leading-relaxed font-sans text-brand-muted font-light pl-3">
-                          {design.designerNote}
-                        </p>
-                      </div>
-
-                      <div className="space-y-2 pt-2">
-                        <div className="flex justify-between items-center text-[8px] font-mono tracking-wider text-brand-muted uppercase">
-                          <span>Synthesized Palette</span>
-                          <span>{design.createdAt}</span>
-                        </div>
-                        <div className="flex gap-1">
-                          {design.palette.map((color, idx) => (
-                            <div key={color + idx} className="h-4.5 flex-1 rounded-sm shadow-xs border border-brand-dark/15 relative group/c" style={{ backgroundColor: color }}>
-                              <span className="absolute top-full left-1/2 -translate-x-1/2 scale-0 group-hover/c:scale-100 bg-brand-dark text-white text-[8px] font-mono px-1 py-0.5 rounded-sm whitespace-nowrap mt-1 label-swatch z-20">
-                                {design.paletteNames[idx] || 'Accent'}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
-                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
-                  <Star size={16} />
-                </div>
-                <h3 className="font-serif text-xl font-light text-brand-dark">No saved spaces curated</h3>
-                <p className="text-xs text-brand-muted max-w-xs mx-auto font-sans font-light leading-relaxed">
-                  Your curated design briefs and architectural transformations will appear here once saved from your consultations.
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeAccountTab === 'wishlist' && (
-          <div className="space-y-6">
-            {wishlist.length > 0 ? (
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                {wishlist.map((item) => {
-                  const prod = getProductById(item.productId);
-                  if (!prod) return null;
-                  return (
-                    <div key={item.id} className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-4 flex flex-col justify-between group shadow-xs relative">
-                      <button
-                        onClick={() => onDeleteWishlist(item.id)}
-                        className="absolute top-3 right-3 p-1.5 opacity-60 hover:opacity-100 text-brand-muted hover:text-red-650 transition-all cursor-pointer"
-                        title="Remove from wishlist"
-                      >
-                        <Trash2 size={13} />
-                      </button>
-
-                      <div className="rounded-xl w-full h-[120px] flex items-center justify-center p-4 overflow-hidden relative" style={{ background: prod.imageBg }}>
-                        <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
-                        <div className="p-3 bg-brand-base/85 backdrop-blur-md rounded-full shadow-xs">
-                          <Heart size={14} className="text-red-500 fill-red-500" />
-                        </div>
-                      </div>
-
-                      <div className="mt-4 flex-1 flex flex-col justify-between">
-                        <div className="space-y-1">
-                          <span className="text-[9px] uppercase tracking-wider text-brand-muted block">{prod.category}</span>
-                          <h4 className="font-serif text-sm font-medium text-brand-bark group-hover:text-brand-bark transition-colors">{prod.name}</h4>
-                          <span className="text-xs font-semibold text-brand-dark font-sans block pt-1">{formatNaira(prod.price)}</span>
-                        </div>
-
-                        <div className="pt-3 mt-3 text-center">
-                          <button
-                            onClick={() => onAddProductToInquiry(prod)}
-                            className="w-full py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-white text-[9px] uppercase tracking-wider font-semibold transition-all cursor-pointer flex items-center justify-center space-x-1"
-                          >
-                            <ShoppingBag size={10} />
-                            <span>Add to inquiry</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
-                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
-                  <Heart size={16} />
-                </div>
-                <h3 className="font-serif text-xl font-light text-brand-dark">Your wishlist casket is empty</h3>
-                <p className="text-xs text-brand-muted max-w-xs mx-auto font-sans font-light leading-relaxed">
-                  Browse our high-end boutique interior catalog furniture lists, click the wishlist heart on any piece, and monitor acquisitions right here.
-                </p>
-                <a
-                  href="#/shop"
-                  className="inline-block mt-2 px-5 py-2 hover:bg-brand-dark text-brand-dark hover:text-white border border-brand-bark/30 text-[10px] uppercase tracking-wider rounded-full transition-all"
-                >
-                  Explore Boutique
-                </a>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeAccountTab === 'gifts' && (
-          <div className="space-y-6">
-            {giftPurchases.length > 0 ? (
-              <div className="space-y-6">
-                {giftPurchases.map((gift) => (
-                  <div key={gift.id} className="bg-brand-sand rounded-xl border border-brand-wood/15 p-6 space-y-4 shadow-xs">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
-                      <div className="space-y-1">
-                        <span className="text-[9px] font-mono text-brand-muted uppercase tracking-wider block">GIFT ORDER ID: {gift.id}</span>
-                        <h4 className="font-serif text-[15px] font-semibold text-brand-dark">Curated Piece: {gift.productName}</h4>
-                        <p className="text-xs text-brand-muted">
-                          Purchased on {gift.purchasedAt} &bull; Value: <span className="font-sans font-semibold text-brand-dark">{formatNaira(gift.price)}</span>
-                        </p>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <span className={`px-2.5 py-1 text-[9px] uppercase tracking-widest font-semibold rounded-md ${gift.status === 'Delivered'
-                            ? 'bg-emerald-50 text-emerald-800 border border-emerald-150'
-                            : 'bg-amber-50 text-amber-800 border border-amber-150'
-                          }`}>
-                          {gift.status}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans text-xs">
-                      <div className="space-y-2">
-                        <span className="text-[10px] uppercase tracking-wider text-brand-muted block font-mono font-bold">Recipient Information</span>
-                        <p className="leading-snug">
-                          <strong className="text-brand-dark">Name: </strong> {gift.recipientName}
-                        </p>
-                        <p className="leading-snug">
-                          <strong className="text-brand-dark">Email contact: </strong> <span className="font-mono">{gift.recipientEmail}</span>
-                        </p>
-                        <p className="leading-snug">
-                          <strong className="text-brand-dark">Phone: </strong> <span className="font-mono">{gift.recipientPhone}</span>
-                        </p>
-                        <p className="leading-snug">
-                          <strong className="text-brand-dark">Delivery Destination: </strong> {gift.deliveryAddress}, Lagos State
-                        </p>
-                      </div>
-
-                      <div className="space-y-2.5 bg-brand-sand/45 p-4 rounded-lg border border-brand-wood/10 flex flex-col justify-between">
-                        <div>
-                          <span className="text-[10px] uppercase tracking-wider text-brand-muted block font-mono font-bold mb-1">Engraved Card Msg</span>
-                          <p className="italic text-[11px] text-brand-wood leading-relaxed">
-                            "{gift.personalMsg || 'No engraved message requested.'}"
-                          </p>
-                        </div>
-                        <div className="flex justify-between items-center text-[9px] font-semibold text-brand-muted pt-2">
-                          <span>LUXURY GIFT WRAP:</span>
-                          <span className={gift.giftWrap ? 'text-brand-dark' : 'text-zinc-400'}>{gift.giftWrap ? 'Satin Wrapped Box ✓' : 'Standard Carton Package'}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
-                <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
-                  <GiftIcon size={16} />
-                </div>
-                <h3 className="font-serif text-xl font-light text-brand-dark">No gift deliveries logged</h3>
-                <p className="text-xs text-brand-muted max-w-xs mx-auto font-sans font-light leading-relaxed">
-                  Surprise friends, family, or colleagues in Lagos by purchasing boutique furniture as gifts. Gift wrapping + personalized greeting notes are compiled securely on checkout.
-                </p>
-                <a
-                  href="#/shop"
-                  className="inline-block mt-2 px-5 py-2 hover:bg-brand-dark text-brand-dark hover:text-white border border-brand-bark/30 text-[10px] uppercase tracking-wider rounded-full transition-all"
-                >
-                  Buy Furniture Gift
-                </a>
-              </div>
-            )}
+            <h3 className="font-serif text-xl font-light text-brand-dark">Your wishlist casket is empty</h3>
+            <p className="text-xs text-brand-muted max-w-xs mx-auto font-sans font-light leading-relaxed">
+              Browse our high-end boutique interior catalog furniture lists, click the wishlist heart on any piece, and monitor acquisitions right here.
+            </p>
+            <a
+              href="#/shop"
+              className="inline-block mt-2 px-5 py-2 hover:bg-brand-dark text-brand-dark hover:text-white border border-brand-bark/30 text-[10px] uppercase tracking-wider rounded-full transition-all"
+            >
+              Explore Boutique
+            </a>
           </div>
         )}
       </div>
