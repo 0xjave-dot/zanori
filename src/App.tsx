@@ -477,6 +477,24 @@ export default function App() {
   const [kuulaLoading, setKuulaLoading] = useState<boolean>(false);
   const loaderVisibleAtRef = useRef<number | null>(null);
 
+  // ── Mobile mandatory splash: show loader for 10 s on small screens ──
+  const [mobileLoading, setMobileLoading] = useState<boolean>(() => {
+    // Only activate on genuine mobile viewports (< 768 px)
+    return typeof window !== 'undefined' && window.innerWidth < 768;
+  });
+  const [mobileExiting, setMobileExiting] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!mobileLoading) return;
+    // Begin fade-out at 9.3 s so the 0.7 s CSS animation completes at exactly 10 s
+    const exitTimer = window.setTimeout(() => setMobileExiting(true), 9300);
+    const doneTimer = window.setTimeout(() => setMobileLoading(false), 10000);
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(doneTimer);
+    };
+  }, []);
+
   // Robustly wait until Kuula iframes on the homepage have fired their load events
   useEffect(() => {
     if (currentPage !== 'home') {
@@ -710,8 +728,11 @@ export default function App() {
 
       </main>
 
-      {/* Full-page loader shown while Kuula feeds load on the homepage */}
-      {kuulaLoading && currentPage === 'home' && <Loader />}
+      {/* Mobile mandatory 10-second splash loader */}
+      {mobileLoading && <Loader exiting={mobileExiting} />}
+
+      {/* Full-page loader shown while Kuula feeds load on the homepage (desktop) */}
+      {!mobileLoading && kuulaLoading && currentPage === 'home' && <Loader />}
 
       <ContactForm
         isOpen={isConsultationModalOpen}

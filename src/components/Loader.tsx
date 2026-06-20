@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Loader() {
+interface LoaderProps {
+  exiting?: boolean;
+}
+
+export default function Loader({ exiting = false }: LoaderProps) {
   return (
     <div
       aria-hidden={false}
@@ -16,7 +20,9 @@ export default function Loader() {
         top: 0,
         left: 0,
         right: 0,
-        bottom: 0
+        bottom: 0,
+        opacity: exiting ? 0 : 1,
+        transition: exiting ? 'opacity 0.7s ease' : 'none',
       }}
     />
   );
