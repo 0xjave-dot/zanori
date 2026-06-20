@@ -5,6 +5,15 @@ import { PORTFOLIO_DATA, PRODUCTS_DATA } from '../data';
 import { db, OperationType, handleFirestoreError } from '../firebase';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
 
+const GRADIENT_PRESETS = [
+  { name: 'Warm Clay / Sand', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)' },
+  { name: 'Sand / Base', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)' },
+  { name: 'Base / Wood', value: 'linear-gradient(135deg, var(--color-brand-base) 0%, var(--color-brand-wood) 100%)' },
+  { name: 'Wood / Bark', value: 'linear-gradient(135deg, var(--color-brand-wood) 0%, var(--color-brand-bark) 100%)' },
+  { name: 'Ivory / Base', value: 'linear-gradient(135deg, var(--color-brand-ivory) 0%, var(--color-brand-base) 100%)' },
+  { name: 'Bark / Wood', value: 'linear-gradient(135deg, var(--color-brand-bark) 0%, var(--color-brand-wood) 100%)' },
+];
+
 interface AdminPanelProps {
   projects: Project[];
   setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
@@ -59,6 +68,7 @@ export default function AdminPanel({
   const [prodPrice, setProdPrice] = useState<number>(100000);
   const [prodIconType, setProdIconType] = useState<Product['iconType']>('bed');
   const [prodIsNew, setProdIsNew] = useState(true);
+  const [prodImageBg, setProdImageBg] = useState('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
 
   // Multi-image upload state
   const [projImages, setProjImages] = useState<string[]>([]); // base64 data URLs
@@ -68,6 +78,9 @@ export default function AdminPanel({
   const [prodImages, setProdImages] = useState<string[]>([]); // base64 data URLs
   const [prodUploading, setProdUploading] = useState(false);
   const prodFileInputRef = useRef<HTMLInputElement>(null);
+
+  const projImagePreview = projImages.length > 0 ? projImages[0] : null;
+  const prodImagePreview = prodImages.length > 0 ? prodImages[0] : null;
 
   // Password visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -103,6 +116,26 @@ export default function AdminPanel({
     reader.readAsDataURL(file);
   };
 
+  // Singular project file change handler
+  const handleProjFileChange = (file: File | null) => {
+    if (!file) return;
+    setProjUploading(true);
+    compressToBase64(file, (dataUrl) => {
+      setProjImages([dataUrl]);
+      setProjUploading(false);
+    });
+  };
+
+  // Singular product file change handler
+  const handleProdFileChange = (file: File | null) => {
+    if (!file) return;
+    setProdUploading(true);
+    compressToBase64(file, (dataUrl) => {
+      setProdImages([dataUrl]);
+      setProdUploading(false);
+    });
+  };
+
   // Append one or more files to the project images array
   const handleProjFilesChange = (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -132,9 +165,8 @@ export default function AdminPanel({
   };
 
   // Derive imageBg string from images array (first item) or fallback gradient
-  const FALLBACK_GRADIENT = 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)';
-  const imagesToBg = (imgs: string[]) =>
-    imgs.length > 0 ? `url('${imgs[0]}') center/cover` : FALLBACK_GRADIENT;
+  const imagesToBg = (imgs: string[], fallback: string) =>
+    imgs.length > 0 ? `url('${imgs[0]}') center/cover` : fallback;
 
   // Auth Handler
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -160,6 +192,33 @@ export default function AdminPanel({
     setTimeout(() => setSuccessMsg(null), 4000);
   };
 
+  // Factory reset to restore initial static dataset in Firestore
+  const handleFactoryReset = async () => {
+    if (!window.confirm('Are you sure you want to restore the initial static dataset and wipe all custom edits?')) {
+      return;
+    }
+    try {
+      // 1. Delete all current projects from Firestore
+      for (const proj of projects) {
+        await deleteDoc(doc(db, 'projects', proj.id));
+      }
+      // 2. Delete all current products from Firestore
+      for (const prod of products) {
+        await deleteDoc(doc(db, 'products', prod.id));
+      }
+      // 3. Seed initial portfolio data
+      for (const proj of PORTFOLIO_DATA) {
+        await setDoc(doc(db, 'projects', proj.id), proj);
+      }
+      // 4. Seed initial products data
+      for (const prod of PRODUCTS_DATA) {
+        await setDoc(doc(db, 'products', prod.id), prod);
+      }
+      triggerBanner('Database restored to original state successfully ✓');
+    } catch (err) {
+      handleFirestoreError(err, OperationType.WRITE, 'reset_database');
+    }
+  };
 
   // Load project for edit form
   const initiateEditProject = (p: Project) => {
@@ -172,6 +231,9 @@ export default function AdminPanel({
     setProjServices(p.servicesUsed);
     setProjIsFeatured(!!p.isFeatured);
     setProjImages(p.images ?? []);
+    if (!p.images || p.images.length === 0) {
+      setProjImageBg(p.imageBg);
+    }
   };
 
   // Init new project form
@@ -185,6 +247,7 @@ export default function AdminPanel({
     setProjServices(['Space Styling']);
     setProjIsFeatured(false);
     setProjImages([]);
+    setProjImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)');
   };
 
   const cancelProjectForm = () => {
@@ -210,7 +273,7 @@ export default function AdminPanel({
           location: projLocation.trim(),
           description: projDescription.trim(),
           servicesUsed: projServices,
-          imageBg: imagesToBg(projImages),
+          imageBg: imagesToBg(projImages, projImageBg),
           images: projImages,
           isFeatured: projIsFeatured
         };
@@ -225,7 +288,7 @@ export default function AdminPanel({
           location: projLocation.trim(),
           description: projDescription.trim(),
           servicesUsed: projServices,
-          imageBg: imagesToBg(projImages),
+          imageBg: imagesToBg(projImages, projImageBg),
           images: projImages,
           isFeatured: projIsFeatured
         };
@@ -273,6 +336,9 @@ export default function AdminPanel({
     setProdIconType(p.iconType);
     setProdIsNew(!!p.isNew);
     setProdImages(p.images ?? []);
+    if (!p.images || p.images.length === 0) {
+      setProdImageBg(p.imageBg);
+    }
   };
 
   const initiateNewProduct = () => {
@@ -284,6 +350,7 @@ export default function AdminPanel({
     setProdIconType('bed');
     setProdIsNew(true);
     setProdImages([]);
+    setProdImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
   };
 
   const cancelProductForm = () => {
@@ -307,7 +374,7 @@ export default function AdminPanel({
           category: prodCategory,
           price: Number(prodPrice),
           iconType: prodIconType,
-          imageBg: imagesToBg(prodImages),
+          imageBg: imagesToBg(prodImages, prodImageBg),
           images: prodImages,
           isNew: prodIsNew
         };
@@ -321,7 +388,7 @@ export default function AdminPanel({
           category: prodCategory,
           price: Number(prodPrice),
           iconType: prodIconType,
-          imageBg: imagesToBg(prodImages),
+          imageBg: imagesToBg(prodImages, prodImageBg),
           images: prodImages,
           isNew: prodIsNew
         };
@@ -900,7 +967,7 @@ export default function AdminPanel({
                       {projImagePreview && (
                         <button
                           type="button"
-                          onClick={() => { setProjImagePreview(null); setProjImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)'); }}
+                          onClick={() => { setProjImages([]); setProjImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)'); }}
                           className="text-[9px] text-brand-muted hover:text-brand-dark font-mono flex items-center gap-1 transition-colors"
                         >
                           <X size={10} /> Remove image — use gradient instead
@@ -1092,7 +1159,7 @@ export default function AdminPanel({
                       {prodImagePreview && (
                         <button
                           type="button"
-                          onClick={() => { setProdImagePreview(null); setProdImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)'); }}
+                          onClick={() => { setProdImages([]); setProdImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)'); }}
                           className="text-[9px] text-brand-muted hover:text-brand-dark font-mono flex items-center gap-1 transition-colors"
                         >
                           <X size={10} /> Remove image — use gradient instead
