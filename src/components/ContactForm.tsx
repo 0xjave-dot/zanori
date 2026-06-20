@@ -199,12 +199,12 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                       onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                       className="w-full px-4 py-3.5 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
                     >
-                      <option value="">Select a range...</option>
-                      <option value="< 1,000,000">&lt; 1,000,000</option>
+                      <option value="">Select a range (NGN)...</option>
+                      <option value="< 1,000,000">Under 1,000,000</option>
                       <option value="1,000,000 - 3,000,000">1,000,000 - 3,000,000</option>
                       <option value="3,000,000 - 5,000,000">3,000,000 - 5,000,000</option>
                       <option value="5,000,000 - 10,000,000">5,000,000 - 10,000,000</option>
-                      <option value="> 10,000,000">&gt; 10,000,000</option>
+                      <option value="> 10,000,000">Over 10,000,000</option>
                     </select>
                   </div>
 
