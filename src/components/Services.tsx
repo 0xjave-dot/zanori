@@ -113,7 +113,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
   return (
     <div id="services-page" className="py-24 md:py-32 bg-brand-base min-h-screen">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24">
-        
+
         {/* Page Header */}
         <div className="pb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
@@ -125,7 +125,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
             </h1>
           </div>
           <p className="max-w-md text-sm text-brand-muted leading-relaxed font-light font-sans">
-            
+
           </p>
         </div>
 
@@ -164,7 +164,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                   <div className="grid grid-cols-1 gap-1.5 text-xs text-brand-dark/80 font-mono">
                     <div className="flex items-center space-x-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-wood"></span>
-                      <span>Bespoke mood boarding & fabric samples</span>
+                      <span>Mood boarding & fabric samples</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-wood"></span>
@@ -204,7 +204,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
 
         {/* INCREDIBLE INTERACTIVE FEATURE - Lagos Design Fee Estimator */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-brand-bark rounded-3xl overflow-hidden shadow-lg text-brand-base border border-brand-wood/20">
-          
+
           <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between space-y-8 bg-brand-bark/95">
             <div className="space-y-4">
               <div className="inline-flex items-center space-x-2 bg-brand-wood/20 border border-brand-wood/20 text-brand-wood px-3.5 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-mono">
@@ -237,7 +237,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
 
           <div className="lg:col-span-7 p-8 md:p-12">
             <form onSubmit={calculateEstimate} className="space-y-6">
-              
+
               {/* Space Selection */}
               <div className="space-y-3">
                 <label className="text-[10px] uppercase font-mono tracking-widest text-brand-wood block font-bold">
@@ -258,11 +258,10 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                         setSpaceType(space.id as SpaceType);
                         setCalculatorDone(false);
                       }}
-                      className={`px-3 py-2.5 rounded-xl text-xs font-light tracking-wide text-center border transition-all ${
-                        spaceType === space.id
-                          ? 'bg-brand-wood border-brand-wood text-brand-bark font-semibold'
-                          : 'bg-transparent border-brand-wood/25 text-brand-sand hover:border-brand-sand'
-                      }`}
+                      className={`px-3 py-2.5 rounded-xl text-xs font-light tracking-wide text-center border transition-all ${spaceType === space.id
+                        ? 'bg-brand-wood border-brand-wood text-brand-bark font-semibold'
+                        : 'bg-transparent border-brand-wood/25 text-brand-sand hover:border-brand-sand'
+                        }`}
                     >
                       {space.label}
                     </button>
@@ -314,7 +313,7 @@ export default function Services({ onSelectService, onApplyEstimateBrief }: Serv
                       }}
                       className="w-full accent-brand-wood rounded-sm h-4 w-4 bg-brand-bark border-brand-wood"
                     />
-                    <span>Include 3D walkthrough rendering plans (+250k NGN)</span>
+                    <span>Include 3D walkthrough rendering plans (+250,000 NGN)</span>
                   </label>
 
                   <label className="flex items-center space-x-3 text-xs text-brand-sand/90 cursor-pointer select-none">

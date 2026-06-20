@@ -22,10 +22,10 @@ const projects: Project[] = [
     name: 'The Adunola Residence',
     category: 'Residential',
     images: {
-      // Penthouse: warm luxury living room / open-plan kitchen / serene bedroom
-      col1_1: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
-      col1_2: 'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=800&q=80',
-      col2:   'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80',
+      // Penthouse: dramatic statement lounge / rich warm-toned bedroom / sweeping open-plan
+      col1_1: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+      col1_2: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80',
+      col2:   'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1200&q=80',
     },
   },
   {
@@ -33,8 +33,8 @@ const projects: Project[] = [
     name: 'Eko Heights Apartment',
     category: 'Residential',
     images: {
-      // Modern apartment: bright open plan / airy dining room / contemporary living
-      col1_1: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+      // Modern apartment: crisp open-plan living / sleek kitchen island / architectural dining nook
+      col1_1: 'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=800&q=80',
       col1_2: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80',
       col2:   'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80',
     },
@@ -44,8 +44,8 @@ const projects: Project[] = [
     name: 'The Banwo Family Home',
     category: 'Residential',
     images: {
-      // Family home: cosy neutral lounge / minimalist study / warm bedroom
-      col1_1: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80',
+      // Family home: earthy textured lounge / sun-drenched reading corner / calm master bedroom
+      col1_1: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80',
       col1_2: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80',
       col2:   'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
     },

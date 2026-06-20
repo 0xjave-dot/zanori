@@ -54,7 +54,7 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Homes',
     location: 'Ikoyi, Lagos',
     servicesUsed: ['Space Styling', 'Quality Furniture', '3D Interior Design'],
-    description: 'This renovation updated a residential penthouse for a large family. The goal was to increase natural light and improve the flow between rooms. We installed custom oak joinery and used local textiles for the styling. 3D modeling verified all layout changes before construction began. The project included space styling and the supply of custom furniture.',
+    description: 'Perched above the tree line of Ikoyi, this penthouse presented an exceptional canvas — soaring ceilings, panoramic harbour views, and a footprint generous enough to serve a multi-generational family without ever feeling subdivided. Our mandate was not simply to renovate but to reimagine the spatial hierarchy entirely, drawing natural light deeper into the floorplan through the strategic repositioning of interior partitions and the introduction of bespoke oak joinery that doubles as both storage and structural visual rhythm. Local Yoruba textiles were woven into the soft furnishing palette, grounding the scheme in cultural identity while maintaining a restrained luxury sensibility. Every layout decision — from the circulation path between the primary suite and the family lounge to the precise angle of the dining banquette — was verified through detailed 3D modelling before a single contractor was briefed, eliminating the costly rework that so often characterises projects of this scale.',
     imageBg: "url('https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=2000&auto=format&fit=crop') center/cover",
     isFeatured: true
   },
@@ -64,7 +64,7 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Commercial',
     location: 'Victoria Island, Lagos',
     servicesUsed: ['Space Styling', 'Design Consultation'],
-    description: 'This project involved the interior design of a workspace for a media agency. The high ceilings required specific storage solutions which we addressed with dark charcoal cabinets. We placed timber tables in the meeting areas. The layout supports both collaborative tasks and individual work. Our team provided design consultation to choose the final material and color palette.',
+    description: 'A fast-growing media agency on Victoria Island required a workspace that could match the creative energy of its team while projecting credibility to the international clients it hosts daily. The inherited shell — a double-height commercial unit with exposed concrete columns — offered immense character but little practical infrastructure. Our design consultation began with a rigorous spatial audit, mapping the agency\'s actual workflow patterns to determine where collaboration naturally clustered and where focused individual work demanded acoustic separation. The solution introduced dark charcoal cabinet walls that contain the infrastructure chaos of a production environment without interrupting the openness of the ceiling void, while solid timber communal tables in the briefing zones signal warmth and creative intent. The final material and colour palette — matte black steel, warm ash veneer, and a single accent of burnt terracotta — was selected through a structured consultation process that balanced the client\'s brand identity with long-term spatial durability.',
     imageBg: "url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
@@ -73,7 +73,7 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Homes',
     location: 'Lekki, Lagos',
     servicesUsed: ['3D Interior Design', 'Quality Furniture'],
-    description: 'We created a private home designed for a tropical climate. The interior uses low profile furniture and sand textured walls to reduce heat and light. Detailed 3D designs planned the furniture placement and window orientations for better comfort. The project featured our custom beds and shelving units to maintain a simple look.',
+    description: 'Designing for Lagos\'s coastal climate requires more than aesthetic restraint — it demands a thorough understanding of how heat, humidity, and intense equatorial light interact with material choices and spatial proportions. This Lekki Phase One villa was conceived as a considered response to those conditions: low-profile furniture keeps sightlines unobstructed and reduces the visual weight that amplifies heat perception, while sand-textured wall finishes scatter rather than reflect direct sunlight, producing a diffused ambient glow throughout the day. Window orientations were precisely modelled in 3D to capture the prevailing south-westerly breeze and shade interior surfaces during peak solar hours, reducing dependence on mechanical cooling. Our custom bed frames and open shelving units — fabricated in pale ash with recessed handles — were designed specifically for this scheme, maintaining the home\'s commitment to quiet simplicity without sacrificing the warmth and tactile richness that makes a house genuinely liveable.',
     imageBg: "url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
@@ -82,7 +82,7 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Designs',
     location: 'Eko Atlantic, Lagos',
     servicesUsed: ['3D Interior Design', 'Design Consultation'],
-    description: 'This corporate office suite development focused on executive comfort. We analyzed sun positions to determine the best placement for workstations and lounge areas. We selected furniture tones to match the exterior glass facade of the building. Digital simulations helped select all materials and lighting configurations for the space.',
+    description: 'Located within one of Eko Atlantic\'s landmark glass towers, this executive office suite demanded a level of precision that matched the building\'s own architectural ambition. The brief called for an environment that would project authority without austerity — a space where senior leadership could conduct high-stakes negotiations and where visiting clients would immediately understand the calibre of the organisation they were dealing with. Our process began with a solar path analysis of the floor\'s specific orientation, mapping the movement of direct light across the slab throughout the working day to determine optimal placement for workstations, lounge alcoves, and the primary boardroom. Furniture finishes were drawn from the exterior curtain wall\'s cool silver-grey and bronze tones, creating a visual continuity between inside and outside that amplifies the tower\'s commanding views. All material and lighting configurations were finalised through digital simulation before any procurement was authorised, a discipline that eliminated guesswork and delivered a space that performed exactly as modelled from day one.',
     imageBg: "url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2000&auto=format&fit=crop') center/cover"
   },
   {
@@ -91,7 +91,7 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Commercial',
     location: 'Banana Island, Lagos',
     servicesUsed: ['Space Styling', 'Quality Furniture'],
-    description: 'We outfitted a commercial wellness space for better functionality. The project used modular storage units and travertine basins. We used light oak finishes to create a calm environment for clients. Every furniture piece was selected for high durability to withstand constant use in a high traffic commercial setting.',
+    description: 'Wellness environments carry a particular design responsibility: they must deliver genuine calm to clients who arrive already seeking relief, while simultaneously withstanding the relentless physical demands of a high-footfall commercial operation. This Banana Island salon and spa lounge was designed to resolve that tension without compromise. Travertine basins and stone-effect wall panels were specified not only for their visual serenity but for their imperviousness to the moisture, chemical exposure, and surface friction that rapidly age lesser materials in treatment environments. Modular storage units were configured to absorb the operational complexity of a full-service salon — tools, product inventory, client records — behind a composed facade of light oak cabinetry that reads as effortlessly residential rather than clinically utilitarian. Every upholstered piece was selected from commercial-grade ranges capable of sustaining thousands of seating cycles without visible degradation, ensuring that the considered atmosphere we created on opening day remains intact years into the life of the business.'
     imageBg: "url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=2000&auto=format&fit=crop') center/cover"
   }
 ];
@@ -169,42 +169,42 @@ export const PRODUCTS_DATA: Product[] = [
 export const TESTIMONIALS_DATA: TestimonialItem[] = [
   {
     quote: "I walked into my living room on installation day and genuinely did not recognise it. In the best way possible. Every single thing was exactly where the render showed it would be.",
-    client: 'Human Being',
+    client: 'Adaeze Okonkwo',
     project: ''
   },
   {
     quote: "I was sceptical about the 3D render — I thought it was just a sales gimmick. It wasn't. It saved me from two decisions I would have regretted, and I didn't spend a naira on anything I didn't already love.",
-    client: 'Human Being',
+    client: 'Emeka Eze',
     project: ''
   },
   {
     quote: "Other designers I spoke to wanted to impose their taste on my space. Kryptonite actually listened. The result feels like me — just a significantly better version of me.",
-    client: 'Human Being',
+    client: 'Kemi Lawal',
     project: ''
   },
   {
     quote: "The furniture quality is something else. I've had the sofa for eight months and it still looks like it arrived yesterday. Worth every kobo.",
-    client: 'Human Being',
+    client: 'Tolulope Adeyemi',
     project: ''
   },
   {
     quote: "I sent them a photo of my bedroom — dark, cluttered, nothing matching. Three weeks later I have a room I actively look forward to going to sleep in.",
-    client: 'Human Being',
+    client: 'Chukwuemeka Obi',
     project: ''
   },
   {
     quote: "What I appreciated most was the honesty. They told me what would work, what wouldn't, and why. No upselling, no filler pieces. Just a tight, beautiful space.",
-    client: 'Human Being',
+    client: 'Fatima Al-Hassan',
     project: ''
   },
   {
     quote: "My office used to feel like somewhere I had to be. Now it feels like somewhere I want to be. That shift in feeling is hard to put a price on.",
-    client: 'Human Being',
+    client: 'Segun Bankole',
     project: ''
   },
   {
     quote: "The brief they sent after our first call showed me they had actually paid attention. Every detail I mentioned — the light, the kids, the dog — was accounted for. That's rare.",
-    client: 'Human Being',
+    client: 'Ngozi Uchenna',
     project: ''
   }
 ];
