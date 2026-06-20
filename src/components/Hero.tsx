@@ -124,7 +124,7 @@ export default function Hero({ onOpenConsultationModal }: HeroProps) {
             </button>
             
             <button
-              onClick={(e) => handleCtaClick(e, 'work-page')}
+              onClick={() => { window.location.hash = '#/work'; }}
               className="pointer-events-auto px-8 py-4 border-2 border-brand-ivory/40 text-brand-ivory hover:border-brand-ivory hover:bg-brand-ivory/5 text-xs uppercase tracking-[0.15em] font-semibold transition-all duration-400 text-center cursor-pointer rounded-lg btn-animated backdrop-blur-sm"
             >
               View Portfolio

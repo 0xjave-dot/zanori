@@ -82,13 +82,13 @@ export default function AdminPanel({
   // Auth Handler
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode.trim().toLowerCase() === 'admin') {
+    if (passcode.trim() === 'Kryptonitekiss2026!') {
       setIsAuthenticated(true);
       localStorage.setItem('zanori_admin_auth', 'true');
       setAuthError(null);
       triggerBanner('Welcome back, Studio Director ✓');
     } else {
-      setAuthError('Incorrect passcode. Hint: Use "admin".');
+      setAuthError('Incorrect passcode. Access denied.');
     }
   };
 
@@ -365,7 +365,7 @@ export default function AdminPanel({
               </label>
               <input
                 type="password"
-                placeholder="Enter passcode (Hint: admin)"
+                placeholder="Enter passcode"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-brand-base/95 text-sm text-brand-dark font-sans"
