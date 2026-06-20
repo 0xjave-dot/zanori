@@ -120,7 +120,7 @@ export default function ProjectDetailModal({ project, isOpen, onClose }: Project
 
                 <div className="bg-white/5 border border-yellow-500/20 px-3.5 py-3 rounded-2xl flex items-center gap-2 text-yellow-200/90">
                   <AlertCircle className="w-4 h-4 stroke-[2]" />
-                  <span className="font-mono text-[9px] uppercase tracking-widest leading-none">Preview environment simulates high-fidelity active web3 nodes.</span>
+
                 </div>
               </div>
             </div>

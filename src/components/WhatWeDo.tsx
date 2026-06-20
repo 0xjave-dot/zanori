@@ -93,7 +93,7 @@ export default function WhatWeDo({ onOpenConsultationModal }: WhatWeDoProps) {
     {
       icon: <PaintBucket className="w-6 h-6" />,
       secondaryIcon: <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-brand-wood" />,
-      title: "SPACE STYLING / SOFT FURNISHINGS)",
+      title: "SPACE STYLING / SOFT FURNISHINGS",
       description:
         "The art of final curation—selecting textiles, accessories, and decorative elements to breathe life and personality into your existing layout.",
       position: "left",
