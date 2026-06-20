@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  User, Mail, Lock, Heart, Gift, Trash2, LogOut, 
-  ArrowRight, LockKeyhole, ShoppingBag, Eye, Star, GiftIcon, HelpCircle 
+import {
+  User, Mail, Lock, Heart, Gift, Trash2, LogOut,
+  ArrowRight, LockKeyhole, ShoppingBag, Eye, Star, GiftIcon, HelpCircle
 } from 'lucide-react';
 import { auth, googleProvider } from '../firebase';
-import { 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signInWithPopup, 
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
   User as FirebaseUser
@@ -145,7 +145,7 @@ export default function AccountPanel({
               {isSignUp ? 'Create Studio Account' : 'Welcome to the Lounge'}
             </h2>
             <p className="text-[11px] text-brand-muted font-sans font-light leading-relaxed max-w-xs mx-auto">
-              Unlock personalized workspace caskets. Preserve generated spaces, save wishlist items, and manage luxury interior gifts.
+              Unlock your personalized workspace. Preserve generated spaces, save wishlist items, and send luxury interior gifts to the people you love.
             </p>
           </div>
 
@@ -221,7 +221,7 @@ export default function AccountPanel({
 
           {/* Social login divider */}
           <div className="relative flex items-center justify-center">
-                <span className="relative px-3 bg-brand-sand text-[8px] uppercase tracking-widest text-brand-wood font-semibold">
+            <span className="relative px-3 bg-brand-sand text-[8px] uppercase tracking-widest text-brand-wood font-semibold">
               Or Authenticate with
             </span>
           </div>
@@ -262,7 +262,7 @@ export default function AccountPanel({
   // Dashboard layout for signed-in members
   return (
     <div className="w-full space-y-8 animate-feed-in">
-      
+
       {/* Visual greeting card banner */}
       <div className="bg-brand-bark rounded-2xl p-6 md:p-8 text-brand-base flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border border-brand-wood/10">
         <div className="space-y-1.5">
@@ -301,11 +301,10 @@ export default function AccountPanel({
             <button
               key={t.key}
               onClick={() => setActiveAccountTab(t.key as any)}
-              className={`pb-2.5 text-xs uppercase tracking-widest font-mono border-b-2 text-left whitespace-nowrap transition-colors relative cursor-pointer ${
-                isActive 
-                  ? 'border-brand-bark text-brand-dark font-semibold' 
+              className={`pb-2.5 text-xs uppercase tracking-widest font-mono border-b-2 text-left whitespace-nowrap transition-colors relative cursor-pointer ${isActive
+                  ? 'border-brand-bark text-brand-dark font-semibold'
                   : 'border-transparent text-brand-muted hover:text-brand-dark'
-              }`}
+                }`}
             >
               <span>{t.label}</span>
               {t.count !== null && (
@@ -324,7 +323,7 @@ export default function AccountPanel({
           <div className="max-w-2xl mx-auto">
             <div className="bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 space-y-6">
               <h3 className="font-serif text-lg text-brand-dark italic">Design Identity & Credentials</h3>
-              
+
               <div className="space-y-4 font-sans text-xs">
                 <div className="flex justify-between py-2">
                   <span className="text-brand-muted uppercase tracking-wider font-light">Account Holder</span>
@@ -355,9 +354,9 @@ export default function AccountPanel({
                   <div key={design.id} className="bg-brand-sand rounded-2xl overflow-hidden border border-brand-wood/15 flex flex-col justify-between group shadow-xs">
                     <div className="relative h-44 bg-zinc-50 flex items-center justify-center overflow-hidden">
                       {design.imageUrl ? (
-                        <img 
-                          src={design.imageUrl} 
-                          alt="Saved Space Render" 
+                        <img
+                          src={design.imageUrl}
+                          alt="Saved Space Render"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           referrerPolicy="no-referrer"
                         />
@@ -498,11 +497,10 @@ export default function AccountPanel({
                       </div>
 
                       <div className="flex items-center space-x-2">
-                        <span className={`px-2.5 py-1 text-[9px] uppercase tracking-widest font-semibold rounded-md ${
-                          gift.status === 'Delivered' 
-                            ? 'bg-emerald-50 text-emerald-800 border border-emerald-150' 
+                        <span className={`px-2.5 py-1 text-[9px] uppercase tracking-widest font-semibold rounded-md ${gift.status === 'Delivered'
+                            ? 'bg-emerald-50 text-emerald-800 border border-emerald-150'
                             : 'bg-amber-50 text-amber-800 border border-amber-150'
-                        }`}>
+                          }`}>
                           {gift.status}
                         </span>
                       </div>
@@ -542,7 +540,7 @@ export default function AccountPanel({
                 ))}
               </div>
             ) : (
-                <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
+              <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
                 <div className="w-10 h-10 bg-brand-warm rounded-full flex items-center justify-center text-brand-wood mx-auto">
                   <GiftIcon size={16} />
                 </div>

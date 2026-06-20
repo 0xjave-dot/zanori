@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, X, Sliders, Upload, ImageIcon } from 'lucide-react';
+import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, EyeOff, X, Sliders, ImageIcon } from 'lucide-react';
 import { Project, Product, PortfolioCategory, ShopCategory } from '../types';
 import { PORTFOLIO_DATA, PRODUCTS_DATA } from '../data';
-import { db, storage, OperationType, handleFirestoreError } from '../firebase';
+import { db, OperationType, handleFirestoreError } from '../firebase';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 interface AdminPanelProps {
   projects: Project[];
@@ -59,29 +58,19 @@ export default function AdminPanel({
   const [prodCategory, setProdCategory] = useState<ShopCategory>('Beds');
   const [prodPrice, setProdPrice] = useState<number>(100000);
   const [prodIconType, setProdIconType] = useState<Product['iconType']>('bed');
-  const [prodImageBg, setProdImageBg] = useState('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
   const [prodIsNew, setProdIsNew] = useState(true);
 
-  // Upload state
+  // Multi-image upload state
+  const [projImages, setProjImages] = useState<string[]>([]); // base64 data URLs
   const [projUploading, setProjUploading] = useState(false);
-  const [projUploadProgress, setProjUploadProgress] = useState(0);
-  const [projImagePreview, setProjImagePreview] = useState<string | null>(null);
   const projFileInputRef = useRef<HTMLInputElement>(null);
 
+  const [prodImages, setProdImages] = useState<string[]>([]); // base64 data URLs
   const [prodUploading, setProdUploading] = useState(false);
-  const [prodUploadProgress, setProdUploadProgress] = useState(0);
-  const [prodImagePreview, setProdImagePreview] = useState<string | null>(null);
   const prodFileInputRef = useRef<HTMLInputElement>(null);
 
-  // Common Luxe Gradient presets
-  const GRADIENT_PRESETS = [
-    { name: 'Warm Warmth (Mahogany / Oak)', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 50%, var(--color-brand-wood) 100%)' },
-    { name: 'Light Alabaster (Japandi / Clay)', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)' },
-    { name: 'Earthy Forest (Iroko / Palm)', value: 'linear-gradient(135deg, var(--color-brand-warm) 0%, var(--color-brand-wood) 100%)' },
-    { name: 'Smoked Charcoal (Dusk / Copper)', value: 'linear-gradient(135deg, var(--color-brand-wood) 0%, var(--color-brand-bark) 100%)' },
-    { name: 'Coquina Bone (Sand / Travertine)', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)' },
-    { name: 'Dramatic Obsidian (Velvet / Night)', value: 'linear-gradient(135deg, var(--color-brand-bark) 0%, var(--color-brand-dark) 100%)' }
-  ];
+  // Password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   // Services available for multi-select
   const AVAILABLE_SERVICES = [
@@ -91,55 +80,61 @@ export default function AdminPanel({
     '3D Interior Design'
   ];
 
-  // Image upload helpers
-  const uploadImage = (
-    file: File,
-    folder: 'projects' | 'products',
-    onProgress: (p: number) => void,
-    onDone: (url: string) => void
-  ) => {
-    const path = `zanori/${folder}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-    const storageRef = ref(storage, path);
-    const task = uploadBytesResumable(storageRef, file);
-    task.on(
-      'state_changed',
-      (snap) => onProgress(Math.round((snap.bytesTransferred / snap.totalBytes) * 100)),
-      (err) => { console.error('Upload error', err); onProgress(0); },
-      async () => { const url = await getDownloadURL(task.snapshot.ref); onDone(url); }
-    );
+  // Canvas-based image compressor — stores as base64, no Firebase Auth needed
+  const compressToBase64 = (file: File, onDone: (dataUrl: string) => void) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX_W = 1400;
+        const MAX_H = 1050;
+        let { width, height } = img;
+        if (width > MAX_W) { height = Math.round(height * MAX_W / width); width = MAX_W; }
+        if (height > MAX_H) { width = Math.round(width * MAX_H / height); height = MAX_H; }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0, width, height);
+        onDone(canvas.toDataURL('image/jpeg', 0.78));
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   };
 
-  const handleProjFileChange = (file: File | null) => {
-    if (!file) return;
-    const preview = URL.createObjectURL(file);
-    setProjImagePreview(preview);
+  // Append one or more files to the project images array
+  const handleProjFilesChange = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
     setProjUploading(true);
-    setProjUploadProgress(0);
-    uploadImage(
-      file, 'projects',
-      (p) => setProjUploadProgress(p),
-      (url) => {
-        setProjImageBg(`url('${url}') center/cover`);
-        setProjUploading(false);
-      }
-    );
+    let remaining = files.length;
+    Array.from(files).forEach((file) => {
+      compressToBase64(file, (dataUrl) => {
+        setProjImages((prev) => [...prev, dataUrl]);
+        remaining -= 1;
+        if (remaining === 0) setProjUploading(false);
+      });
+    });
   };
 
-  const handleProdFileChange = (file: File | null) => {
-    if (!file) return;
-    const preview = URL.createObjectURL(file);
-    setProdImagePreview(preview);
+  // Append one or more files to the product images array
+  const handleProdFilesChange = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
     setProdUploading(true);
-    setProdUploadProgress(0);
-    uploadImage(
-      file, 'products',
-      (p) => setProdUploadProgress(p),
-      (url) => {
-        setProdImageBg(`url('${url}') center/cover`);
-        setProdUploading(false);
-      }
-    );
+    let remaining = files.length;
+    Array.from(files).forEach((file) => {
+      compressToBase64(file, (dataUrl) => {
+        setProdImages((prev) => [...prev, dataUrl]);
+        remaining -= 1;
+        if (remaining === 0) setProdUploading(false);
+      });
+    });
   };
+
+  // Derive imageBg string from images array (first item) or fallback gradient
+  const FALLBACK_GRADIENT = 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)';
+  const imagesToBg = (imgs: string[]) =>
+    imgs.length > 0 ? `url('${imgs[0]}') center/cover` : FALLBACK_GRADIENT;
 
   // Auth Handler
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -165,31 +160,6 @@ export default function AdminPanel({
     setTimeout(() => setSuccessMsg(null), 4000);
   };
 
-  // Reset to static mock defaults backed by Firestore
-  const handleFactoryReset = async () => {
-    if (window.confirm('Are you sure you want to restore initial factory case studies and shop items? This overrides current changes.')) {
-      try {
-        // Sequentially purge current lists in database
-        for (const proj of projects) {
-          await deleteDoc(doc(db, 'projects', proj.id));
-        }
-        for (const proj of PORTFOLIO_DATA) {
-          await setDoc(doc(db, 'projects', proj.id), proj);
-        }
-
-        for (const prod of products) {
-          await deleteDoc(doc(db, 'products', prod.id));
-        }
-        for (const prod of PRODUCTS_DATA) {
-          await setDoc(doc(db, 'products', prod.id), prod);
-        }
-
-        triggerBanner('Restored initial studio collections successfully ✓');
-      } catch (err) {
-        handleFirestoreError(err, OperationType.WRITE, 'factory_reset');
-      }
-    }
-  };
 
   // Load project for edit form
   const initiateEditProject = (p: Project) => {
@@ -200,11 +170,8 @@ export default function AdminPanel({
     setProjLocation(p.location);
     setProjDescription(p.description);
     setProjServices(p.servicesUsed);
-    setProjImageBg(p.imageBg);
     setProjIsFeatured(!!p.isFeatured);
-    // Show existing image as preview if it's a URL-based bg
-    const urlMatch = p.imageBg.match(/url\(['"](.*?)['"]\)/);
-    setProjImagePreview(urlMatch ? urlMatch[1] : null);
+    setProjImages(p.images ?? []);
   };
 
   // Init new project form
@@ -216,14 +183,14 @@ export default function AdminPanel({
     setProjLocation('');
     setProjDescription('');
     setProjServices(['Space Styling']);
-    setProjImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)');
     setProjIsFeatured(false);
-    setProjImagePreview(null);
+    setProjImages([]);
   };
 
   const cancelProjectForm = () => {
     setIsCreatingProject(false);
     setEditingProject(null);
+    setProjImages([]);
   };
 
   // Submit Project Form (Creates or Updates on Firestore)
@@ -236,7 +203,6 @@ export default function AdminPanel({
 
     try {
       if (editingProject) {
-        // Editing Mode
         const updatedProj: Project = {
           ...editingProject,
           title: projTitle.trim(),
@@ -244,13 +210,13 @@ export default function AdminPanel({
           location: projLocation.trim(),
           description: projDescription.trim(),
           servicesUsed: projServices,
-          imageBg: projImageBg,
+          imageBg: imagesToBg(projImages),
+          images: projImages,
           isFeatured: projIsFeatured
         };
         await setDoc(doc(db, 'projects', editingProject.id), updatedProj);
         triggerBanner(`Updated "${projTitle}" successfully ✓`);
       } else {
-        // Create Mode
         const newProjId = `proj-${Date.now()}`;
         const newProj: Project = {
           id: newProjId,
@@ -259,7 +225,8 @@ export default function AdminPanel({
           location: projLocation.trim(),
           description: projDescription.trim(),
           servicesUsed: projServices,
-          imageBg: projImageBg,
+          imageBg: imagesToBg(projImages),
+          images: projImages,
           isFeatured: projIsFeatured
         };
         await setDoc(doc(db, 'projects', newProjId), newProj);
@@ -271,6 +238,7 @@ export default function AdminPanel({
 
     setIsCreatingProject(false);
     setEditingProject(null);
+    setProjImages([]);
   };
 
   // Delete project
@@ -303,10 +271,8 @@ export default function AdminPanel({
     setProdCategory(p.category);
     setProdPrice(p.price);
     setProdIconType(p.iconType);
-    setProdImageBg(p.imageBg);
     setProdIsNew(!!p.isNew);
-    const urlMatch = p.imageBg.match(/url\(['"](.*?)['"]\)/);
-    setProdImagePreview(urlMatch ? urlMatch[1] : null);
+    setProdImages(p.images ?? []);
   };
 
   const initiateNewProduct = () => {
@@ -316,14 +282,14 @@ export default function AdminPanel({
     setProdCategory('Beds');
     setProdPrice(150000);
     setProdIconType('bed');
-    setProdImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
     setProdIsNew(true);
-    setProdImagePreview(null);
+    setProdImages([]);
   };
 
   const cancelProductForm = () => {
     setIsCreatingProduct(false);
     setEditingProduct(null);
+    setProdImages([]);
   };
 
   const saveProduct = async (e: React.FormEvent) => {
@@ -335,20 +301,19 @@ export default function AdminPanel({
 
     try {
       if (editingProduct) {
-        // Editing Mode
         const updatedProd: Product = {
           ...editingProduct,
           name: prodName.trim(),
           category: prodCategory,
           price: Number(prodPrice),
           iconType: prodIconType,
-          imageBg: prodImageBg,
+          imageBg: imagesToBg(prodImages),
+          images: prodImages,
           isNew: prodIsNew
         };
         await setDoc(doc(db, 'products', editingProduct.id), updatedProd);
         triggerBanner(`Updated product "${prodName}" ✓`);
       } else {
-        // Create Mode
         const newProdId = `prod-${Date.now()}`;
         const newProd: Product = {
           id: newProdId,
@@ -356,7 +321,8 @@ export default function AdminPanel({
           category: prodCategory,
           price: Number(prodPrice),
           iconType: prodIconType,
-          imageBg: prodImageBg,
+          imageBg: imagesToBg(prodImages),
+          images: prodImages,
           isNew: prodIsNew
         };
         await setDoc(doc(db, 'products', newProdId), newProd);
@@ -368,6 +334,7 @@ export default function AdminPanel({
 
     setIsCreatingProduct(false);
     setEditingProduct(null);
+    setProdImages([]);
   };
 
   const deleteProduct = async (id: string, name: string) => {
@@ -385,14 +352,14 @@ export default function AdminPanel({
   const filteredProjectsAdmin = projects.filter((p) => {
     const term = projectSearch.toLowerCase();
     return p.title.toLowerCase().includes(term) ||
-           p.location.toLowerCase().includes(term) ||
-           p.category.toLowerCase().includes(term);
+      p.location.toLowerCase().includes(term) ||
+      p.category.toLowerCase().includes(term);
   });
 
   const filteredProductsAdmin = products.filter((p) => {
     const term = productSearch.toLowerCase();
     return p.name.toLowerCase().includes(term) ||
-           p.category.toLowerCase().includes(term);
+      p.category.toLowerCase().includes(term);
   });
 
   // Naira value formatter
@@ -409,7 +376,7 @@ export default function AdminPanel({
     return (
       <div id="admin-auth-page" className="min-h-screen bg-brand-warm/60 flex items-center justify-center p-6">
         <div className="max-w-md w-full bg-brand-base/95 rounded-3xl border border-brand-wood/25 p-8 md:p-12 space-y-8 shadow-xs">
-          
+
           <div className="text-center space-y-3">
             <div className="w-12 h-12 mx-auto rounded-full bg-brand-base/90 flex items-center justify-center text-brand-wood border border-brand-wood/10">
               <Lock size={18} />
@@ -419,7 +386,7 @@ export default function AdminPanel({
                 ZANORI SYSTEM PORTAL
               </span>
               <h2 className="font-serif text-3xl font-light text-brand-dark">
-                 Director login
+                Director login
               </h2>
             </div>
             <p className="text-xs text-brand-muted leading-relaxed font-sans font-light">
@@ -432,13 +399,23 @@ export default function AdminPanel({
               <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">
                 Administrative passcode
               </label>
-              <input
-                type="password"
-                placeholder="Enter passcode"
-                value={passcode}
-                onChange={(e) => setPasscode(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-brand-base/95 text-sm text-brand-dark font-sans"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Enter passcode"
+                  value={passcode}
+                  onChange={(e) => setPasscode(e.target.value)}
+                  className="w-full px-4 py-3 pr-12 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-brand-base/95 text-sm text-brand-dark font-sans"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-brand-dark transition-colors p-1"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                </button>
+              </div>
             </div>
 
             {authError && (
@@ -475,7 +452,7 @@ export default function AdminPanel({
   return (
     <div id="admin-workstation" className="py-24 md:py-32 bg-brand-warm/30 min-h-screen">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
-        
+
         {/* Dynamic Success alert banner */}
         {successMsg && (
           <div className="fixed top-24 right-6 md:right-12 z-50 bg-brand-bark text-brand-base border border-brand-wood/20 p-4 rounded-xl shadow-xl flex items-center space-x-3 text-xs animate-feed-in font-sans">
@@ -488,7 +465,7 @@ export default function AdminPanel({
           <div className="space-y-4 text-left">
             <div className="flex items-center space-x-2">
               <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
-                WORKSTATION CONSOLE
+
               </span>
               <span className="h-1.5 w-1.5 rounded-full bg-brand-cranberry/70"></span>
               <span className="text-[9px] uppercase tracking-wider text-brand-bark font-mono font-bold bg-brand-base/90 border border-brand-wood/15 px-2 py-0.5 rounded-full">
@@ -496,7 +473,7 @@ export default function AdminPanel({
               </span>
             </div>
             <h1 className="font-serif text-5xl md:text-5xl font-light text-brand-dark leading-tight">
-              Design & Catalog control
+              Admin Panel
             </h1>
           </div>
 
@@ -516,7 +493,7 @@ export default function AdminPanel({
               onClick={handleLogout}
               className="px-4 py-2.5 rounded-full border border-brand-wood hover:bg-brand-warm/50 text-brand-dark text-xs font-mono transition-colors cursor-pointer"
             >
-              Logout Space
+              Logout
             </button>
 
             <button
@@ -532,10 +509,10 @@ export default function AdminPanel({
 
         {/* Console Hub Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start text-left">
-          
+
           {/* Main List Management Panel Frame */}
           <div className="lg:col-span-8 bg-brand-base rounded-2xl border border-brand-wood/15 p-6 md:p-8 space-y-6 shadow-sm">
-            
+
             {/* Tab selection panel */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
               <div className="flex bg-brand-warm/60 p-1 rounded-full items-center">
@@ -546,11 +523,10 @@ export default function AdminPanel({
                     cancelProjectForm();
                     cancelProductForm();
                   }}
-                  className={`px-5 py-2 rounded-full text-xs font-light uppercase tracking-[0.1em] transition-all flex items-center space-x-2 ${
-                    activeTab === 'projects'
-                      ? 'bg-brand-bark text-brand-sand font-medium shadow-xs'
-                      : 'text-brand-muted hover:text-brand-dark'
-                  }`}
+                  className={`px-5 py-2 rounded-full text-xs font-light uppercase tracking-[0.1em] transition-all flex items-center space-x-2 ${activeTab === 'projects'
+                    ? 'bg-brand-bark text-brand-sand font-medium shadow-xs'
+                    : 'text-brand-muted hover:text-brand-dark'
+                    }`}
                 >
                   <Layers size={12} />
                   <span>Portfolio & Case Studies</span>
@@ -562,14 +538,13 @@ export default function AdminPanel({
                     cancelProjectForm();
                     cancelProductForm();
                   }}
-                  className={`px-5 py-2 rounded-full text-xs font-light uppercase tracking-[0.1em] transition-all flex items-center space-x-2 ${
-                    activeTab === 'products'
-                      ? 'bg-brand-bark text-brand-sand font-medium shadow-xs'
-                      : 'text-brand-muted hover:text-brand-dark'
-                  }`}
+                  className={`px-5 py-2 rounded-full text-xs font-light uppercase tracking-[0.1em] transition-all flex items-center space-x-2 ${activeTab === 'products'
+                    ? 'bg-brand-bark text-brand-sand font-medium shadow-xs'
+                    : 'text-brand-muted hover:text-brand-dark'
+                    }`}
                 >
                   <ShoppingBag size={12} />
-                  <span>The Shop Collection</span>
+                  <span>Shop</span>
                 </button>
               </div>
 
@@ -598,7 +573,7 @@ export default function AdminPanel({
             {/* Render Portfolio management panel */}
             {activeTab === 'projects' && (
               <div className="space-y-6">
-                
+
                 {/* Search projects bar */}
                 <div className="relative">
                   <input
@@ -621,11 +596,10 @@ export default function AdminPanel({
                       return (
                         <div
                           key={proj.id}
-                          className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                            isActiveEd 
-                              ? 'bg-brand-warm border-brand-wood/40 ring-1 ring-brand-wood/20' 
-                              : 'bg-brand-warm/30 rounded-xl border-brand-wood/10 hover:border-brand-wood/25'
-                          }`}
+                          className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${isActiveEd
+                            ? 'bg-brand-warm border-brand-wood/40 ring-1 ring-brand-wood/20'
+                            : 'bg-brand-warm/30 rounded-xl border-brand-wood/10 hover:border-brand-wood/25'
+                            }`}
                         >
                           <div className="space-y-1.5 max-w-lg">
                             <div className="flex items-center space-x-2 flex-wrap gap-y-1">
@@ -690,7 +664,7 @@ export default function AdminPanel({
             {/* Render Shop Boutique products panel */}
             {activeTab === 'products' && (
               <div className="space-y-6">
-                
+
                 {/* Search products bar */}
                 <div className="relative">
                   <input
@@ -713,11 +687,10 @@ export default function AdminPanel({
                       return (
                         <div
                           key={prod.id}
-                          className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                            isActiveEd 
-                              ? 'bg-brand-warm border-brand-wood/80 ring-1 ring-brand-wood/40' 
-                              : 'bg-brand-warm/30 rounded-xl border-brand-wood/10 hover:border-brand-wood/25'
-                          }`}
+                          className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${isActiveEd
+                            ? 'bg-brand-warm border-brand-wood/80 ring-1 ring-brand-wood/40'
+                            : 'bg-brand-warm/30 rounded-xl border-brand-wood/10 hover:border-brand-wood/25'
+                            }`}
                         >
                           <div className="flex items-start space-x-3 text-left">
                             {/* Decorative preview block */}
@@ -779,7 +752,7 @@ export default function AdminPanel({
 
           {/* Right Editor Panel Frame (Dynamic based on selected action) */}
           <div className="lg:col-span-4 bg-brand-sand rounded-2xl border border-brand-wood/15 p-6 md:p-8 shadow-sm relative overflow-hidden space-y-6">
-            
+
             {/* If neither creating nor editing, show instructions placeholder */}
             {!isCreatingProject && !editingProject && !isCreatingProduct && !editingProduct ? (
               <div className="min-h-[350px] flex flex-col items-center justify-center text-center p-6 space-y-4">
@@ -814,7 +787,7 @@ export default function AdminPanel({
                 {/* PROJECT WORKSPACE FORM */}
                 {(isCreatingProject || editingProject) && (
                   <form onSubmit={saveProject} className="space-y-5">
-                    
+
                     {/* Title */}
                     <div className="space-y-1 text-left">
                       <label className="text-[10px] uppercase tracking-wider text-brand-dark/80 font-mono font-bold block">
@@ -907,13 +880,11 @@ export default function AdminPanel({
                           </div>
                         )}
 
-                        {/* Upload progress overlay */}
+                        {/* Upload overlay — spinner while canvas compresses */}
                         {projUploading && (
                           <div className="absolute inset-0 bg-brand-dark/60 flex flex-col items-center justify-center gap-2 rounded-xl">
-                            <span className="text-white text-[11px] font-mono">Uploading… {projUploadProgress}%</span>
-                            <div className="w-3/4 h-1 bg-white/20 rounded-full overflow-hidden">
-                              <div className="h-full bg-brand-wood rounded-full transition-all" style={{ width: `${projUploadProgress}%` }} />
-                            </div>
+                            <span className="text-white text-[11px] font-mono">Processing image…</span>
+                            <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                           </div>
                         )}
                       </div>
@@ -1010,7 +981,7 @@ export default function AdminPanel({
                 {/* PRODUCT WORKSPACE FORM */}
                 {(isCreatingProduct || editingProduct) && (
                   <form onSubmit={saveProduct} className="space-y-5">
-                    
+
                     {/* Name */}
                     <div className="space-y-1 text-left">
                       <label className="text-[10px] uppercase tracking-wider text-brand-dark/80 font-mono font-bold block">
@@ -1101,13 +1072,11 @@ export default function AdminPanel({
                           </div>
                         )}
 
-                        {/* Upload progress overlay */}
+                        {/* Upload overlay — spinner while canvas compresses */}
                         {prodUploading && (
                           <div className="absolute inset-0 bg-brand-dark/60 flex flex-col items-center justify-center gap-2 rounded-xl">
-                            <span className="text-white text-[11px] font-mono">Uploading… {prodUploadProgress}%</span>
-                            <div className="w-3/4 h-1 bg-white/20 rounded-full overflow-hidden">
-                              <div className="h-full bg-brand-wood rounded-full transition-all" style={{ width: `${prodUploadProgress}%` }} />
-                            </div>
+                            <span className="text-white text-[11px] font-mono">Processing image…</span>
+                            <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                           </div>
                         )}
                       </div>
@@ -1190,8 +1159,8 @@ export default function AdminPanel({
         </div>
       </div>
     </div>
-    );
-  }
+  );
+}
 
 
 

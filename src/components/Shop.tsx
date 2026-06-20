@@ -13,14 +13,14 @@ interface ShopProps {
   onOpenGiftCheckout: (product: Product) => void;
 }
 
-export default function Shop({ 
-  onAddProductToInquiry, 
-  onOpenInquiryDrawer, 
-  inquiryCount, 
-  products, 
-  wishlist, 
-  onToggleWishlist, 
-  onOpenGiftCheckout 
+export default function Shop({
+  onAddProductToInquiry,
+  onOpenInquiryDrawer,
+  inquiryCount,
+  products,
+  wishlist,
+  onToggleWishlist,
+  onOpenGiftCheckout
 }: ShopProps) {
   const [activeTab, setActiveTab] = useState<ShopCategory>('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,8 +32,8 @@ export default function Shop({
   // Filter & Search Logic
   let filteredProducts = productsToUse.filter((product) => {
     const matchesCategory = activeTab === 'All' || product.category === activeTab;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          product.category.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesPrice = product.price <= maxPrice;
     return matchesCategory && matchesSearch && matchesPrice;
   });
@@ -75,19 +75,19 @@ export default function Shop({
   };
 
   const logisticsGuides = [
-    { title: "Standard Lagos Delivery", text: "Delivered fully assembled. Island standard transit handles Lekki Phases 1 & 2, Ikoyi, Banana Island, and VI. Mainland serves Ikeja, GRA, Surulere, and Magodo." },
-    { title: "Sustainably Sourced Hardwoods", desc: "Our carcasses utilize sustainably logged Nigerian high-grade Mahogany and Tek wood. Standard 5-year structural warranty seals frames seamlessly." }
+    { title: "Standard Delivery", text: "Delivered fully assembled. " },
+    { title: "Sustainably Sourced Hardwoods", desc: "We make use of sustainably logged high-grade wood." }
   ];
 
   return (
     <div id="shop-page" className="py-24 md:py-32 bg-brand-warm min-h-screen">
       <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
-        
+
         {/* Page Header */}
         <div className="pb-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-4">
             <span className="text-[11px] uppercase tracking-[0.25em] font-medium text-brand-bark block">
-              ZANORI HEIRLOOM BOUTIQUE
+
             </span>
             <h1 className="font-serif text-5xl md:text-6xl font-light text-brand-dark leading-tight">
               Timeless Furniture pieces
@@ -101,7 +101,7 @@ export default function Shop({
         {/* Dynamic Interactive Filter Panel toolbar */}
         <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-6 space-y-6">
           <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6">
-            
+
             {/* Left: Interactive Category Tabs */}
             <div className="flex flex-wrap items-center gap-1.5 pb-4 lg:pb-0">
               {categories.map((category) => (
@@ -109,11 +109,10 @@ export default function Shop({
                   key={category}
                   type="button"
                   onClick={() => setActiveTab(category)}
-                  className={`py-1.5 px-4 rounded-full text-xs font-light uppercase tracking-[0.12em] transition-all duration-300 ${
-                    activeTab === category
-                      ? 'text-brand-dark font-medium bg-brand-sand border border-brand-wood/25 shadow-xs'
-                      : 'text-brand-muted hover:text-brand-dark bg-transparent border border-transparent'
-                  }`}
+                  className={`py-1.5 px-4 rounded-full text-xs font-light uppercase tracking-[0.12em] transition-all duration-300 ${activeTab === category
+                    ? 'text-brand-dark font-medium bg-brand-sand border border-brand-wood/25 shadow-xs'
+                    : 'text-brand-muted hover:text-brand-dark bg-transparent border border-transparent'
+                    }`}
                 >
                   {category}
                 </button>
@@ -218,7 +217,7 @@ export default function Shop({
                     >
                       <Heart size={12} className={`transition-colors duration-350 ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-brand-muted hover:text-brand-dark'}`} />
                     </button>
-                    
+
                     {/* Visual Label */}
                     <span className="absolute bottom-2.5 right-3 font-mono text-[83px] leading-none text-brand-dark/5 select-none font-bold">
                       {product.category.substring(0, 3).toUpperCase()}
@@ -240,7 +239,7 @@ export default function Shop({
                       <span className="text-sm font-medium text-brand-dark tracking-wide font-sans">
                         {formatNairaVal(product.price)}
                       </span>
-                      
+
                       <div className="flex gap-1">
                         <button
                           type="button"

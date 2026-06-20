@@ -148,11 +148,10 @@ export default function Footer({ onBlockedNavigation, onOpenConsultationModal }:
         {/* Lower copyright row */}
         <div className="pt-8 flex flex-col items-center justify-center text-[10px] md:text-[11px] text-brand-muted/70 tracking-widest font-light gap-2 md:gap-4 md:flex-row md:justify-between">
           <span>ZANORI SPACES</span>
-          <span className="hidden md:inline">&copy; 2026 ZANORI SPACES &bull; ALL RIGHTS RESERVED &bull; <a href="#/admin" className="text-brand-sand/70 hover:text-brand-base transition-colors duration-300">Admin</a></span>
+          <span className="hidden md:inline">&copy; 2026 ZANORI SPACES &bull; ALL RIGHTS RESERVED</span>
           <div className="md:hidden text-center space-y-1">
             <div>&copy; 2026 ZANORI SPACES</div>
             <div>ALL RIGHTS RESERVED</div>
-            <a href="#/admin" className="text-brand-sand/70 hover:text-brand-base transition-colors duration-300 block">Admin</a>
           </div>
         </div>
       </div>

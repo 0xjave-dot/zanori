@@ -17,7 +17,8 @@ export interface Project {
   location: string;
   servicesUsed: string[];
   description: string;
-  imageBg: string; // Color gradient specifier representational for Lagos vibe
+  imageBg: string;
+  images?: string[];   // ordered array of base64/URL images; first becomes imageBg
   isFeatured?: boolean;
 }
 
@@ -27,6 +28,7 @@ export interface Product {
   name: string;
   price: number;
   imageBg: string;
+  images?: string[];   // ordered array of base64/URL images; first becomes imageBg
   iconType: 'bed' | 'sofa' | 'shelving' | 'table' | 'storage';
   isNew?: boolean;
 }
