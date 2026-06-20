@@ -115,19 +115,6 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
                 currentPage === 'shop' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </a>
-
-            <a
-              href="#/account"
-              onClick={(e) => handleLinkClick(e, '#/account')}
-              className={`transition-all duration-300 relative py-1 group hover:text-brand-ivory ${
-                currentPage === 'account' ? 'text-brand-ivory font-medium' : ''
-              }`}
-            >
-              <span>{user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account'}</span>
-              <span className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-brand-cranberry to-brand-cranberry transition-all duration-300 origin-left ${
-                currentPage === 'account' ? 'w-full' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </a>
           </div>
 
           {/* Right Pillar */}
@@ -202,8 +189,7 @@ export default function Navbar({ onOpenInquiryDrawer, inquiryCount, currentPage,
           {[
             { label: 'Work', href: '#/work', current: currentPage === 'work' },
             { label: 'Services', href: '#/services', current: currentPage === 'services' },
-            { label: 'Shop', href: '#/shop', current: currentPage === 'shop' },
-            { label: user ? (user.displayName || user.email?.split('@')[0] || 'Member') : 'Account', href: '#/account', current: currentPage === 'account' }
+            { label: 'Shop', href: '#/shop', current: currentPage === 'shop' }
           ].map((item, idx) => (
             <a
               key={item.label}
