@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, X, Sliders } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, X, Sliders, Upload, ImageIcon } from 'lucide-react';
 import { Project, Product, PortfolioCategory, ShopCategory } from '../types';
 import { PORTFOLIO_DATA, PRODUCTS_DATA } from '../data';
-import { db, OperationType, handleFirestoreError } from '../firebase';
+import { db, storage, OperationType, handleFirestoreError } from '../firebase';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 interface AdminPanelProps {
   projects: Project[];
@@ -61,6 +62,17 @@ export default function AdminPanel({
   const [prodImageBg, setProdImageBg] = useState('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
   const [prodIsNew, setProdIsNew] = useState(true);
 
+  // Upload state
+  const [projUploading, setProjUploading] = useState(false);
+  const [projUploadProgress, setProjUploadProgress] = useState(0);
+  const [projImagePreview, setProjImagePreview] = useState<string | null>(null);
+  const projFileInputRef = useRef<HTMLInputElement>(null);
+
+  const [prodUploading, setProdUploading] = useState(false);
+  const [prodUploadProgress, setProdUploadProgress] = useState(0);
+  const [prodImagePreview, setProdImagePreview] = useState<string | null>(null);
+  const prodFileInputRef = useRef<HTMLInputElement>(null);
+
   // Common Luxe Gradient presets
   const GRADIENT_PRESETS = [
     { name: 'Warm Warmth (Mahogany / Oak)', value: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 50%, var(--color-brand-wood) 100%)' },
@@ -78,6 +90,56 @@ export default function AdminPanel({
     'Quality Furniture',
     '3D Interior Design'
   ];
+
+  // Image upload helpers
+  const uploadImage = (
+    file: File,
+    folder: 'projects' | 'products',
+    onProgress: (p: number) => void,
+    onDone: (url: string) => void
+  ) => {
+    const path = `zanori/${folder}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+    const storageRef = ref(storage, path);
+    const task = uploadBytesResumable(storageRef, file);
+    task.on(
+      'state_changed',
+      (snap) => onProgress(Math.round((snap.bytesTransferred / snap.totalBytes) * 100)),
+      (err) => { console.error('Upload error', err); onProgress(0); },
+      async () => { const url = await getDownloadURL(task.snapshot.ref); onDone(url); }
+    );
+  };
+
+  const handleProjFileChange = (file: File | null) => {
+    if (!file) return;
+    const preview = URL.createObjectURL(file);
+    setProjImagePreview(preview);
+    setProjUploading(true);
+    setProjUploadProgress(0);
+    uploadImage(
+      file, 'projects',
+      (p) => setProjUploadProgress(p),
+      (url) => {
+        setProjImageBg(`url('${url}') center/cover`);
+        setProjUploading(false);
+      }
+    );
+  };
+
+  const handleProdFileChange = (file: File | null) => {
+    if (!file) return;
+    const preview = URL.createObjectURL(file);
+    setProdImagePreview(preview);
+    setProdUploading(true);
+    setProdUploadProgress(0);
+    uploadImage(
+      file, 'products',
+      (p) => setProdUploadProgress(p),
+      (url) => {
+        setProdImageBg(`url('${url}') center/cover`);
+        setProdUploading(false);
+      }
+    );
+  };
 
   // Auth Handler
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -140,6 +202,9 @@ export default function AdminPanel({
     setProjServices(p.servicesUsed);
     setProjImageBg(p.imageBg);
     setProjIsFeatured(!!p.isFeatured);
+    // Show existing image as preview if it's a URL-based bg
+    const urlMatch = p.imageBg.match(/url\(['"](.*?)['"]\)/);
+    setProjImagePreview(urlMatch ? urlMatch[1] : null);
   };
 
   // Init new project form
@@ -153,6 +218,7 @@ export default function AdminPanel({
     setProjServices(['Space Styling']);
     setProjImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)');
     setProjIsFeatured(false);
+    setProjImagePreview(null);
   };
 
   const cancelProjectForm = () => {
@@ -239,6 +305,8 @@ export default function AdminPanel({
     setProdIconType(p.iconType);
     setProdImageBg(p.imageBg);
     setProdIsNew(!!p.isNew);
+    const urlMatch = p.imageBg.match(/url\(['"](.*?)['"]\)/);
+    setProdImagePreview(urlMatch ? urlMatch[1] : null);
   };
 
   const initiateNewProduct = () => {
@@ -250,6 +318,7 @@ export default function AdminPanel({
     setProdIconType('bed');
     setProdImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)');
     setProdIsNew(true);
+    setProdImagePreview(null);
   };
 
   const cancelProductForm = () => {
@@ -815,34 +884,76 @@ export default function AdminPanel({
                       </div>
                     </div>
 
-                    {/* Image / Gradient specifier */}
+                    {/* Image Upload */}
                     <div className="space-y-2 text-left">
                       <label className="text-[10px] uppercase tracking-wider text-brand-dark/80 font-mono font-bold block">
-                        Aesthetic Visual Background (CSS-Gradient / URL)
+                        Project Image
                       </label>
-                      <input
-                        type="text"
-                        placeholder="Can be custom gradient or direct image URL path"
-                        value={projImageBg}
-                        onChange={(e) => setProjImageBg(e.target.value)}
-                        required
-                        className="w-full px-3 py-2 border border-brand-wood/25 bg-brand-warm/15 rounded-xl text-[10px] font-mono text-brand-dark"
-                      />
-                      
-                      {/* Presets Grid */}
-                      <span className="text-[8px] text-brand-muted font-mono block">SUGGESTED STUDIO PRESETS:</span>
-                      <div className="grid grid-cols-3 gap-1.5">
-                        {GRADIENT_PRESETS.map((preset, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => setProjImageBg(preset.value)}
-                            className="h-7 rounded-md border border-brand-wood/15 relative overflow-hidden cursor-pointer"
-                            style={{ background: preset.value }}
-                            title={preset.name}
-                          />
-                        ))}
+
+                      {/* Drop zone */}
+                      <div
+                        className="relative border-2 border-dashed border-brand-wood/30 rounded-xl overflow-hidden cursor-pointer hover:border-brand-bark/60 transition-colors"
+                        style={{ minHeight: '120px', background: projImagePreview ? 'transparent' : 'rgba(196,168,130,0.06)' }}
+                        onClick={() => projFileInputRef.current?.click()}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => { e.preventDefault(); handleProjFileChange(e.dataTransfer.files[0] ?? null); }}
+                      >
+                        {projImagePreview ? (
+                          <img src={projImagePreview} alt="Preview" className="w-full h-32 object-cover rounded-xl" />
+                        ) : (
+                          <div className="flex flex-col items-center justify-center h-28 gap-2 text-brand-muted">
+                            <ImageIcon size={22} className="text-brand-wood/50" />
+                            <span className="text-[10px] font-mono text-center">Click or drag an image here</span>
+                          </div>
+                        )}
+
+                        {/* Upload progress overlay */}
+                        {projUploading && (
+                          <div className="absolute inset-0 bg-brand-dark/60 flex flex-col items-center justify-center gap-2 rounded-xl">
+                            <span className="text-white text-[11px] font-mono">Uploading… {projUploadProgress}%</span>
+                            <div className="w-3/4 h-1 bg-white/20 rounded-full overflow-hidden">
+                              <div className="h-full bg-brand-wood rounded-full transition-all" style={{ width: `${projUploadProgress}%` }} />
+                            </div>
+                          </div>
+                        )}
                       </div>
+
+                      <input
+                        ref={projFileInputRef}
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleProjFileChange(e.target.files?.[0] ?? null)}
+                      />
+
+                      {projImagePreview && (
+                        <button
+                          type="button"
+                          onClick={() => { setProjImagePreview(null); setProjImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-warm) 100%)'); }}
+                          className="text-[9px] text-brand-muted hover:text-brand-dark font-mono flex items-center gap-1 transition-colors"
+                        >
+                          <X size={10} /> Remove image — use gradient instead
+                        </button>
+                      )}
+
+                      {/* Gradient presets — shown when no image is set */}
+                      {!projImagePreview && (
+                        <>
+                          <span className="text-[8px] text-brand-muted font-mono block">OR CHOOSE A STUDIO GRADIENT:</span>
+                          <div className="grid grid-cols-3 gap-1.5">
+                            {GRADIENT_PRESETS.map((preset, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => setProjImageBg(preset.value)}
+                                className="h-7 rounded-md border border-brand-wood/15 relative overflow-hidden cursor-pointer"
+                                style={{ background: preset.value }}
+                                title={preset.name}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     {/* Toggle Case Study featured */}
@@ -967,34 +1078,76 @@ export default function AdminPanel({
                       </select>
                     </div>
 
-                    {/* Image / Color specifier */}
+                    {/* Product Image Upload */}
                     <div className="space-y-2 text-left">
                       <label className="text-[10px] uppercase tracking-wider text-brand-dark/80 font-mono font-bold block">
-                        Visual Background Gradient
+                        Product Image
                       </label>
-                      <input
-                        type="text"
-                        placeholder="Pick custom gradient or css rules"
-                        value={prodImageBg}
-                        onChange={(e) => setProdImageBg(e.target.value)}
-                        required
-                        className="w-full px-3 py-2 border border-brand-wood/25 bg-brand-warm/15 rounded-xl text-[10px] font-mono text-brand-dark"
-                      />
-                      
-                      {/* Presets Grid */}
-                      <span className="text-[8px] text-brand-muted font-mono block">SUGGESTED STUDIO PRESETS:</span>
-                      <div className="grid grid-cols-3 gap-1.5">
-                        {GRADIENT_PRESETS.map((preset, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => setProdImageBg(preset.value)}
-                            className="h-7 rounded-md border border-brand-wood/15 relative overflow-hidden cursor-pointer"
-                            style={{ background: preset.value }}
-                            title={preset.name}
-                          />
-                        ))}
+
+                      {/* Drop zone */}
+                      <div
+                        className="relative border-2 border-dashed border-brand-wood/30 rounded-xl overflow-hidden cursor-pointer hover:border-brand-bark/60 transition-colors"
+                        style={{ minHeight: '120px', background: prodImagePreview ? 'transparent' : 'rgba(196,168,130,0.06)' }}
+                        onClick={() => prodFileInputRef.current?.click()}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => { e.preventDefault(); handleProdFileChange(e.dataTransfer.files[0] ?? null); }}
+                      >
+                        {prodImagePreview ? (
+                          <img src={prodImagePreview} alt="Preview" className="w-full h-32 object-cover rounded-xl" />
+                        ) : (
+                          <div className="flex flex-col items-center justify-center h-28 gap-2 text-brand-muted">
+                            <ImageIcon size={22} className="text-brand-wood/50" />
+                            <span className="text-[10px] font-mono text-center">Click or drag an image here</span>
+                          </div>
+                        )}
+
+                        {/* Upload progress overlay */}
+                        {prodUploading && (
+                          <div className="absolute inset-0 bg-brand-dark/60 flex flex-col items-center justify-center gap-2 rounded-xl">
+                            <span className="text-white text-[11px] font-mono">Uploading… {prodUploadProgress}%</span>
+                            <div className="w-3/4 h-1 bg-white/20 rounded-full overflow-hidden">
+                              <div className="h-full bg-brand-wood rounded-full transition-all" style={{ width: `${prodUploadProgress}%` }} />
+                            </div>
+                          </div>
+                        )}
                       </div>
+
+                      <input
+                        ref={prodFileInputRef}
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleProdFileChange(e.target.files?.[0] ?? null)}
+                      />
+
+                      {prodImagePreview && (
+                        <button
+                          type="button"
+                          onClick={() => { setProdImagePreview(null); setProdImageBg('linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)'); }}
+                          className="text-[9px] text-brand-muted hover:text-brand-dark font-mono flex items-center gap-1 transition-colors"
+                        >
+                          <X size={10} /> Remove image — use gradient instead
+                        </button>
+                      )}
+
+                      {/* Gradient presets — shown when no image is set */}
+                      {!prodImagePreview && (
+                        <>
+                          <span className="text-[8px] text-brand-muted font-mono block">OR CHOOSE A STUDIO GRADIENT:</span>
+                          <div className="grid grid-cols-3 gap-1.5">
+                            {GRADIENT_PRESETS.map((preset, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => setProdImageBg(preset.value)}
+                                className="h-7 rounded-md border border-brand-wood/15 relative overflow-hidden cursor-pointer"
+                                style={{ background: preset.value }}
+                                title={preset.name}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     {/* Toggle New Badge */}
