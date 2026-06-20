@@ -8,6 +8,8 @@ interface ShopProps {
   onOpenInquiryDrawer: () => void;
   inquiryCount: number;
   products?: Product[];
+  wishlist: WishlistItem[];
+  onToggleWishlist: (productId: string) => Promise<void>;
   onOpenGiftCheckout: (product: Product) => void;
 }
 
@@ -16,6 +18,8 @@ export default function Shop({
   onOpenInquiryDrawer,
   inquiryCount,
   products,
+  wishlist,
+  onToggleWishlist,
   onOpenGiftCheckout
 }: ShopProps) {
   const [activeTab, setActiveTab] = useState<ShopCategory>('All');
@@ -173,6 +177,7 @@ export default function Shop({
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {filteredProducts.map((product) => {
+              const isWishlisted = wishlist.some((item) => item.productId === product.id);
               return (
                 <div
                   key={product.id}
@@ -199,6 +204,19 @@ export default function Shop({
                         New In
                       </span>
                     )}
+
+                    {/* Wishlist Heart Toggle */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleWishlist(product.id);
+                      }}
+                      className="absolute top-3 right-3 z-20 p-2 rounded-full bg-brand-base/80 backdrop-blur-sm hover:bg-brand-base transition-all cursor-pointer shadow-xs hover:scale-115 active:scale-90"
+                      title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                    >
+                      <Heart size={12} className={`transition-colors duration-350 ${isWishlisted ? 'text-red-500 fill-red-500' : 'text-brand-muted hover:text-brand-dark'}`} />
+                    </button>
 
                     {/* Visual Label */}
                     <span className="absolute bottom-2.5 right-3 font-mono text-[83px] leading-none text-brand-dark/5 select-none font-bold">
