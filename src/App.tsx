@@ -25,7 +25,6 @@ import { Project, Product, InquiryItem, SavedDesign, WishlistItem, GiftPurchase 
 import { ShoppingBag, User as UserIcon } from 'lucide-react';
 import { PORTFOLIO_DATA, PRODUCTS_DATA } from './data';
 import AdminPanel from './components/AdminPanel';
-import AccountPanel from './components/AccountPanel';
 import GiftModal from './components/GiftModal';
 import Loader from './components/Loader';
 import { db, auth, OperationType, handleFirestoreError } from './firebase';
@@ -218,10 +217,10 @@ export default function App() {
     personalMsg: string,
     giftWrap: boolean
   ) => {
-    if (!user || !selectedGiftProduct) return;
+    if (!selectedGiftProduct) return;
     try {
       await addDoc(collection(db, 'gift_purchases'), {
-        userId: user.uid,
+        userId: user ? user.uid : 'guest',
         productId: selectedGiftProduct.id,
         productName: selectedGiftProduct.name,
         price: selectedGiftProduct.price,
@@ -238,9 +237,6 @@ export default function App() {
         }),
         status: 'Pending Delivery'
       });
-      // Move them directly to gifts orders tab to see their delivery catalog log instantly!
-      setActiveAccountTab('gifts');
-      window.location.hash = '#/account';
       setToastMessage(`Splendid! Ordered gift package for ${recipientName} ✓`);
     } catch (err) {
       handleFirestoreError(err, OperationType.WRITE, 'gift_purchases');
@@ -372,8 +368,6 @@ export default function App() {
         setCurrentPage('services');
       } else if (hash.startsWith('#/shop')) {
         setCurrentPage('shop');
-      } else if (hash.startsWith('#/account')) {
-        setCurrentPage('account');
       } else if (hash.startsWith('#/admin')) {
         setCurrentPage('admin');
       } else {
@@ -679,39 +673,12 @@ export default function App() {
               onOpenInquiryDrawer={handleOpenInquiryDrawer}
               inquiryCount={totalInquiryItemsCount}
               products={products}
-              wishlist={wishlist}
-              onToggleWishlist={handleToggleWishlist}
               onOpenGiftCheckout={(prod) => setSelectedGiftProduct(prod)}
             />
           </div>
         )}
 
-        {/* ACCOUNT CLIENT SPACE */}
-        {currentPage === 'account' && (
-          <div className="reveal-section max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-10 min-h-screen">
-            <div>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#8B6F52] font-mono block mb-1">
-                ZANORI SERVICES
-              </span>
-              <h1 className="font-serif text-4xl md:text-5xl font-light text-brand-dark">
-                {user ? "Member's Lounge" : "Secure Authentication"}
-              </h1>
-            </div>
 
-            <AccountPanel
-              user={user}
-              savedDesigns={savedDesigns}
-              wishlist={wishlist}
-              giftPurchases={giftPurchases}
-              products={products}
-              onDeleteDesign={handleDeleteDesign}
-              onDeleteWishlist={handleDeleteWishlist}
-              onAddProductToInquiry={handleAddProductToInquiryVal}
-              activeAccountTab={activeAccountTab}
-              setActiveAccountTab={setActiveAccountTab}
-            />
-          </div>
-        )}
 
         {/* ADMIN WORKSTATION ROUTE */}
         {currentPage === 'admin' && (

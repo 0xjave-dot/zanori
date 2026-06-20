@@ -564,7 +564,7 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns, onOpenC
                       Try another style
                     </button>
 
-                    {user ? (
+                    {user && (
                       <button
                         type="button"
                         disabled={isSaving || hasBeenSaved}
@@ -585,18 +585,6 @@ export default function RoomRenderer({ user, onSaveDesign, savedDesigns, onOpenC
                       >
                         <Bookmark size={12} className={hasBeenSaved ? 'text-brand-bark' : ''} />
                         <span>{isSaving ? 'Saving Design...' : hasBeenSaved ? 'Saved Design ✓' : 'Save as Brief'}</span>
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          window.location.hash = '#/account';
-                        }}
-                        className="w-full sm:w-auto px-5 py-3 rounded-xl bg-brand-warm hover:bg-brand-sand border border-brand-wood/40 text-brand-muted text-xs font-semibold uppercase tracking-wider transition-colors flex items-center justify-center space-x-1.5 cursor-pointer font-sans"
-                        title="Sign in to save this design"
-                      >
-                        <Lock size={12} />
-                        <span>Save to Account (Sign in)</span>
                       </button>
                     )}
 

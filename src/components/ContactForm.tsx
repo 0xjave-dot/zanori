@@ -171,7 +171,7 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                   {/* Purpose of Design */}
                   <div className="space-y-2">
                     <label htmlFor="user-purpose" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
-                      10. Purpose of design
+                      5. Purpose of design
                     </label>
                     <select
                       id="user-purpose"
@@ -191,7 +191,7 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                   {/* Budget Range */}
                   <div className="space-y-2">
                     <label htmlFor="user-budget" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
-                      14. Project Budget (₦)
+                      6. Project Budget (₦)
                     </label>
                     <select
                       id="user-budget"
@@ -200,18 +200,18 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                       className="w-full px-4 py-3.5 bg-brand-base border border-brand-wood/20 rounded-xl text-sm font-light text-brand-dark focus:border-brand-dark focus:outline-hidden transition-all"
                     >
                       <option value="">Select a range (NGN)...</option>
-                      <option value="< 1,000,000">Under 1,000,000</option>
+                      <option value="< 1,000,000">&lt; 1,000,000</option>
                       <option value="1,000,000 - 3,000,000">1,000,000 - 3,000,000</option>
                       <option value="3,000,000 - 5,000,000">3,000,000 - 5,000,000</option>
                       <option value="5,000,000 - 10,000,000">5,000,000 - 10,000,000</option>
-                      <option value="> 10,000,000">Over 10,000,000</option>
+                      <option value="> 10,000,000">&gt; 10,000,000</option>
                     </select>
                   </div>
 
                   {/* Project Timeline */}
                   <div className="space-y-2">
                     <label htmlFor="user-timeline" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold">
-                      21. Project Timeline/ Deadline
+                      7. Project Timeline/ Deadline
                     </label>
                     <input
                       type="text"
@@ -227,7 +227,7 @@ export default function ContactForm({ isOpen, onClose, serviceRequestPreset, bri
                 {/* Space Description */}
                 <div className="space-y-2">
                   <label htmlFor="user-brief" className="text-[11px] uppercase tracking-[0.1em] text-brand-muted block font-bold leading-relaxed">
-                    20. Please provide a detailed description of your preferred design style, color palette, inspiration, or Pinterest board. Also, include anything we should know about your vision, lifestyle, and expectations for the project.
+                    8. Please provide a detailed description of your preferred design style, color palette, inspiration, or Pinterest board. Also, include anything we should know about your vision, lifestyle, and expectations for the project.
                   </label>
                   <textarea
                     id="user-brief"
