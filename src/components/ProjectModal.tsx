@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { X, MapPin, CheckCircle } from 'lucide-react';
 import { Project } from '../types';
 
@@ -9,6 +9,8 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose, onOpenConsultationModal }: ProjectModalProps) {
+  const [activeImage, setActiveImage] = useState<string>('');
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -18,6 +20,10 @@ export default function ProjectModal({ project, onClose, onOpenConsultationModal
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
+
+  useEffect(() => {
+    setActiveImage(project?.images?.[0] ?? '');
+  }, [project]);
 
   if (!project) return null;
 
@@ -43,10 +49,34 @@ export default function ProjectModal({ project, onClose, onOpenConsultationModal
 
         <div className="grid grid-cols-1 md:grid-cols-12">
           {/* Visual Presentation Area - Left */}
-          <div
-            className="md:col-span-6 min-h-[300px] md:min-h-[500px] relative p-8 flex flex-col justify-between"
-            style={{ background: project.imageBg }}
-          >
+          <div className="md:col-span-6 min-h-[300px] md:min-h-[500px] relative p-8 flex flex-col justify-between overflow-hidden">
+            {project.images?.length ? (
+              <>
+                <img
+                  src={activeImage || project.images[0]}
+                  alt={project.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-brand-dark/10 to-transparent"></div>
+                {project.images.length > 1 && (
+                  <div className="absolute bottom-6 left-8 right-8 z-20 flex gap-2">
+                    {project.images.map((image, idx) => (
+                      <button
+                        key={image}
+                        type="button"
+                        onClick={() => setActiveImage(image)}
+                        className={`h-14 w-20 overflow-hidden rounded-lg border transition-all ${activeImage === image ? 'border-white/90' : 'border-white/20 opacity-80'}`}
+                      >
+                        <img src={image} alt={`${project.title} preview ${idx + 1}`} className="h-full w-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="absolute inset-0" style={{ background: project.imageBg }} />
+            )}
+
             <div className="absolute inset-0 bg-black/10 mix-blend-multiply"></div>
 
             {/* Simulated schematic framing */}

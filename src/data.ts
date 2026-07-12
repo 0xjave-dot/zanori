@@ -50,12 +50,13 @@ export const SERVICES_DATA: ServiceItem[] = [
 export const PORTFOLIO_DATA: Project[] = [
   {
     id: 'proj-1',
-    title: 'Ikoyi Penthouse Residence',
+    title: 'Ikori Penthouse Residence',
     category: 'Homes',
     location: 'Ikoyi, Lagos',
-    servicesUsed: ['Space Styling', 'Quality Furniture', '3D Interior Design'],
+    servicesUsed: ['Space Styling', 'Quality Furniture'],
     description: 'Perched above the tree line of Ikoyi, this penthouse presented an exceptional canvas — soaring ceilings, panoramic harbour views, and a footprint generous enough to serve a multi-generational family without ever feeling subdivided. Our mandate was not simply to renovate but to reimagine the spatial hierarchy entirely, drawing natural light deeper into the floorplan through the strategic repositioning of interior partitions and the introduction of bespoke oak joinery that doubles as both storage and structural visual rhythm. Local Yoruba textiles were woven into the soft furnishing palette, grounding the scheme in cultural identity while maintaining a restrained luxury sensibility. Every layout decision — from the circulation path between the primary suite and the family lounge to the precise angle of the dining banquette — was verified through detailed 3D modelling before a single contractor was briefed, eliminating the costly rework that so often characterises projects of this scale.',
-    imageBg: "url('https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=2000&auto=format&fit=crop') center/cover",
+    imageBg: "url('https://i.ibb.co/sdJ1vCSB/IMG-20260630-WA0053.jpg') center/cover",
+    images: ['https://i.ibb.co/sdJ1vCSB/IMG-20260630-WA0053.jpg', 'https://i.ibb.co/wNWsfDRC/IMG-20260630-WA0070.jpg'],
     isFeatured: true
   },
   {
