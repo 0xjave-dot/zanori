@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, EyeOff, X, Sliders, ImageIcon } from 'lucide-react';
 import { Project, Product, PortfolioCategory, ShopCategory, DesignShowcaseItem } from '../types';
 import { PORTFOLIO_DATA, PRODUCTS_DATA, DESIGN_SHOWCASE_DATA } from '../data';
@@ -35,6 +35,27 @@ export default function AdminPanel({
   });
   const [passcode, setPasscode] = useState('');
   const [authError, setAuthError] = useState<string | null>(null);
+
+  // Sync authentication state with localStorage on mount and when it changes
+  useEffect(() => {
+    // Keep localStorage in sync with state
+    if (isAuthenticated) {
+      localStorage.setItem('zanori_admin_auth', 'true');
+    } else {
+      localStorage.removeItem('zanori_admin_auth');
+    }
+  }, [isAuthenticated]);
+
+  // Listen for storage changes from other tabs/windows
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'zanori_admin_auth') {
+        setIsAuthenticated(e.newValue === 'true');
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   // Active Admin Tab: 'projects' | 'products'
   const [activeTab, setActiveTab] = useState<'projects' | 'products'>('projects');

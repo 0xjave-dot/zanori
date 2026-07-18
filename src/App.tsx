@@ -730,6 +730,7 @@ export default function App() {
         {/* ADMIN WORKSTATION ROUTE */}
         {currentPage === 'admin' && (
           <AdminPanel
+            key="admin-panel-persistent"
             projects={projects}
             setProjects={setProjects}
             products={products}
@@ -737,6 +738,21 @@ export default function App() {
             onNavigateHome={() => { window.location.hash = '#/'; }}
           />
         )}
+
+        <style>{`
+          ${currentPage === 'admin' ? `
+            #admin-workstation * {
+              opacity: 1 !important;
+              visibility: visible !important;
+              display: auto !important;
+            }
+            #admin-auth-page * {
+              opacity: 1 !important;
+              visibility: visible !important;
+              display: auto !important;
+            }
+          ` : ''}
+        `}</style>
 
       </main>
 
