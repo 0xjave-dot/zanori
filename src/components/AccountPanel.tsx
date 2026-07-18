@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   updateProfile,
   User as FirebaseUser
@@ -84,18 +85,32 @@ export default function AccountPanel({
     }
   };
 
-  // Google Login popup
+  // Google Login popup with fallback to redirect
   const handleGoogleLogin = async () => {
     setAuthError(null);
     setIsAuthLoading(true);
     try {
+      // Try popup first (better UX)
       await signInWithPopup(auth, googleProvider);
     } catch (err: any) {
-      console.error(err);
-      if (err.code !== 'auth/popup-closed-by-user') {
-        setAuthError('Google sign in failed. Please try again.');
+      console.error('Google Sign-in Error:', err.code, err.message);
+      
+      // If popup fails due to popup being blocked, try redirect
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/unauthorized-domain') {
+        try {
+          await signInWithRedirect(auth, googleProvider);
+          return; // Redirect will handle the rest
+        } catch (redirectErr: any) {
+          console.error('Google Sign-in Redirect Error:', redirectErr);
+          setAuthError(`Sign-in failed: ${redirectErr.message || 'Please check your browser popup settings and ensure localhost:5173 is allowed'}`);
+        }
+      } else if (err.code !== 'auth/popup-closed-by-user') {
+        // Only show error if user didn't close the popup intentionally
+        const errorMessage = err.code === 'auth/unauthorized-domain' 
+          ? 'This domain is not authorized. Please check Firebase Console OAuth settings.'
+          : err.message || 'Google sign in failed. Please try again.';
+        setAuthError(errorMessage);
       }
-    } finally {
       setIsAuthLoading(false);
     }
   };

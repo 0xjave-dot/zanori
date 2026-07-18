@@ -21,6 +21,17 @@ export const auth = getAuth(app);
 export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 
+// Configure Google provider for development
+googleProvider.setCustomParameters({
+  'prompt': 'consent'
+});
+
+// Add localhost to authorized domains (development only)
+if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+  // Enable offline persistence for development
+  auth.settings.appVerificationDisabledForTesting = false;
+}
+
 // Firestore Error Information Interface
 export enum OperationType {
   CREATE = 'create',

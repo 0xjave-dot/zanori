@@ -614,7 +614,7 @@ export default function AdminPanel({
               </h2>
             </div>
             <p className="text-xs text-brand-muted leading-relaxed font-sans font-light">
-              Access the administrative workstation to edit, append, and curate design case studies and retail boutique catalog products.
+              Access your administrative panal to edit, append, and curate design case studies and retail catalog products.
             </p>
           </div>
 
