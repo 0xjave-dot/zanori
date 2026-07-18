@@ -33,6 +33,18 @@ export interface Product {
   isNew?: boolean;
 }
 
+export interface DesignShowcaseItem {
+  id: string;
+  title: string;
+  description: string;
+  assetType: 'Plain Design' | '3D Design';
+  accessType: 'Free' | 'Paid';
+  price: number;
+  imageBg: string;
+  imageUrl?: string;
+  fileUrl?: string;
+}
+
 export interface InquiryItem {
   product: Product;
   quantity: number;

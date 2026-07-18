@@ -1,4 +1,4 @@
-import { ServiceItem, Project, Product, TestimonialItem } from './types';
+import { ServiceItem, Project, Product, TestimonialItem, DesignShowcaseItem } from './types';
 
 export const SERVICES_DATA: ServiceItem[] = [
   {
@@ -164,6 +164,39 @@ export const PRODUCTS_DATA: Product[] = [
     price: 650000,
     imageBg: 'linear-gradient(135deg, #2A2520 0%, #8B6F52 100%)',
     iconType: 'shelving'
+  }
+];
+
+export const DESIGN_SHOWCASE_DATA: DesignShowcaseItem[] = [
+  {
+    id: 'design-1',
+    title: 'Lagos Living Room Mood Board',
+    description: 'A polished plain-design concept sheet for contemporary living spaces with warm tones and layered texture.',
+    assetType: 'Plain Design',
+    accessType: 'Free',
+    price: 0,
+    imageBg: 'linear-gradient(135deg, #F7F4EF 0%, #C4A882 100%)',
+    imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1400&auto=format&fit=crop'
+  },
+  {
+    id: 'design-2',
+    title: 'Premium 3D Villa Concept',
+    description: 'A high-end 3D design concept for a luxury villa experience with sculptural forms and premium finishes.',
+    assetType: '3D Design',
+    accessType: 'Paid',
+    price: 250000,
+    imageBg: 'linear-gradient(135deg, #2A2520 0%, #8B6F52 100%)',
+    imageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1400&auto=format&fit=crop'
+  },
+  {
+    id: 'design-3',
+    title: 'Boutique Office Layout Pack',
+    description: 'A clean, modern plain-design layout pack for branded office interiors and collaborative workspaces.',
+    assetType: 'Plain Design',
+    accessType: 'Paid',
+    price: 180000,
+    imageBg: 'linear-gradient(135deg, #E8E0D4 0%, #8B6F52 100%)',
+    imageUrl: 'https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1400&auto=format&fit=crop'
   }
 ];
 

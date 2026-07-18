@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, EyeOff, X, Sliders, ImageIcon } from 'lucide-react';
-import { Project, Product, PortfolioCategory, ShopCategory } from '../types';
-import { PORTFOLIO_DATA, PRODUCTS_DATA } from '../data';
+import { Project, Product, PortfolioCategory, ShopCategory, DesignShowcaseItem } from '../types';
+import { PORTFOLIO_DATA, PRODUCTS_DATA, DESIGN_SHOWCASE_DATA } from '../data';
 import { db, OperationType, handleFirestoreError } from '../firebase';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
 
@@ -42,6 +42,7 @@ export default function AdminPanel({
   // Search/Filter states inside admin lists
   const [projectSearch, setProjectSearch] = useState('');
   const [productSearch, setProductSearch] = useState('');
+  const [showcaseSearch, setShowcaseSearch] = useState('');
 
   // Editing & Creating modals or expanded forms states
   const [editingProject, setEditingProject] = useState<Project | null>(null);
@@ -49,6 +50,17 @@ export default function AdminPanel({
 
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isCreatingProduct, setIsCreatingProduct] = useState(false);
+
+  const [designShowcaseItems, setDesignShowcaseItems] = useState<DesignShowcaseItem[]>(() => DESIGN_SHOWCASE_DATA);
+  const [editingShowcaseItem, setEditingShowcaseItem] = useState<DesignShowcaseItem | null>(null);
+  const [isCreatingShowcaseItem, setIsCreatingShowcaseItem] = useState(false);
+  const [showcaseTitle, setShowcaseTitle] = useState('');
+  const [showcaseDescription, setShowcaseDescription] = useState('');
+  const [showcaseAssetType, setShowcaseAssetType] = useState<'Plain Design' | '3D Design'>('Plain Design');
+  const [showcaseAccessType, setShowcaseAccessType] = useState<'Free' | 'Paid'>('Free');
+  const [showcasePrice, setShowcasePrice] = useState<number>(0);
+  const [showcaseImageUrl, setShowcaseImageUrl] = useState('');
+  const [showcaseFileUrl, setShowcaseFileUrl] = useState('');
 
   // Success Notification
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -168,6 +180,12 @@ export default function AdminPanel({
   const imagesToBg = (imgs: string[], fallback: string) =>
     imgs.length > 0 ? `url('${imgs[0]}') center/cover` : fallback;
 
+  const setSyncLock = (key: 'zanori_projects_sync_lock' | 'zanori_products_sync_lock', durationMs = 1500) => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(key, '1');
+    window.setTimeout(() => window.localStorage.removeItem(key), durationMs);
+  };
+
   // Auth Handler
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -277,7 +295,11 @@ export default function AdminPanel({
           images: projImages,
           isFeatured: projIsFeatured
         };
+        setSyncLock('zanori_projects_sync_lock');
         await setDoc(doc(db, 'projects', editingProject.id), updatedProj);
+        setProjects((prev) => prev.some((p) => p.id === editingProject.id)
+          ? prev.map((p) => (p.id === editingProject.id ? updatedProj : p))
+          : [...prev, updatedProj]);
         triggerBanner(`Updated "${projTitle}" successfully ✓`);
       } else {
         const newProjId = `proj-${Date.now()}`;
@@ -292,7 +314,9 @@ export default function AdminPanel({
           images: projImages,
           isFeatured: projIsFeatured
         };
+        setSyncLock('zanori_projects_sync_lock');
         await setDoc(doc(db, 'projects', newProjId), newProj);
+        setProjects((prev) => [newProj, ...prev]);
         triggerBanner(`Created "${projTitle}" case study successfully ✓`);
       }
     } catch (err) {
@@ -309,6 +333,7 @@ export default function AdminPanel({
     if (window.confirm(`Are you sure you want to permanently delete "${name}" from your portfolio?`)) {
       try {
         await deleteDoc(doc(db, 'projects', id));
+        setProjects((prev) => prev.filter((p) => p.id !== id));
         triggerBanner(`Deleted "${name}" case study`);
       } catch (err) {
         handleFirestoreError(err, OperationType.DELETE, `projects/${id}`);
@@ -378,7 +403,11 @@ export default function AdminPanel({
           images: prodImages,
           isNew: prodIsNew
         };
+        setSyncLock('zanori_products_sync_lock');
         await setDoc(doc(db, 'products', editingProduct.id), updatedProd);
+        setProducts((prev) => prev.some((p) => p.id === editingProduct.id)
+          ? prev.map((p) => (p.id === editingProduct.id ? updatedProd : p))
+          : [...prev, updatedProd]);
         triggerBanner(`Updated product "${prodName}" ✓`);
       } else {
         const newProdId = `prod-${Date.now()}`;
@@ -392,7 +421,9 @@ export default function AdminPanel({
           images: prodImages,
           isNew: prodIsNew
         };
+        setSyncLock('zanori_products_sync_lock');
         await setDoc(doc(db, 'products', newProdId), newProd);
+        setProducts((prev) => [newProd, ...prev]);
         triggerBanner(`Added "${prodName}" to the Boutique shop ✓`);
       }
     } catch (err) {
@@ -408,6 +439,7 @@ export default function AdminPanel({
     if (window.confirm(`Are you sure you want to permanently delete "${name}" from the retail listings?`)) {
       try {
         await deleteDoc(doc(db, 'products', id));
+        setProducts((prev) => prev.filter((p) => p.id !== id));
         triggerBanner(`Deleted product "${name}"`);
       } catch (err) {
         handleFirestoreError(err, OperationType.DELETE, `products/${id}`);
@@ -428,6 +460,80 @@ export default function AdminPanel({
     return p.name.toLowerCase().includes(term) ||
       p.category.toLowerCase().includes(term);
   });
+
+  const filteredShowcaseItemsAdmin = designShowcaseItems.filter((item) => {
+    const term = showcaseSearch.toLowerCase();
+    return item.title.toLowerCase().includes(term) ||
+      item.description.toLowerCase().includes(term) ||
+      item.assetType.toLowerCase().includes(term);
+  });
+
+  const initiateNewShowcaseItem = () => {
+    setEditingShowcaseItem(null);
+    setIsCreatingShowcaseItem(true);
+    setShowcaseTitle('');
+    setShowcaseDescription('');
+    setShowcaseAssetType('Plain Design');
+    setShowcaseAccessType('Free');
+    setShowcasePrice(0);
+    setShowcaseImageUrl('');
+    setShowcaseFileUrl('');
+  };
+
+  const initiateEditShowcaseItem = (item: DesignShowcaseItem) => {
+    setEditingShowcaseItem(item);
+    setIsCreatingShowcaseItem(false);
+    setShowcaseTitle(item.title);
+    setShowcaseDescription(item.description);
+    setShowcaseAssetType(item.assetType);
+    setShowcaseAccessType(item.accessType);
+    setShowcasePrice(item.price);
+    setShowcaseImageUrl(item.imageUrl || '');
+    setShowcaseFileUrl(item.fileUrl || '');
+  };
+
+  const cancelShowcaseForm = () => {
+    setIsCreatingShowcaseItem(false);
+    setEditingShowcaseItem(null);
+  };
+
+  const saveShowcaseItem = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!showcaseTitle.trim() || !showcaseDescription.trim()) {
+      alert('Please complete the showcase item title and description.');
+      return;
+    }
+
+    const payload: DesignShowcaseItem = {
+      id: editingShowcaseItem?.id || `showcase-${Date.now()}`,
+      title: showcaseTitle.trim(),
+      description: showcaseDescription.trim(),
+      assetType: showcaseAssetType,
+      accessType: showcaseAccessType,
+      price: Number(showcasePrice) || 0,
+      imageBg: 'linear-gradient(135deg, var(--color-brand-sand) 0%, var(--color-brand-base) 100%)',
+      imageUrl: showcaseImageUrl.trim(),
+      fileUrl: showcaseFileUrl.trim(),
+    };
+
+    if (editingShowcaseItem) {
+      setDesignShowcaseItems((prev) => prev.map((item) => item.id === editingShowcaseItem.id ? payload : item));
+      triggerBanner(`Updated showcase item "${payload.title}" ✓`);
+    } else {
+      setDesignShowcaseItems((prev) => [payload, ...prev]);
+      triggerBanner(`Added showcase item "${payload.title}" ✓`);
+    }
+
+    setIsCreatingShowcaseItem(false);
+    setEditingShowcaseItem(null);
+  };
+
+  const deleteShowcaseItem = async (id: string, title: string) => {
+    if (window.confirm(`Delete showcase item "${title}"?`)) {
+      setDesignShowcaseItems((prev) => prev.filter((item) => item.id !== id));
+      triggerBanner(`Deleted showcase item "${title}"`);
+    }
+  };
 
   // Naira value formatter
   const formatNaira = (val: number) => {
@@ -613,6 +719,21 @@ export default function AdminPanel({
                   <ShoppingBag size={12} />
                   <span>Shop</span>
                 </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTab('showcase');
+                    cancelProjectForm();
+                    cancelProductForm();
+                  }}
+                  className={`px-5 py-2 rounded-full text-xs font-light uppercase tracking-[0.1em] transition-all flex items-center space-x-2 ${activeTab === 'showcase'
+                    ? 'bg-brand-bark text-brand-sand font-medium shadow-xs'
+                    : 'text-brand-muted hover:text-brand-dark'
+                    }`}
+                >
+                  <Sparkles size={12} />
+                  <span>Showcase</span>
+                </button>
               </div>
 
               {/* Append new Button */}
@@ -625,7 +746,7 @@ export default function AdminPanel({
                   <Plus size={13} />
                   <span>Add Case Study</span>
                 </button>
-              ) : (
+              ) : activeTab === 'products' ? (
                 <button
                   type="button"
                   onClick={initiateNewProduct}
@@ -633,6 +754,15 @@ export default function AdminPanel({
                 >
                   <Plus size={13} />
                   <span>Add Product</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={initiateNewShowcaseItem}
+                  className="px-4 py-2 bg-brand-cranberry hover:bg-brand-bark text-brand-sand rounded-full text-xs font-sans font-medium uppercase tracking-wider flex items-center space-x-1.5 cursor-pointer"
+                >
+                  <Plus size={13} />
+                  <span>Add Showcase Item</span>
                 </button>
               )}
             </div>
@@ -725,6 +855,88 @@ export default function AdminPanel({
                   )}
                 </div>
 
+              </div>
+            )}
+
+            {/* Render Showcase panel */}
+            {activeTab === 'showcase' && (
+              <div className="space-y-6">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search showcase items by title or type..."
+                    value={showcaseSearch}
+                    onChange={(e) => setShowcaseSearch(e.target.value)}
+                    className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-brand-wood/25 bg-brand-warm/20 text-xs font-sans focus:outline-hidden focus:border-brand-bark"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted text-[10px] uppercase font-mono tracking-wider font-semibold">
+                    {filteredShowcaseItemsAdmin.length} Items
+                  </span>
+                </div>
+
+                {(isCreatingShowcaseItem || editingShowcaseItem) && (
+                  <form onSubmit={saveShowcaseItem} className="space-y-4 rounded-2xl border border-brand-wood/15 bg-brand-warm/40 p-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">Title</label>
+                        <input value={showcaseTitle} onChange={(e) => setShowcaseTitle(e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-brand-wood/20 bg-brand-base text-sm text-brand-dark" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">Asset Type</label>
+                        <select value={showcaseAssetType} onChange={(e) => setShowcaseAssetType(e.target.value as 'Plain Design' | '3D Design')} className="w-full px-3 py-2.5 rounded-xl border border-brand-wood/20 bg-brand-base text-sm text-brand-dark">
+                          <option value="Plain Design">Plain Design</option>
+                          <option value="3D Design">3D Design</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">Description</label>
+                        <textarea value={showcaseDescription} onChange={(e) => setShowcaseDescription(e.target.value)} rows={3} className="w-full px-3 py-2.5 rounded-xl border border-brand-wood/20 bg-brand-base text-sm text-brand-dark" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">Access Type</label>
+                        <select value={showcaseAccessType} onChange={(e) => setShowcaseAccessType(e.target.value as 'Free' | 'Paid')} className="w-full px-3 py-2.5 rounded-xl border border-brand-wood/20 bg-brand-base text-sm text-brand-dark">
+                          <option value="Free">Free</option>
+                          <option value="Paid">Paid</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">Price</label>
+                        <input type="number" min="0" value={showcasePrice} onChange={(e) => setShowcasePrice(Number(e.target.value))} className="w-full px-3 py-2.5 rounded-xl border border-brand-wood/20 bg-brand-base text-sm text-brand-dark" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">Image URL</label>
+                        <input value={showcaseImageUrl} onChange={(e) => setShowcaseImageUrl(e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-brand-wood/20 bg-brand-base text-sm text-brand-dark" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">File URL</label>
+                        <input value={showcaseFileUrl} onChange={(e) => setShowcaseFileUrl(e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-brand-wood/20 bg-brand-base text-sm text-brand-dark" />
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-end gap-3">
+                      <button type="button" onClick={cancelShowcaseForm} className="px-3 py-2 rounded-full text-xs uppercase tracking-wider text-brand-muted hover:text-brand-dark">Cancel</button>
+                      <button type="submit" className="px-4 py-2 rounded-full bg-brand-bark text-brand-sand text-xs uppercase tracking-wider">Save</button>
+                    </div>
+                  </form>
+                )}
+
+                <div className="space-y-3.5 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                  {filteredShowcaseItemsAdmin.length > 0 ? filteredShowcaseItemsAdmin.map((item) => (
+                    <div key={item.id} className="p-4 rounded-xl border border-brand-wood/10 bg-brand-warm/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="space-y-1.5 max-w-lg">
+                        <div className="flex items-center flex-wrap gap-2">
+                          <span className="text-[10px] font-mono uppercase tracking-wider text-brand-muted">{item.assetType}</span>
+                          <span className="text-[10px] font-mono uppercase tracking-wider text-brand-bark">{item.accessType}</span>
+                        </div>
+                        <h4 className="font-serif text-lg text-brand-dark leading-tight">{item.title}</h4>
+                        <p className="text-[11px] text-brand-muted line-clamp-2 leading-relaxed">{item.description}</p>
+                      </div>
+                      <div className="flex items-center space-x-2 sm:self-center shrink-0">
+                        <button type="button" onClick={() => initiateEditShowcaseItem(item)} className="p-2 border border-brand-wood/25 rounded-lg text-brand-dark hover:bg-brand-wood/10 transition-colors" title="Edit showcase item"><Edit2 size={13} /></button>
+                        <button type="button" onClick={() => deleteShowcaseItem(item.id, item.title)} className="p-2 border border-brand-cranberry/30 rounded-lg text-brand-cranberry hover:bg-brand-cranberry/10 transition-colors" title="Delete showcase item"><Trash2 size={13} /></button>
+                      </div>
+                    </div>
+                  )) : <div className="text-center py-10 text-xs text-brand-muted">No showcase items match your search filter.</div>}
+                </div>
               </div>
             )}
 

@@ -23,13 +23,14 @@ import FloatingWhatsApp from './components/FloatingWhatsApp';
 // Models
 import { Project, Product, InquiryItem, SavedDesign, WishlistItem, GiftPurchase } from './types';
 import { ShoppingBag, User as UserIcon } from 'lucide-react';
-import { PORTFOLIO_DATA, PRODUCTS_DATA } from './data';
+import { PORTFOLIO_DATA, PRODUCTS_DATA, DESIGN_SHOWCASE_DATA } from './data';
 import AdminPanel from './components/AdminPanel';
 import AccountPanel from './components/AccountPanel';
 import GiftModal from './components/GiftModal';
 import Loader from './components/Loader';
+import DesignShowcase from './components/DesignShowcase';
 import { db, auth, OperationType, handleFirestoreError } from './firebase';
-import { collection, onSnapshot, doc, setDoc, addDoc, deleteDoc, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, doc, setDoc, addDoc, deleteDoc, query, where, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 
 export default function App() {
@@ -46,9 +47,33 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const showNavBlockedToast = () => setToastMessage('not done cooking');
 
-  // Dynamic synchronized state with database (backed by Firestore)
-  const [projects, setProjects] = useState<Project[]>(PORTFOLIO_DATA);
-  const [products, setProducts] = useState<Product[]>(PRODUCTS_DATA);
+  // Dynamic synchronized state with database (backed by Firestore), with local persistence for images and edits
+  const [projects, setProjects] = useState<Project[]>(() => {
+    if (typeof window === 'undefined') return PORTFOLIO_DATA.map((proj) => ({ ...proj }));
+    try {
+      const cached = window.localStorage.getItem('zanori_projects_state');
+      if (cached) {
+        const parsed = JSON.parse(cached) as Project[];
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      // Fall back to defaults if the cache is unreadable.
+    }
+    return PORTFOLIO_DATA.map((proj) => ({ ...proj }));
+  });
+  const [products, setProducts] = useState<Product[]>(() => {
+    if (typeof window === 'undefined') return PRODUCTS_DATA.map((prod) => ({ ...prod }));
+    try {
+      const cached = window.localStorage.getItem('zanori_products_state');
+      if (cached) {
+        const parsed = JSON.parse(cached) as Product[];
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      // Fall back to defaults if the cache is unreadable.
+    }
+    return PRODUCTS_DATA.map((prod) => ({ ...prod }));
+  });
 
   // User auth state and private club curation tracking
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -72,6 +97,18 @@ export default function App() {
     });
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('zanori_projects_state', JSON.stringify(projects));
+    }
+  }, [projects]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('zanori_products_state', JSON.stringify(products));
+    }
+  }, [products]);
 
   // Sync saved designs
   useEffect(() => {
@@ -244,64 +281,44 @@ export default function App() {
     }
   };
 
-  // Real-time Firestore synchronization for portfolio case studies
+  // One-time hydration from Firestore, then keep the UI driven by local state.
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, 'projects'),
-      async (snapshot) => {
-        if (snapshot.empty) {
-          console.log('No design case studies in database. Seeding collections...');
-          try {
-            for (const proj of PORTFOLIO_DATA) {
-              await setDoc(doc(db, 'projects', proj.id), proj);
-            }
-          } catch (err) {
-            handleFirestoreError(err, OperationType.WRITE, 'projects');
-          }
-        } else {
-          const list: Project[] = [];
-          snapshot.forEach((doc) => {
-            list.push(doc.data() as Project);
-          });
+    const hydrateFromFirestore = async () => {
+      try {
+        const [projectsSnapshot, productsSnapshot] = await Promise.all([
+          getDocs(collection(db, 'projects')),
+          getDocs(collection(db, 'products')),
+        ]);
+
+        if (!projectsSnapshot.empty) {
+          const list: Project[] = projectsSnapshot.docs.map((docSnap) => ({
+            ...(docSnap.data() as Project),
+            id: docSnap.id,
+          }));
           setProjects(list);
-        }
-      },
-      (error) => {
-        handleFirestoreError(error, OperationType.GET, 'projects');
-      }
-    );
-
-    return () => unsubscribe();
-  }, []);
-
-  // Real-time Firestore synchronization for boutique shop products
-  useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, 'products'),
-      async (snapshot) => {
-        if (snapshot.empty) {
-          console.log('No products in database. Seeding catalogue...');
-          try {
-            for (const prod of PRODUCTS_DATA) {
-              await setDoc(doc(db, 'products', prod.id), prod);
-            }
-          } catch (err) {
-            handleFirestoreError(err, OperationType.WRITE, 'products');
-          }
         } else {
-          const list: Product[] = [];
-          snapshot.forEach((doc) => {
-            list.push(doc.data() as Product);
-          });
-          setProducts(list);
+          const seededProjects = PORTFOLIO_DATA.map((proj) => ({ ...proj }));
+          await Promise.all(seededProjects.map((proj) => setDoc(doc(db, 'projects', proj.id), proj)));
+          setProjects(seededProjects);
         }
-      },
-      (error) => {
-        handleFirestoreError(error, OperationType.GET, 'products');
-      }
-    );
 
-    return () => unsubscribe();
+        if (!productsSnapshot.empty) {
+          const list: Product[] = productsSnapshot.docs.map((docSnap) => ({
+            ...(docSnap.data() as Product),
+            id: docSnap.id,
+          }));
+          setProducts(list);
+        } else {
+          const seededProducts = PRODUCTS_DATA.map((prod) => ({ ...prod }));
+          await Promise.all(seededProducts.map((prod) => setDoc(doc(db, 'products', prod.id), prod)));
+          setProducts(seededProducts);
+        }
+      } catch (error) {
+        handleFirestoreError(error, OperationType.GET, 'projects/products');
+      }
+    };
+
+    void hydrateFromFirestore();
   }, []);
 
   // Hash-based dynamic pages state: 'home' | 'work' | 'services' | 'shop' | 'ai-renderer' | 'admin'
@@ -649,6 +666,7 @@ export default function App() {
             <div className="reveal-section"><WhatWeDo onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
             <div className="reveal-section"><ConfidenceAssurance /></div>
             <div className="reveal-section"><Projects /></div>
+            <div className="reveal-section"><DesignShowcase items={DESIGN_SHOWCASE_DATA} /></div>
             <div className="reveal-section"><HowItWorks /></div>
           </div>
         )}
