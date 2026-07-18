@@ -29,6 +29,8 @@ export default function Shop({
   const [searchQuery, setSearchQuery] = useState('');
   const [maxPrice, setMaxPrice] = useState(800000);
   const [sortBy, setSortBy] = useState<'default' | 'priceAsc' | 'priceDesc'>('default');
+  const [designFilter, setDesignFilter] = useState<'All' | 'Plain Design' | '3D Design'>('All');
+  const [designAccessFilter, setDesignAccessFilter] = useState<'All' | 'Free' | 'Paid'>('All');
 
   const productsToUse = products || PRODUCTS_DATA;
 
@@ -310,57 +312,170 @@ export default function Shop({
           </>
         ) : (
           <>
-            {showcaseItems.length > 0 ? (
-              <div className="space-y-6">
-                <div className="flex items-center gap-2">
-                  <Sparkles size={16} className="text-brand-bark" />
-                  <h2 className="font-serif text-3xl md:text-4xl font-light text-brand-dark">
-                    Featured Design Showcase
-                  </h2>
+            <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-6 space-y-6">
+              <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6">
+                <div className="flex flex-wrap items-center gap-1.5 pb-4 lg:pb-0">
+                  {(['All', 'Plain Design', '3D Design'] as const).map((filter) => (
+                    <button
+                      key={filter}
+                      type="button"
+                      onClick={() => setDesignFilter(filter)}
+                      className={`py-1.5 px-4 rounded-full text-xs font-light uppercase tracking-[0.12em] transition-all duration-300 ${designFilter === filter
+                        ? 'text-brand-dark font-medium bg-brand-sand border border-brand-wood/25 shadow-xs'
+                        : 'text-brand-muted hover:text-brand-dark bg-transparent border border-transparent'
+                        }`}
+                    >
+                      {filter}
+                    </button>
+                  ))}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {showcaseItems.map((item) => (
-                    <div key={item.id} className="overflow-hidden rounded-3xl border border-brand-wood/15 bg-brand-base shadow-sm">
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                  <div className="relative flex-grow">
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-muted" size={14} />
+                    <input
+                      type="text"
+                      placeholder="Search concept, moodboard..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 bg-brand-warm rounded-full border border-brand-wood/20 focus:outline-hidden focus:border-brand-bark text-xs font-sans text-brand-dark placeholder:text-brand-muted/70"
+                    />
+                  </div>
+
+                  <div className="relative flex items-center space-x-2 bg-brand-warm rounded-full border border-brand-wood/20 px-3 py-2 text-xs">
+                    <ArrowUpDown size={12} className="text-brand-muted" />
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value as any)}
+                      className="bg-transparent border-none focus:outline-hidden outline-hidden font-sans text-brand-dark leading-none cursor-pointer"
+                    >
+                      <option value="default">Default Order</option>
+                      <option value="priceAsc">Price: Low to High</option>
+                      <option value="priceDesc">Price: High to Low</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 flex flex-col sm:flex-row items-baseline sm:items-center justify-between gap-4">
+                <span className="text-[10px] font-mono tracking-widest text-brand-wood uppercase font-bold flex items-center space-x-1.5">
+                  <SlidersHorizontal size={12} />
+                  <span>Filter by access and budget</span>
+                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  {(['All', 'Free', 'Paid'] as const).map((filter) => (
+                    <button
+                      key={filter}
+                      type="button"
+                      onClick={() => setDesignAccessFilter(filter)}
+                      className={`py-1.5 px-3 rounded-full text-[10px] font-light uppercase tracking-[0.12em] transition-all duration-300 ${designAccessFilter === filter
+                        ? 'text-brand-dark font-medium bg-brand-sand border border-brand-wood/25 shadow-xs'
+                        : 'text-brand-muted hover:text-brand-dark bg-transparent border border-transparent'
+                        }`}
+                    >
+                      {filter}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center space-x-4 w-full sm:w-80">
+                  <input
+                    type="range"
+                    min="0"
+                    max="800000"
+                    step="25000"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                    className="w-full accent-brand-wood bg-brand-sand h-1 rounded-full outline-hidden"
+                  />
+                  <span className="text-xs font-mono bg-brand-sand border border-brand-wood/15 px-2 py-1 rounded-md text-brand-dark shrink-0 font-medium whitespace-nowrap">
+                    {maxPrice === 0 ? 'Free only' : `Under ${formatNairaVal(maxPrice)}`}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {(() => {
+              let filteredDesigns = showcaseItems.filter((item) => {
+                const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  item.assetType.toLowerCase().includes(searchQuery.toLowerCase());
+                const matchesType = designFilter === 'All' || item.assetType === designFilter;
+                const matchesAccess = designAccessFilter === 'All' || item.accessType === designAccessFilter;
+                const matchesPrice = item.price <= maxPrice && (maxPrice > 0 || item.accessType === 'Free');
+                return matchesSearch && matchesType && matchesAccess && matchesPrice;
+              });
+
+              if (sortBy === 'priceAsc') {
+                filteredDesigns = [...filteredDesigns].sort((a, b) => a.price - b.price);
+              } else if (sortBy === 'priceDesc') {
+                filteredDesigns = [...filteredDesigns].sort((a, b) => b.price - a.price);
+              }
+
+              return filteredDesigns.length > 0 ? (
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+                  {filteredDesigns.map((item) => (
+                    <div key={item.id} className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-3 pb-5 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs">
                       <div
-                        className="h-44 w-full bg-cover bg-center"
+                        className="relative rounded-xl w-full h-[140px] flex items-center justify-center p-4 overflow-hidden transition-transform duration-500"
                         style={{ background: item.imageUrl ? `url('${item.imageUrl}') center/cover` : item.imageBg }}
-                      />
-                      <div className="p-5 space-y-3">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="text-[10px] uppercase tracking-[0.2em] text-brand-bark font-semibold">
-                            {item.assetType}
-                          </span>
-                          <span className="rounded-full bg-brand-warm px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-brand-dark">
-                            {item.accessType}
-                          </span>
+                      >
+                        <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
+                        <div className="absolute inset-2 border border-brand-dark/5 rounded-lg opacity-40 pointer-events-none"></div>
+                        <div className="relative z-10 px-3 py-2 rounded-full bg-brand-base/80 backdrop-blur-sm text-[10px] uppercase tracking-[0.16em] text-brand-bark font-medium">
+                          {item.assetType}
                         </div>
-                        <h3 className="font-serif text-xl font-light text-brand-dark">{item.title}</h3>
-                        <p className="text-sm text-brand-muted leading-relaxed font-sans">{item.description}</p>
-                        <div className="flex items-center justify-between pt-2">
-                          <span className="text-sm font-semibold text-brand-dark">
+                      </div>
+
+                      <div className="mt-4 space-y-3 flex-grow flex flex-col justify-between">
+                        <div className="space-y-1">
+                          <span className="text-[10px] uppercase tracking-[0.15em] text-brand-muted font-light block">
+                            {item.accessType} Access
+                          </span>
+                          <h3 className="font-serif text-base font-light text-brand-dark leading-snug">{item.title}</h3>
+                        </div>
+
+                        <p className="text-xs text-brand-muted leading-relaxed font-sans">{item.description}</p>
+
+                        <div className="flex items-center justify-between pt-2 gap-2">
+                          <span className="text-sm font-medium text-brand-dark tracking-wide font-sans">
                             {item.accessType === 'Free' ? 'Free access' : formatNairaVal(item.price)}
                           </span>
-                          {item.fileUrl ? (
-                            <a href={item.fileUrl} target="_blank" rel="noreferrer" className="text-[10px] uppercase tracking-[0.15em] text-brand-bark hover:underline">
-                              View asset
-                            </a>
-                          ) : (
-                            <span className="text-[10px] uppercase tracking-[0.15em] text-brand-muted">Coming soon</span>
-                          )}
+                          <div className="flex gap-1">
+                            {item.fileUrl ? (
+                              <a href={item.fileUrl} target="_blank" rel="noreferrer" className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-brand-base text-[9px] uppercase tracking-[0.11em] font-medium transition-all duration-300 cursor-pointer">
+                                <span>Preview</span>
+                              </a>
+                            ) : (
+                              <span className="px-2.5 py-1.5 rounded-full bg-brand-warm text-brand-dark text-[9px] uppercase tracking-[0.11em] font-medium">
+                                Coming soon
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
-            ) : (
-              <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
-                <h3 className="font-serif text-2xl font-light text-brand-dark">No design showcases are available yet</h3>
-                <p className="text-xs text-brand-muted max-w-sm mx-auto">
-                  The design collection will appear here once curated assets are added.
-                </p>
-              </div>
-            )}
+              ) : (
+                <div className="bg-brand-base rounded-2xl border border-brand-wood/15 p-16 text-center space-y-3">
+                  <h3 className="font-serif text-2xl font-light text-brand-dark">No design assets match your filters</h3>
+                  <p className="text-xs text-brand-muted max-w-sm mx-auto">
+                    Try adjusting the design type, access mode, or budget filter to explore more concepts.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setDesignFilter('All');
+                      setDesignAccessFilter('All');
+                      setSearchQuery('');
+                      setMaxPrice(800000);
+                    }}
+                    className="mt-4 px-5 py-2 rounded-full border border-brand-bark/30 text-[10px] uppercase tracking-wider text-brand-bark hover:bg-brand-warm transition-all"
+                  >
+                    Reset Filters
+                  </button>
+                </div>
+              );
+            })()}
           </>
         )}
 
