@@ -729,15 +729,13 @@ export default function App() {
 
         {/* ADMIN WORKSTATION ROUTE */}
         {currentPage === 'admin' && (
-          <div className="reveal-section">
-            <AdminPanel
-              projects={projects}
-              setProjects={setProjects}
-              products={products}
-              setProducts={setProducts}
-              onNavigateHome={() => { window.location.hash = '#/'; }}
-            />
-          </div>
+          <AdminPanel
+            projects={projects}
+            setProjects={setProjects}
+            products={products}
+            setProducts={setProducts}
+            onNavigateHome={() => { window.location.hash = '#/'; }}
+          />
         )}
 
       </main>
