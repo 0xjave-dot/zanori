@@ -28,7 +28,6 @@ import AdminPanel from './components/AdminPanel';
 import AccountPanel from './components/AccountPanel';
 import GiftModal from './components/GiftModal';
 import Loader from './components/Loader';
-import DesignShowcase from './components/DesignShowcase';
 import { db, auth, OperationType, handleFirestoreError } from './firebase';
 import { collection, onSnapshot, doc, setDoc, addDoc, deleteDoc, query, where, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
@@ -666,7 +665,6 @@ export default function App() {
             <div className="reveal-section"><WhatWeDo onOpenConsultationModal={() => setIsConsultationModalOpen(true)} /></div>
             <div className="reveal-section"><ConfidenceAssurance /></div>
             <div className="reveal-section"><Projects /></div>
-            <div className="reveal-section"><DesignShowcase items={DESIGN_SHOWCASE_DATA} /></div>
             <div className="reveal-section"><HowItWorks /></div>
           </div>
         )}
@@ -697,6 +695,7 @@ export default function App() {
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
               onOpenGiftCheckout={(prod) => setSelectedGiftProduct(prod)}
+              showcaseItems={DESIGN_SHOWCASE_DATA}
             />
           </div>
         )}

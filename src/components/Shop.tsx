@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift } from 'lucide-react';
+import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift, Sparkles } from 'lucide-react';
 import { PRODUCTS_DATA } from '../data';
-import { ShopCategory, Product, WishlistItem } from '../types';
+import { ShopCategory, Product, WishlistItem, DesignShowcaseItem } from '../types';
 
 interface ShopProps {
   onAddProductToInquiry: (product: Product) => void;
@@ -11,6 +11,7 @@ interface ShopProps {
   wishlist: WishlistItem[];
   onToggleWishlist: (productId: string) => Promise<void>;
   onOpenGiftCheckout: (product: Product) => void;
+  showcaseItems?: DesignShowcaseItem[];
 }
 
 export default function Shop({
@@ -20,7 +21,8 @@ export default function Shop({
   products,
   wishlist,
   onToggleWishlist,
-  onOpenGiftCheckout
+  onOpenGiftCheckout,
+  showcaseItems = []
 }: ShopProps) {
   const [activeTab, setActiveTab] = useState<ShopCategory>('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -172,6 +174,52 @@ export default function Shop({
             </div>
           </div>
         </div>
+
+        {/* Featured Design Showcase */}
+        {showcaseItems.length > 0 && (
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <Sparkles size={16} className="text-brand-bark" />
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-brand-dark">
+                Featured Design Showcase
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {showcaseItems.map((item) => (
+                <div key={item.id} className="overflow-hidden rounded-3xl border border-brand-wood/15 bg-brand-base shadow-sm">
+                  <div
+                    className="h-44 w-full bg-cover bg-center"
+                    style={{ background: item.imageUrl ? `url('${item.imageUrl}') center/cover` : item.imageBg }}
+                  />
+                  <div className="p-5 space-y-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-brand-bark font-semibold">
+                        {item.assetType}
+                      </span>
+                      <span className="rounded-full bg-brand-warm px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-brand-dark">
+                        {item.accessType}
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-xl font-light text-brand-dark">{item.title}</h3>
+                    <p className="text-sm text-brand-muted leading-relaxed font-sans">{item.description}</p>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="text-sm font-semibold text-brand-dark">
+                        {item.accessType === 'Free' ? 'Free access' : formatNairaVal(item.price)}
+                      </span>
+                      {item.fileUrl ? (
+                        <a href={item.fileUrl} target="_blank" rel="noreferrer" className="text-[10px] uppercase tracking-[0.15em] text-brand-bark hover:underline">
+                          View asset
+                        </a>
+                      ) : (
+                        <span className="text-[10px] uppercase tracking-[0.15em] text-brand-muted">Coming soon</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Product Grid Results */}
         {filteredProducts.length > 0 ? (
