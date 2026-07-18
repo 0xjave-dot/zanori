@@ -649,6 +649,19 @@ export default function App() {
         onOpenConsultationModal={() => setIsConsultationModalOpen(true)}
       />
 
+      {/* Force admin page content to always be visible */}
+      {currentPage === 'admin' && (
+        <style>{`
+          main h1, main h2, main h3, main h4, main h5, main h6, 
+          main p, main button, main a, main input, main textarea, main select,
+          main div, main span, main form, main label {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+          }
+        `}</style>
+      )}
+
       {/* Dynamic Routing Screen Page Views */}
       <main className="pt-20">
 
@@ -741,15 +754,21 @@ export default function App() {
 
         <style>{`
           ${currentPage === 'admin' ? `
+            #admin-workstation {
+              opacity: 1 !important;
+              visibility: visible !important;
+            }
             #admin-workstation * {
               opacity: 1 !important;
               visibility: visible !important;
-              display: auto !important;
+            }
+            #admin-auth-page {
+              opacity: 1 !important;
+              visibility: visible !important;
             }
             #admin-auth-page * {
               opacity: 1 !important;
               visibility: visible !important;
-              display: auto !important;
             }
           ` : ''}
         `}</style>

@@ -57,6 +57,36 @@ export default function AdminPanel({
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
+  // Ensure content stays visible when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Force visibility of all admin content
+      const timer = setTimeout(() => {
+        const workstation = document.getElementById('admin-workstation');
+        if (workstation) {
+          workstation.style.opacity = '1';
+          workstation.style.visibility = 'visible';
+        }
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthenticated]);
+
+  // Guard against authentication state being reset unexpectedly
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    
+    const checkAuthInterval = setInterval(() => {
+      const storedAuth = localStorage.getItem('zanori_admin_auth');
+      if (storedAuth !== 'true' && isAuthenticated) {
+        // Auth was lost, restore it
+        localStorage.setItem('zanori_admin_auth', 'true');
+      }
+    }, 500);
+    
+    return () => clearInterval(checkAuthInterval);
+  }, [isAuthenticated]);
+
   // Active Admin Tab: 'projects' | 'products'
   const [activeTab, setActiveTab] = useState<'projects' | 'products'>('projects');
 
