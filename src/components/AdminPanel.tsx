@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, EyeOff, X, Sliders, ImageIcon } from 'lucide-react';
 import { Project, Product, PortfolioCategory, ShopCategory, DesignShowcaseItem } from '../types';
 import { PORTFOLIO_DATA, PRODUCTS_DATA, DESIGN_SHOWCASE_DATA } from '../data';
-import { db, OperationType, handleFirestoreError } from '../firebase';
+import { auth, db, OperationType, handleFirestoreError } from '../firebase';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
 
 const GRADIENT_PRESETS = [
@@ -237,31 +238,40 @@ export default function AdminPanel({
     window.setTimeout(() => window.localStorage.removeItem(key), durationMs);
   };
 
-  // Loading state for async server auth
+  // Loading state for async Firebase auth
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  // Auth Handler — verifies passcode against the server (scrypt hash in ADMIN_PASSWORD_HASH env var)
+  // The admin account lives in Firebase Authentication.
+  // Create it once via the Firebase console:
+  //   Authentication → Users → Add user
+  //   Email: admin@zanorispaces.com  |  Password: your chosen passcode
+  const ADMIN_EMAIL = 'admin@zanorispaces.com';
+
+  // Auth Handler — verifies the passcode against Firebase Authentication.
+  // We sign in then immediately sign out so the admin session does not
+  // appear in the regular user auth state managed by App.tsx.
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!passcode.trim()) return;
     setIsLoggingIn(true);
     setAuthError(null);
     try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passcode: passcode.trim() }),
-      });
-      const data = await res.json() as { ok: boolean; error?: string };
-      if (data.ok) {
-        setIsAuthenticated(true);
-        localStorage.setItem('zanori_admin_auth', 'true');
-        triggerBanner('Welcome back, Studio Director ✓');
+      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, passcode.trim());
+      // Sign out right away — we only needed Firebase to verify the password.
+      // Admin session is tracked via localStorage (same as before).
+      await signOut(auth);
+      setIsAuthenticated(true);
+      localStorage.setItem('zanori_admin_auth', 'true');
+      triggerBanner('Welcome back, Studio Director ✓');
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code ?? '';
+      if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
+        setAuthError('Incorrect passcode. Access denied.');
+      } else if (code === 'auth/too-many-requests') {
+        setAuthError('Too many failed attempts. Please wait a moment and try again.');
       } else {
-        setAuthError(data.error ?? 'Incorrect passcode. Access denied.');
+        setAuthError('Login error. Please try again.');
       }
-    } catch {
-      setAuthError('Could not reach the server. Please try again.');
     } finally {
       setIsLoggingIn(false);
     }
