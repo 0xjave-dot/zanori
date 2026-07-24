@@ -321,7 +321,19 @@ export default function App() {
   }, []);
 
   // Hash-based dynamic pages state: 'home' | 'work' | 'services' | 'shop' | 'ai-renderer' | 'admin'
-  const [currentPage, setCurrentPage] = useState<string>('home');
+  // Initialise directly from the URL hash so the correct page renders on the very
+  // first paint — without this, navigating to /#/admin always renders 'home' first,
+  // which triggers scroll-reveal animations (opacity:0) that bleed onto AdminPanel.
+  const [currentPage, setCurrentPage] = useState<string>(() => {
+    if (typeof window === 'undefined') return 'home';
+    const hash = window.location.hash;
+    if (hash.startsWith('#/work')) return 'work';
+    if (hash.startsWith('#/services')) return 'services';
+    if (hash.startsWith('#/shop')) return 'shop';
+    if (hash.startsWith('#/account')) return 'account';
+    if (hash.startsWith('#/admin')) return 'admin';
+    return 'home';
+  });
 
   useEffect(() => {
     const revealSections = document.querySelectorAll<HTMLElement>('.reveal-section');

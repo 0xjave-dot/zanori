@@ -237,16 +237,33 @@ export default function AdminPanel({
     window.setTimeout(() => window.localStorage.removeItem(key), durationMs);
   };
 
-  // Auth Handler
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  // Loading state for async server auth
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  // Auth Handler — verifies passcode against the server (scrypt hash in ADMIN_PASSWORD_HASH env var)
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode.trim() === 'Kryptonitekiss2026!') {
-      setIsAuthenticated(true);
-      localStorage.setItem('zanori_admin_auth', 'true');
-      setAuthError(null);
-      triggerBanner('Welcome back, Studio Director ✓');
-    } else {
-      setAuthError('Incorrect passcode. Access denied.');
+    if (!passcode.trim()) return;
+    setIsLoggingIn(true);
+    setAuthError(null);
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode: passcode.trim() }),
+      });
+      const data = await res.json() as { ok: boolean; error?: string };
+      if (data.ok) {
+        setIsAuthenticated(true);
+        localStorage.setItem('zanori_admin_auth', 'true');
+        triggerBanner('Welcome back, Studio Director ✓');
+      } else {
+        setAuthError(data.error ?? 'Incorrect passcode. Access denied.');
+      }
+    } catch {
+      setAuthError('Could not reach the server. Please try again.');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -650,10 +667,11 @@ export default function AdminPanel({
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-xl bg-brand-bark hover:bg-brand-bark/90 text-brand-sand text-xs uppercase tracking-widest font-semibold transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-xs"
+              disabled={isLoggingIn}
+              className="w-full py-3.5 rounded-xl bg-brand-bark hover:bg-brand-bark/90 disabled:opacity-60 text-brand-sand text-xs uppercase tracking-widest font-semibold transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-xs"
             >
-              <span>Unlock Admin Panel</span>
-              <ArrowRight size={13} />
+              <span>{isLoggingIn ? 'Verifying…' : 'Unlock Admin Panel'}</span>
+              {!isLoggingIn && <ArrowRight size={13} />}
             </button>
           </form>
 
