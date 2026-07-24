@@ -50,7 +50,7 @@ export default function Shop({
     filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
   }
 
-  const categories: ShopCategory[] = ['All', 'Beds', 'Sofas', 'Shelving', 'Tables', 'Storage'];
+  const categories: ShopCategory[] = ['All', 'Sofas', 'Tables', 'Beds', 'Chairs', 'Shelving', 'Storage', 'Lighting', 'Outdoor', 'Decor'];
   const sections: Array<'Furniture' | 'Designs'> = ['Furniture', 'Designs'];
 
   // Currency formatter
@@ -74,6 +74,14 @@ export default function Shop({
       case 'table':
         return <Columns className="w-8 h-8 text-brand-bark/85 flip-y stroke-[1.25]" />;
       case 'storage':
+        return <Archive className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
+      case 'chair':
+        return <Sofa className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
+      case 'lamp':
+        return <Sparkles className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
+      case 'outdoor':
+        return <Layers className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
+      case 'decor':
         return <Archive className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
       default:
         return <Layers className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;

@@ -1367,11 +1367,15 @@ export default function AdminPanel({
                         onChange={(e) => setProdCategory(e.target.value as ShopCategory)}
                         className="w-full px-3 py-2 border border-brand-wood/25 bg-brand-warm/15 rounded-xl text-xs font-sans text-brand-dark focus:outline-hidden"
                       >
-                        <option value="Beds">Beds</option>
                         <option value="Sofas">Sofas</option>
-                        <option value="Shelving">Shelving</option>
                         <option value="Tables">Tables</option>
+                        <option value="Beds">Beds</option>
+                        <option value="Chairs">Chairs</option>
+                        <option value="Shelving">Shelving</option>
                         <option value="Storage">Storage</option>
+                        <option value="Lighting">Lighting</option>
+                        <option value="Outdoor">Outdoor</option>
+                        <option value="Decor">Decor</option>
                       </select>
                     </div>
 
@@ -1403,9 +1407,13 @@ export default function AdminPanel({
                       >
                         <option value="bed">Bed Frame</option>
                         <option value="sofa">Sofa / Cushion</option>
+                        <option value="chair">Chair</option>
+                        <option value="table">Table / Desk</option>
                         <option value="shelving">Shelving Unit</option>
-                        <option value="table">Dining Table</option>
-                        <option value="storage">Storage Drawer</option>
+                        <option value="storage">Storage / Cabinet</option>
+                        <option value="lamp">Lighting</option>
+                        <option value="outdoor">Outdoor</option>
+                        <option value="decor">Décor</option>
                       </select>
                     </div>
 

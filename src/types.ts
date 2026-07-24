@@ -1,5 +1,5 @@
 export type PortfolioCategory = 'All' | 'Homes' | 'Commercial' | 'Designs';
-export type ShopCategory = 'All' | 'Beds' | 'Sofas' | 'Shelving' | 'Tables' | 'Storage';
+export type ShopCategory = 'All' | 'Sofas' | 'Tables' | 'Beds' | 'Shelving' | 'Storage' | 'Chairs' | 'Lighting' | 'Outdoor' | 'Decor';
 
 export interface ServiceItem {
   id: string;
@@ -29,7 +29,7 @@ export interface Product {
   price: number;
   imageBg: string;
   images?: string[];   // ordered array of base64/URL images; first becomes imageBg
-  iconType: 'bed' | 'sofa' | 'shelving' | 'table' | 'storage';
+  iconType: 'bed' | 'sofa' | 'shelving' | 'table' | 'storage' | 'chair' | 'lamp' | 'outdoor' | 'decor';
   isNew?: boolean;
 }
 
