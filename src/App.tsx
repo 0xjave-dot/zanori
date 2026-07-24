@@ -123,7 +123,10 @@ export default function App() {
         setSavedDesigns(list);
       },
       (error) => {
-        handleFirestoreError(error, OperationType.GET, 'saved_designs');
+        // Log gracefully — never throw inside a Firestore subscription error
+        // callback because it becomes an uncaught async error that React
+        // intercepts and uses to unmount the entire component tree (blank page).
+        console.error('[Zanori] saved_designs subscription error:', error.message);
       }
     );
     return () => unsubscribe();
@@ -143,7 +146,7 @@ export default function App() {
         setWishlist(list);
       },
       (error) => {
-        handleFirestoreError(error, OperationType.GET, 'wishlists');
+        console.error('[Zanori] wishlists subscription error:', error.message);
       }
     );
     return () => unsubscribe();
@@ -163,7 +166,7 @@ export default function App() {
         setGiftPurchases(list);
       },
       (error) => {
-        handleFirestoreError(error, OperationType.GET, 'gift_purchases');
+        console.error('[Zanori] gift_purchases subscription error:', error.message);
       }
     );
     return () => unsubscribe();
@@ -313,7 +316,9 @@ export default function App() {
           setProducts(seededProducts);
         }
       } catch (error) {
-        handleFirestoreError(error, OperationType.GET, 'projects/products');
+        // Log gracefully — throwing here would become an unhandled rejection
+        // that can crash the React tree.
+        console.error('[Zanori] hydrateFromFirestore error:', error instanceof Error ? error.message : error);
       }
     };
 
