@@ -54,7 +54,7 @@ export const PORTFOLIO_DATA: Project[] = [
     category: 'Homes',
     location: 'Ikoyi, Lagos',
     servicesUsed: ['Space Styling', 'Quality Furniture'],
-    description: 'A full residential fit-out for a penthouse spanning the top two floors of a high-rise in Ikoyi. The brief demanded a home that was simultaneously a sanctuary from city life and an environment capable of hosting Lagos's most demanding social calendars. Our response centred on a palette of pale limestone, bleached European oak, and aged brass — materials that absorb natural light from the panoramic floor-to-ceiling glazing without competing with it. Every furniture piece was specified at a scale that acknowledged the double-volume living area rather than shrinking from it. Custom millwork hid the home's technical infrastructure — AV systems, HVAC controls, motorised blinds — behind surfaces that read purely as architecture. The result is a residence that functions with the quiet efficiency of a five-star hotel suite and the warmth of a carefully considered private home.',
+    description: 'A full residential fit-out for a penthouse spanning the top two floors of a high-rise in Ikoyi. The brief demanded a home that was simultaneously a sanctuary from city life and an environment capable of hosting Lagos\u0027s most demanding social calendars. Our response centred on a palette of pale limestone, bleached European oak, and aged brass — materials that absorb natural light from the panoramic floor-to-ceiling glazing without competing with it. Every furniture piece was specified at a scale that acknowledged the double-volume living area rather than shrinking from it. Custom millwork hid the home\u0027s technical infrastructure — AV systems, HVAC controls, motorised blinds — behind surfaces that read purely as architecture. The result is a residence that functions with the quiet efficiency of a five-star hotel suite and the warmth of a carefully considered private home.',
     imageBg: "url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=2000&auto=format&fit=crop') center/cover",
     isFeatured: true
   },
@@ -94,6 +94,26 @@ export const PORTFOLIO_DATA: Project[] = [
     servicesUsed: ['Space Styling', 'Quality Furniture'],
     description: 'Wellness environments carry a particular design responsibility: they must deliver genuine calm to clients who arrive already seeking relief, while simultaneously withstanding the relentless physical demands of a high-footfall commercial operation. This Banana Island salon and spa lounge was designed to resolve that tension without compromise. Travertine basins and stone-effect wall panels were specified not only for their visual serenity but for their imperviousness to the moisture, chemical exposure, and surface friction that rapidly age lesser materials in treatment environments. Modular storage units were configured to absorb the operational complexity of a full-service salon — tools, product inventory, client records — behind a composed facade of light oak cabinetry that reads as effortlessly residential rather than clinically utilitarian. Every upholstered piece was selected from commercial-grade ranges capable of sustaining thousands of seating cycles without visible degradation, ensuring that the considered atmosphere we created on opening day remains intact years into the life of the business.',
     imageBg: "url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=2000&auto=format&fit=crop') center/cover"
+  }
+];
+
+// ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
+
+export const TESTIMONIALS_DATA: TestimonialItem[] = [
+  {
+    quote: 'The online visualization was the moment everything clicked. I could see exactly what my living room would become, and they brought it to life down to the exact wood grains and furniture.',
+    client: 'Toheerah D.',
+    project: 'Lekki Phase 1 Family Home',
+  },
+  {
+    quote: 'Their design consultation saved us months of expensive construction mistakes. They styled our photography lounge with an incredible balance of light and warmth.',
+    client: 'Daniel A.',
+    project: 'Banana Island Salon and Spa Lounge',
+  },
+  {
+    quote: 'Zanori Spaces\' pieces are heirloom quality. Hard to believe anyone can consistently deliver furniture of such quality everytime. The 3-seater and King Bed changed the entire energy of our home into a serene and restorative place.',
+    client: 'Kurosaki O.',
+    project: 'Ikori Penthouse Residence',
   }
 ];
 
