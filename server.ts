@@ -1,4 +1,6 @@
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -6,16 +8,18 @@ import bodyParser from 'body-parser';
 // Load environment variables from .env file
 dotenv.config();
 
+// ESM-compatible __dirname (compiled to CJS by esbuild, but source is ESM)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const port = process.env.PORT || 3000; // Default to port 3000
 
 // Middleware
-// Enable CORS for all origins during development to allow frontend to communicate with backend
 app.use(cors());
-// Parse JSON request bodies, with a limit to handle potentially large image data
 app.use(bodyParser.json({ limit: '50mb' }));
 
-// Placeholder for the /api/reimagine endpoint
+// ── API routes ─────────────────────────────────────────────────────────────
 // This endpoint is called by the RoomRenderer.tsx component
 app.post('/api/reimagine', async (req, res) => {
   console.log('Received request to /api/reimagine');
@@ -24,11 +28,6 @@ app.post('/api/reimagine', async (req, res) => {
   if (!image || !style) {
     return res.status(400).json({ error: 'Image and style are required.' });
   }
-
-  // In a real application, you would integrate with an AI service here
-  // (e.g., Google Gemini API) to process the image and generate a design report.
-  // For now, we'll simulate a response.
-  console.log(`Simulating AI processing for image with style: ${style}`);
 
   // Simulate AI processing delay
   await new Promise(resolve => setTimeout(resolve, 2000));
@@ -48,7 +47,32 @@ app.post('/api/reimagine', async (req, res) => {
   res.json(mockDesignReport);
 });
 
-// Start the server
+// ── Static file serving (production SPA) ──────────────────────────────────
+// Serve the Vite build output.  When running `node dist/server.cjs` from the
+// project root the built assets live in ./dist; from inside dist/ they live in ./.
+// We try __dirname first (works when CWD is anything) then fall back to CWD/dist.
+const distDir = path.join(__dirname, '..', 'dist');          // project-root/dist  (when run as dist/server.cjs)
+const distDirAlt = path.join(process.cwd(), 'dist');         // fallback
+
+// Serve static assets (JS, CSS, images …)
+app.use(express.static(distDir));
+app.use(express.static(distDirAlt));
+
+// SPA catch-all: for any non-API request return index.html so client-side
+// hash routing (/#/admin, /#/work, …) works after a hard-refresh.
+app.get('*', (_req, res) => {
+  // Try both locations for index.html
+  const indexHtml = path.join(distDir, 'index.html');
+  res.sendFile(indexHtml, (err) => {
+    if (err) {
+      res.sendFile(path.join(distDirAlt, 'index.html'), (err2) => {
+        if (err2) res.status(404).send('Not found');
+      });
+    }
+  });
+});
+
+// ── Start ──────────────────────────────────────────────────────────────────
 app.listen(port, () => {
-  console.log(`Backend server running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
