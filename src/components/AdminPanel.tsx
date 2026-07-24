@@ -247,9 +247,9 @@ export default function AdminPanel({
   //   Email: admin@zanorispaces.com  |  Password: your chosen passcode
   const ADMIN_EMAIL = 'admin@zanorispaces.com';
 
-  // Auth Handler — verifies the passcode against Firebase Authentication.
-  // We sign in then immediately sign out so the admin session does not
-  // appear in the regular user auth state managed by App.tsx.
+  // Auth Handler — verifies the passcode against Firebase Authentication
+  // and keeps the session alive so Firestore writes (admin panel) are
+  // authorised by the "isAdmin()" rule in firestore.rules.
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!passcode.trim()) return;
@@ -257,9 +257,9 @@ export default function AdminPanel({
     setAuthError(null);
     try {
       await signInWithEmailAndPassword(auth, ADMIN_EMAIL, passcode.trim());
-      // Sign out right away — we only needed Firebase to verify the password.
-      // Admin session is tracked via localStorage (same as before).
-      await signOut(auth);
+      // Keep the Firebase session alive so Firestore writes from the admin panel
+      // are authenticated and pass the "isAdmin()" security rules.
+      // The session is terminated when the admin clicks Logout (see handleLogout).
       setIsAuthenticated(true);
       localStorage.setItem('zanori_admin_auth', 'true');
       triggerBanner('Welcome back, Studio Director ✓');
@@ -280,6 +280,8 @@ export default function AdminPanel({
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('zanori_admin_auth');
+    // End the Firebase admin session so no further authenticated writes are possible.
+    signOut(auth).catch(() => {/* no-op if already signed out */});
     triggerBanner('Logged out successfully');
   };
 
