@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift, Sparkles } from 'lucide-react';
+import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift } from 'lucide-react';
 import { PRODUCTS_DATA } from '../data';
 import { ShopCategory, Product, WishlistItem, DesignShowcaseItem } from '../types';
 
@@ -78,7 +78,7 @@ export default function Shop({
       case 'chair':
         return <Sofa className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
       case 'lamp':
-        return <Sparkles className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
+        return <Layers className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
       case 'outdoor':
         return <Layers className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
       case 'decor':
