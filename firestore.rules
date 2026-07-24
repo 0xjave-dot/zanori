@@ -48,5 +48,28 @@ service cloud.firestore {
         && request.resource.data.productId.size() <= 128;
       allow update: if false; // Wishlist items are immutable after creation.
     }
+
+    // Saved AI design briefs — private to the user who saved them.
+    match /saved_designs/{designId} {
+      allow read, delete: if isOwner(resource.data.userId);
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid;
+      allow update: if false;
+    }
+
+    // Gift purchases — private to the user who placed the order.
+    match /gift_purchases/{purchaseId} {
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid;
+      allow update: if isAdmin(); // Admin can update delivery status.
+      allow delete: if false;
+    }
+
+    // Connection test document — read-only public access for health checks.
+    match /test/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
   }
 }
