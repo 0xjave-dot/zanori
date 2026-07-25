@@ -37,6 +37,19 @@ export default function ProductDetailModal({
 
   const galleryImages = useMemo(() => product?.images?.filter(Boolean) ?? [], [product]);
 
+  const handleInquiry = () => {
+    if (!product) return;
+
+    onAddProductToInquiry(product);
+
+    if (typeof window === 'undefined') return;
+
+    const productLink = `${window.location.origin}/#/shop?product=${encodeURIComponent(product.id)}`;
+    const message = `Hello Zanori Spaces! I'm interested in ${product.name}. Please share availability, pricing, and delivery details for this piece. Product link: ${productLink}`;
+    const whatsappUrl = `https://wa.me/2349130377554?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+
   if (!product) return null;
 
   return (
@@ -152,13 +165,13 @@ export default function ProductDetailModal({
               <button
                 type="button"
                 onClick={() => {
-                  onAddProductToInquiry(product);
+                  handleInquiry();
                   onClose();
                 }}
                 className="flex flex-1 items-center justify-center gap-2 rounded-full bg-brand-dark px-4 py-3 text-[10px] uppercase tracking-[0.2em] text-brand-base transition hover:bg-brand-wood hover:text-brand-dark"
               >
                 <ShoppingBag size={14} />
-                Add to inquiry
+                Chat on WhatsApp
               </button>
               <button
                 type="button"
