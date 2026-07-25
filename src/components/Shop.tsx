@@ -232,7 +232,8 @@ export default function Shop({
                 {filteredProducts.map((product) => {
                   const isWishlisted = wishlist.some((item) => item.productId === product.id);
                   const hasUploadedImage = Array.isArray(product.images) && product.images.length > 0;
-                  const cardBackground = hasUploadedImage ? `url('${product.images![0]}') center/cover` : product.imageBg;
+                  const primaryImage = hasUploadedImage ? product.images![0] : '';
+                  const cardBackground = primaryImage ? `url('${primaryImage}') center/cover` : product.imageBg;
                   return (
                     <div
                       key={product.id}
