@@ -20,6 +20,8 @@ interface AdminPanelProps {
   setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  designShowcaseItems: DesignShowcaseItem[];
+  setDesignShowcaseItems: React.Dispatch<React.SetStateAction<DesignShowcaseItem[]>>;
   onNavigateHome: () => void;
 }
 
@@ -28,6 +30,8 @@ export default function AdminPanel({
   setProjects,
   products,
   setProducts,
+  designShowcaseItems,
+  setDesignShowcaseItems,
   onNavigateHome
 }: AdminPanelProps) {
   // Authentication State
@@ -88,8 +92,8 @@ export default function AdminPanel({
     return () => clearInterval(checkAuthInterval);
   }, [isAuthenticated]);
 
-  // Active Admin Tab: 'projects' | 'products'
-  const [activeTab, setActiveTab] = useState<'projects' | 'products'>('projects');
+  // Active Admin Tab: 'projects' | 'products' | 'showcase'
+  const [activeTab, setActiveTab] = useState<'projects' | 'products' | 'showcase'>('projects');
 
   // Search/Filter states inside admin lists
   const [projectSearch, setProjectSearch] = useState('');
@@ -103,7 +107,6 @@ export default function AdminPanel({
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isCreatingProduct, setIsCreatingProduct] = useState(false);
 
-  const [designShowcaseItems, setDesignShowcaseItems] = useState<DesignShowcaseItem[]>(() => DESIGN_SHOWCASE_DATA);
   const [editingShowcaseItem, setEditingShowcaseItem] = useState<DesignShowcaseItem | null>(null);
   const [isCreatingShowcaseItem, setIsCreatingShowcaseItem] = useState(false);
   const [showcaseTitle, setShowcaseTitle] = useState('');
@@ -312,6 +315,14 @@ export default function AdminPanel({
       for (const prod of PRODUCTS_DATA) {
         await setDoc(doc(db, 'products', prod.id), prod);
       }
+      // 5. Seed the downloadable design marketplace
+      for (const item of designShowcaseItems) {
+        await deleteDoc(doc(db, 'designs', item.id));
+      }
+      for (const item of DESIGN_SHOWCASE_DATA) {
+        await setDoc(doc(db, 'designs', item.id), item);
+      }
+      setDesignShowcaseItems(DESIGN_SHOWCASE_DATA.map((item) => ({ ...item })));
       triggerBanner('Database restored to original state successfully ✓');
     } catch (err) {
       handleFirestoreError(err, OperationType.WRITE, 'reset_database');
@@ -597,9 +608,11 @@ export default function AdminPanel({
     };
 
     if (editingShowcaseItem) {
+      await setDoc(doc(db, 'designs', editingShowcaseItem.id), payload);
       setDesignShowcaseItems((prev) => prev.map((item) => item.id === editingShowcaseItem.id ? payload : item));
       triggerBanner(`Updated showcase item "${payload.title}" ✓`);
     } else {
+      await setDoc(doc(db, 'designs', payload.id), payload);
       setDesignShowcaseItems((prev) => [payload, ...prev]);
       triggerBanner(`Added showcase item "${payload.title}" ✓`);
     }
@@ -610,6 +623,11 @@ export default function AdminPanel({
 
   const deleteShowcaseItem = async (id: string, title: string) => {
     if (window.confirm(`Delete showcase item "${title}"?`)) {
+      try {
+        await deleteDoc(doc(db, 'designs', id));
+      } catch (err) {
+        handleFirestoreError(err, OperationType.DELETE, `designs/${id}`);
+      }
       setDesignShowcaseItems((prev) => prev.filter((item) => item.id !== id));
       triggerBanner(`Deleted showcase item "${title}"`);
     }

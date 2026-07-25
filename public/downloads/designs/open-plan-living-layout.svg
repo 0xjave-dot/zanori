@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#f7f2ea"/>
+  <g fill="none" stroke="#2b241f" stroke-width="4">
+    <path d="M100 100h1000v600H100zM100 480h1000M760 480v220M420 100v380"/>
+    <rect x="170" y="180" width="230" height="120" rx="12"/>
+    <rect x="500" y="190" width="170" height="90" rx="12"/>
+    <circle cx="850" cy="280" r="100"/>
+    <path d="M160 580h210v70H160zM510 540h150v120H510z"/>
+  </g>
+  <g fill="#705c4e" font-family="Arial,sans-serif" font-size="24">
+    <text x="180" y="165">LOUNGE</text><text x="520" y="175">MEDIA</text>
+    <text x="790" y="285">DINING</text><text x="180" y="620">ENTRY</text>
+    <text x="530" y="610">KITCHEN</text><text x="930" y="745">45 m² · 1:50</text>
+  </g>
+</svg>

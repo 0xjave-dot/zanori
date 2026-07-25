@@ -1,0 +1,10 @@
+{
+  "asset": { "version": "2.0", "generator": "Zanori curated starter scene" },
+  "scene": 0,
+  "scenes": [{ "nodes": [0, 1, 2] }],
+  "nodes": [
+    { "name": "Living Room Shell" },
+    { "name": "Dining Room Shell" },
+    { "name": "Primary Suite Shell" }
+  ]
+}

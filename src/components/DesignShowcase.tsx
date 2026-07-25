@@ -72,6 +72,9 @@ export default function DesignShowcase({ items }: DesignShowcaseProps) {
                   <p className="text-sm text-brand-sand/90 leading-relaxed font-sans">
                     {item.description}
                   </p>
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-brand-sand/70">
+                    {[item.category, item.designStyle, item.format].filter(Boolean).join(' · ')}
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between gap-3 pt-3 border-t border-white/15">

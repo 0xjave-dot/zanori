@@ -1,5 +1,28 @@
 export type PortfolioCategory = 'All' | 'Homes' | 'Commercial' | 'Designs';
-export type ShopCategory = 'All' | 'Sofas' | 'Tables' | 'Beds' | 'Shelving' | 'Storage' | 'Chairs' | 'Lighting' | 'Outdoor' | 'Decor';
+export type ShopCategory =
+  | 'All'
+  | 'Sofas'
+  | 'Sectionals'
+  | 'Coffee Tables'
+  | 'Dining Tables'
+  | 'Dining Chairs'
+  | 'Office Chairs'
+  | 'Office Desks'
+  | 'Beds'
+  | 'Wardrobes'
+  | 'TV Consoles'
+  | 'Side Tables'
+  | 'Bookshelves'
+  | 'Cabinets'
+  | 'Outdoor Furniture'
+  | 'Lighting'
+  | 'Decor'
+  // Retained for backwards compatibility with existing Firestore records.
+  | 'Tables'
+  | 'Shelving'
+  | 'Storage'
+  | 'Chairs'
+  | 'Outdoor';
 
 export interface ServiceItem {
   id: string;
@@ -27,6 +50,17 @@ export interface Product {
   category: ShopCategory;
   name: string;
   price: number;
+  description?: string;
+  dimensions?: string;
+  materials?: string[];
+  colours?: string[];
+  retailPrice?: number;
+  salePrice?: number;
+  sku?: string;
+  brand?: string;
+  stockQuantity?: number;
+  specSheetUrl?: string;
+  sourceUrl?: string;
   imageBg: string;
   images?: string[];   // ordered array of base64/URL images; first becomes imageBg
   iconType: 'bed' | 'sofa' | 'shelving' | 'table' | 'storage' | 'chair' | 'lamp' | 'outdoor' | 'decor';
@@ -38,6 +72,10 @@ export interface DesignShowcaseItem {
   title: string;
   description: string;
   assetType: 'Plain Design' | '3D Design';
+  format?: string;
+  category?: string;
+  designStyle?: 'Modern' | 'Contemporary' | 'Scandinavian' | 'Industrial' | 'Minimalist' | 'Luxury' | 'Traditional';
+  numberOfRooms?: number;
   accessType: 'Free' | 'Paid';
   price: number;
   imageBg: string;
