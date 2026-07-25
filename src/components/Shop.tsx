@@ -54,6 +54,7 @@ export default function Shop({
     'All',
     'Sofas',
     'Sectionals',
+    'Accent Chairs',
     'Coffee Tables',
     'Dining Tables',
     'Dining Chairs',
@@ -65,9 +66,11 @@ export default function Shop({
     'Side Tables',
     'Bookshelves',
     'Cabinets',
+    'Dressers',
     'Outdoor Furniture',
     'Lighting',
     'Decor',
+    'Storage Furniture',
   ];
   const sections: Array<'Furniture' | 'Designs'> = ['Furniture', 'Designs'];
 

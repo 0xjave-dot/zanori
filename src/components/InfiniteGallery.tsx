@@ -1,7 +1,8 @@
 import React from 'react';
 
-// Kuula embed URLs for featured 3D renders
+// Curated Kuula tours for the refined furniture showroom experience.
 const KUULA_EMBEDS: string[] = [
+  'https://kuula.co/share/5DQfs?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=1',
   'https://kuula.co/share/h5Hpv?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=1',
   'https://kuula.co/share/hb9t7?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=1',
   'https://kuula.co/share/5H7Z7?logo=0&info=0&ui=0&fs=1&vr=0&sd=1&thumbs=1'
