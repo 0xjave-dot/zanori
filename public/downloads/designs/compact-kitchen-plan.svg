@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fbf8f3"/>
+  <g fill="none" stroke="#322a24" stroke-width="4">
+    <path d="M100 110h1000v580H100zM100 250h1000M100 500h1000M300 250v250M820 250v250"/>
+    <rect x="420" y="315" width="310" height="120" rx="8"/>
+    <circle cx="470" cy="370" r="22"/><circle cx="680" cy="370" r="22"/>
+    <path d="M160 150h100M360 150h150M870 150h170"/>
+  </g>
+  <g fill="#705c4e" font-family="Arial,sans-serif" font-size="24">
+    <text x="150" y="205">TALL STORAGE</text><text x="420" y="300">ISLAND · 900 mm AISLE</text>
+    <text x="150" y="410">PANTRY</text><text x="850" y="410">DINING</text>
+    <text x="930" y="745">35 m² · 1:50</text>
+  </g>
+</svg>

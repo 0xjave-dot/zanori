@@ -21,7 +21,7 @@ import Toast from './components/Toast';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 // Models
-import { Project, Product, InquiryItem, SavedDesign, WishlistItem, GiftPurchase } from './types';
+import { Project, Product, InquiryItem, SavedDesign, WishlistItem, GiftPurchase, DesignShowcaseItem } from './types';
 import { ShoppingBag, User as UserIcon } from 'lucide-react';
 import { PORTFOLIO_DATA, PRODUCTS_DATA, DESIGN_SHOWCASE_DATA } from './data';
 import AdminPanel from './components/AdminPanel';
@@ -73,6 +73,19 @@ export default function App() {
     }
     return PRODUCTS_DATA.map((prod) => ({ ...prod }));
   });
+  const [designShowcaseItems, setDesignShowcaseItems] = useState<DesignShowcaseItem[]>(() => {
+    if (typeof window === 'undefined') return DESIGN_SHOWCASE_DATA.map((item) => ({ ...item }));
+    try {
+      const cached = window.localStorage.getItem('zanori_design_showcase_state');
+      if (cached) {
+        const parsed = JSON.parse(cached) as DesignShowcaseItem[];
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      // Fall back to the curated seed when local cache is unreadable.
+    }
+    return DESIGN_SHOWCASE_DATA.map((item) => ({ ...item }));
+  });
 
   // User auth state and private club curation tracking
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -108,6 +121,12 @@ export default function App() {
       window.localStorage.setItem('zanori_products_state', JSON.stringify(products));
     }
   }, [products]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('zanori_design_showcase_state', JSON.stringify(designShowcaseItems));
+    }
+  }, [designShowcaseItems]);
 
   // Sync saved designs
   useEffect(() => {
@@ -287,9 +306,10 @@ export default function App() {
   useEffect(() => {
     const hydrateFromFirestore = async () => {
       try {
-        const [projectsSnapshot, productsSnapshot] = await Promise.all([
+        const [projectsSnapshot, productsSnapshot, designsSnapshot] = await Promise.all([
           getDocs(collection(db, 'projects')),
           getDocs(collection(db, 'products')),
+          getDocs(collection(db, 'designs')),
         ]);
 
         if (!projectsSnapshot.empty) {
@@ -309,11 +329,29 @@ export default function App() {
             ...(docSnap.data() as Product),
             id: docSnap.id,
           }));
-          setProducts(list);
+          const curatedMissingFromDatabase = PRODUCTS_DATA.filter(
+            (product) => !list.some((existing) => existing.id === product.id),
+          );
+          setProducts([...list, ...curatedMissingFromDatabase]);
         } else {
           const seededProducts = PRODUCTS_DATA.map((prod) => ({ ...prod }));
           await Promise.all(seededProducts.map((prod) => setDoc(doc(db, 'products', prod.id), prod)));
           setProducts(seededProducts);
+        }
+
+        if (!designsSnapshot.empty) {
+          const list: DesignShowcaseItem[] = designsSnapshot.docs.map((docSnap) => ({
+            ...(docSnap.data() as DesignShowcaseItem),
+            id: docSnap.id,
+          }));
+          const curatedMissingFromDatabase = DESIGN_SHOWCASE_DATA.filter(
+            (item) => !list.some((existing) => existing.id === item.id),
+          );
+          setDesignShowcaseItems([...list, ...curatedMissingFromDatabase]);
+        } else {
+          const seededDesigns = DESIGN_SHOWCASE_DATA.map((item) => ({ ...item }));
+          await Promise.all(seededDesigns.map((item) => setDoc(doc(db, 'designs', item.id), item)));
+          setDesignShowcaseItems(seededDesigns);
         }
       } catch (error) {
         // Log gracefully — throwing here would become an unhandled rejection
@@ -725,7 +763,7 @@ export default function App() {
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
               onOpenGiftCheckout={(prod) => setSelectedGiftProduct(prod)}
-              showcaseItems={DESIGN_SHOWCASE_DATA}
+              showcaseItems={designShowcaseItems}
             />
           </div>
         )}
@@ -765,6 +803,8 @@ export default function App() {
             setProjects={setProjects}
             products={products}
             setProducts={setProducts}
+            designShowcaseItems={designShowcaseItems}
+            setDesignShowcaseItems={setDesignShowcaseItems}
             onNavigateHome={() => { window.location.hash = '#/'; }}
           />
         )}

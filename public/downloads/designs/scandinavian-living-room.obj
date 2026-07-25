@@ -1,0 +1,16 @@
+# Zanori Scandinavian living room starter scene
+o CoffeeTable
+v -1.0 -0.6 0.0
+v 1.0 -0.6 0.0
+v 1.0 0.6 0.0
+v -1.0 0.6 0.0
+v -1.0 -0.6 0.35
+v 1.0 -0.6 0.35
+v 1.0 0.6 0.35
+v -1.0 0.6 0.35
+f 1 2 3 4
+f 5 8 7 6
+f 1 5 6 2
+f 2 6 7 3
+f 3 7 8 4
+f 4 8 5 1

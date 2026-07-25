@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <rect width="1400" height="900" fill="#f8f1e8"/>
+  <g fill="none" stroke="#302822" stroke-width="4">
+    <path d="M80 80h1240v740H80zM80 500h1240M420 80v740M900 500v320"/>
+    <rect x="140" y="180" width="210" height="180"/><rect x="520" y="170" width="270" height="200"/>
+    <rect x="980" y="170" width="220" height="190"/><rect x="140" y="590" width="210" height="160"/>
+  </g>
+  <g fill="#765e4e" font-family="Arial,sans-serif" font-size="25">
+    <text x="145" y="155">LIVING</text><text x="530" y="145">DINING + KITCHEN</text>
+    <text x="990" y="145">PRIMARY BED</text><text x="145" y="565">GUEST ROOM</text>
+    <text x="1000" y="860">6 ROOMS · FAMILY HOME</text>
+  </g>
+</svg>

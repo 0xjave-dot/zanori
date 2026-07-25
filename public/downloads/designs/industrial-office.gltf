@@ -1,0 +1,7 @@
+{
+  "asset": { "version": "2.0", "generator": "Zanori curated starter scene" },
+  "scene": 0,
+  "scenes": [{ "nodes": [0] }],
+  "nodes": [{ "mesh": 0, "name": "Industrial Office Desk" }],
+  "meshes": [{ "name": "Desk placeholder geometry", "primitives": [] }]
+}

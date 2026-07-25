@@ -27,7 +27,7 @@ export default function Shop({
   const [activeTab, setActiveTab] = useState<ShopCategory>('All');
   const [activeSection, setActiveSection] = useState<'Furniture' | 'Designs'>('Furniture');
   const [searchQuery, setSearchQuery] = useState('');
-  const [maxPrice, setMaxPrice] = useState(800000);
+  const [maxPrice, setMaxPrice] = useState(5000000);
   const [sortBy, setSortBy] = useState<'default' | 'priceAsc' | 'priceDesc'>('default');
   const [designFilter, setDesignFilter] = useState<'All' | 'Plain Design' | '3D Design'>('All');
   const [designAccessFilter, setDesignAccessFilter] = useState<'All' | 'Free' | 'Paid'>('All');
@@ -50,7 +50,25 @@ export default function Shop({
     filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
   }
 
-  const categories: ShopCategory[] = ['All', 'Sofas', 'Tables', 'Beds', 'Chairs', 'Shelving', 'Storage', 'Lighting', 'Outdoor', 'Decor'];
+  const categories: ShopCategory[] = [
+    'All',
+    'Sofas',
+    'Sectionals',
+    'Coffee Tables',
+    'Dining Tables',
+    'Dining Chairs',
+    'Office Chairs',
+    'Office Desks',
+    'Beds',
+    'Wardrobes',
+    'TV Consoles',
+    'Side Tables',
+    'Bookshelves',
+    'Cabinets',
+    'Outdoor Furniture',
+    'Lighting',
+    'Decor',
+  ];
   const sections: Array<'Furniture' | 'Designs'> = ['Furniture', 'Designs'];
 
   // Currency formatter
@@ -192,7 +210,7 @@ export default function Shop({
                   <input
                     type="range"
                     min="100000"
-                    max="800000"
+                    max="5000000"
                     step="25000"
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(parseInt(e.target.value))}
@@ -265,11 +283,36 @@ export default function Shop({
                           <h3 className="font-serif text-lg font-light text-brand-dark leading-snug group-hover:text-brand-bark transition-colors duration-300">
                             {product.name}
                           </h3>
+                          {product.brand && (
+                            <p className="text-[10px] uppercase tracking-[0.12em] text-brand-muted">
+                              {product.brand}{product.sku ? ` · ${product.sku}` : ''}
+                            </p>
+                          )}
+                          {product.dimensions && (
+                            <p className="text-[10px] text-brand-muted font-sans">{product.dimensions}</p>
+                          )}
+                          {product.specSheetUrl && (
+                            <a
+                              href={product.specSheetUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-[10px] uppercase tracking-[0.1em] text-brand-bark hover:text-brand-dark underline underline-offset-2"
+                            >
+                              Specification sheet
+                            </a>
+                          )}
                         </div>
 
                         <div className="flex items-center justify-between pt-3 gap-2">
                           <span className="text-sm font-medium text-brand-dark tracking-wide font-sans">
-                            {formatNairaVal(product.price)}
+                            {product.salePrice && product.retailPrice && product.salePrice < product.retailPrice ? (
+                              <span className="flex flex-col">
+                                <span className="text-[10px] text-brand-muted line-through">
+                                  {formatNairaVal(product.retailPrice)}
+                                </span>
+                                <span>{formatNairaVal(product.salePrice)}</span>
+                              </span>
+                            ) : formatNairaVal(product.price)}
                           </span>
 
                           <div className="flex gap-1">
@@ -309,7 +352,7 @@ export default function Shop({
                   onClick={() => {
                     setActiveTab('All');
                     setSearchQuery('');
-                    setMaxPrice(800000);
+                    setMaxPrice(5000000);
                   }}
                   className="mt-4 px-5 py-2 rounded-full border border-brand-bark/30 text-[10px] uppercase tracking-wider text-brand-bark hover:bg-brand-warm transition-all"
                 >
@@ -389,7 +432,7 @@ export default function Shop({
                   <input
                     type="range"
                     min="0"
-                    max="800000"
+                    max="5000000"
                     step="25000"
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(parseInt(e.target.value))}
@@ -440,6 +483,14 @@ export default function Shop({
                             {item.accessType} Access
                           </span>
                           <h3 className="font-serif text-base font-light text-brand-dark leading-snug">{item.title}</h3>
+                          <p className="text-[10px] uppercase tracking-[0.12em] text-brand-muted">
+                            {[item.category, item.designStyle, item.format].filter(Boolean).join(' · ')}
+                          </p>
+                          {item.numberOfRooms && (
+                            <p className="text-[10px] text-brand-muted">
+                              {item.numberOfRooms} room{item.numberOfRooms === 1 ? '' : 's'}
+                            </p>
+                          )}
                         </div>
 
                         <p className="text-xs text-brand-muted leading-relaxed font-sans">{item.description}</p>
@@ -451,7 +502,7 @@ export default function Shop({
                           <div className="flex gap-1">
                             {item.fileUrl ? (
                               <a href={item.fileUrl} target="_blank" rel="noreferrer" className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-brand-base text-[9px] uppercase tracking-[0.11em] font-medium transition-all duration-300 cursor-pointer">
-                                <span>Preview</span>
+                                <span>{item.accessType === 'Free' ? 'Download' : 'View asset'}</span>
                               </a>
                             ) : (
                               <span className="px-2.5 py-1.5 rounded-full bg-brand-warm text-brand-dark text-[9px] uppercase tracking-[0.11em] font-medium">
@@ -475,7 +526,7 @@ export default function Shop({
                       setDesignFilter('All');
                       setDesignAccessFilter('All');
                       setSearchQuery('');
-                      setMaxPrice(800000);
+                      setMaxPrice(5000000);
                     }}
                     className="mt-4 px-5 py-2 rounded-full border border-brand-bark/30 text-[10px] uppercase tracking-wider text-brand-bark hover:bg-brand-warm transition-all"
                   >

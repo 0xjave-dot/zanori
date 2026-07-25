@@ -1,4 +1,5 @@
 import { ServiceItem, Project, Product, TestimonialItem, DesignShowcaseItem } from './types';
+import { CURATED_PRODUCTS_DATA, CURATED_DESIGN_SHOWCASE_DATA } from './data/marketplace';
 
 export const SERVICES_DATA: ServiceItem[] = [
   {
@@ -121,7 +122,7 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
 // Comprehensive curated product range across all categories.
 // All prices in Nigerian Naira (NGN). Images sourced from Unsplash.
 
-export const PRODUCTS_DATA: Product[] = [
+const LEGACY_PRODUCTS_DATA: Product[] = [
 
   // ── SOFAS ──────────────────────────────────────────────────────────────────
 
@@ -621,7 +622,7 @@ export const PRODUCTS_DATA: Product[] = [
 // Downloadable interior design assets — floor plans, 3D models, renders.
 // Mix of free and premium content across all major design styles.
 
-export const DESIGN_SHOWCASE_DATA: DesignShowcaseItem[] = [
+const LEGACY_DESIGN_SHOWCASE_DATA: DesignShowcaseItem[] = [
 
   // ── FREE 2D PLANS ─────────────────────────────────────────────────────────
 
@@ -877,3 +878,8 @@ export const DESIGN_SHOWCASE_DATA: DesignShowcaseItem[] = [
     fileUrl: 'https://drive.google.com/uc?id=paid-penthouse-3d-master'
   }
 ];
+
+// The legacy seed remains in this file for backwards compatibility with older
+// Firestore documents. New installs use the curated marketplace catalog.
+export const PRODUCTS_DATA: Product[] = CURATED_PRODUCTS_DATA;
+export const DESIGN_SHOWCASE_DATA: DesignShowcaseItem[] = CURATED_DESIGN_SHOWCASE_DATA;

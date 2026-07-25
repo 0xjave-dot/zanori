@@ -39,6 +39,12 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Downloadable interior design assets — publicly browsable; curated by admin.
+    match /designs/{designId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // User wishlists — each document is private to the user who created it.
     match /wishlists/{wishlistId} {
       allow read, delete: if isOwner(resource.data.userId);
