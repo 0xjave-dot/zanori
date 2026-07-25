@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift, Sparkles } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift, Sparkles, Eye, Download, X } from 'lucide-react';
+import ProductDetailModal from './ProductDetailModal';
 import { PRODUCTS_DATA } from '../data';
 import { ShopCategory, Product, WishlistItem, DesignShowcaseItem } from '../types';
 
@@ -31,8 +32,34 @@ export default function Shop({
   const [sortBy, setSortBy] = useState<'default' | 'priceAsc' | 'priceDesc'>('default');
   const [designFilter, setDesignFilter] = useState<'All' | 'Plain Design' | '3D Design'>('All');
   const [designAccessFilter, setDesignAccessFilter] = useState<'All' | 'Free' | 'Paid'>('All');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedDesign, setSelectedDesign] = useState<DesignShowcaseItem | null>(null);
 
   const productsToUse = products || PRODUCTS_DATA;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const requestedProductId = searchParams.get('product');
+    if (!requestedProductId) return;
+
+    const matchedProduct = productsToUse.find((product) => product.id === requestedProductId);
+    if (matchedProduct) {
+      setSelectedProduct(matchedProduct);
+    }
+  }, [productsToUse]);
+
+  const handleProductInquiry = (product: Product) => {
+    onAddProductToInquiry(product);
+
+    if (typeof window === 'undefined') return;
+
+    const productLink = `${window.location.origin}/#/shop?product=${encodeURIComponent(product.id)}`;
+    const message = `Hello Zanori Spaces! I'm interested in ${product.name}. Please share availability, pricing, and delivery details for this piece. Product link: ${productLink}`;
+    const whatsappUrl = `https://wa.me/2349130377554?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
 
   // Filter & Search Logic
   let filteredProducts = productsToUse.filter((product) => {
@@ -54,6 +81,7 @@ export default function Shop({
     'All',
     'Sofas',
     'Sectionals',
+    'Accent Chairs',
     'Coffee Tables',
     'Dining Tables',
     'Dining Chairs',
@@ -65,9 +93,11 @@ export default function Shop({
     'Side Tables',
     'Bookshelves',
     'Cabinets',
+    'Dressers',
     'Outdoor Furniture',
     'Lighting',
     'Decor',
+    'Storage Furniture',
   ];
   const sections: Array<'Furniture' | 'Designs'> = ['Furniture', 'Designs'];
 
@@ -122,7 +152,7 @@ export default function Shop({
 
             </span>
             <h1 className="font-serif text-5xl md:text-6xl font-light text-brand-dark leading-tight">
-              Timeless Furniture pieces
+              Timeless Furniture pieces &  Designs 
             </h1>
           </div>
           <p className="max-w-md text-sm text-brand-muted leading-relaxed font-light font-sans">
@@ -228,15 +258,20 @@ export default function Shop({
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 {filteredProducts.map((product) => {
                   const isWishlisted = wishlist.some((item) => item.productId === product.id);
+                  const hasUploadedImage = Array.isArray(product.images) && product.images.length > 0;
+                  const primaryImage = hasUploadedImage ? product.images![0] : '';
+                  const cardBackground = primaryImage ? `url('${primaryImage}') center/cover` : product.imageBg;
                   return (
-                    <div
+                    <button
                       key={product.id}
-                      className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-4 pb-6 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs"
+                      type="button"
+                      onClick={() => setSelectedProduct(product)}
+                      className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-4 pb-6 flex flex-col justify-between text-left transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs"
                     >
                       {/* Product Visual Layout */}
                       <div
                         className="relative rounded-xl w-full h-[180px] flex items-center justify-center p-6 overflow-hidden transition-transform duration-500"
-                        style={{ background: product.imageBg }}
+                        style={{ background: cardBackground }}
                       >
                         <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
 
@@ -244,9 +279,11 @@ export default function Shop({
                         <div className="absolute inset-2 border border-brand-dark/5 rounded-lg opacity-40 pointer-events-none"></div>
 
                         {/* Main furniture icon */}
-                        <div className="relative z-10 p-4.5 bg-brand-base/70 backdrop-blur-md rounded-full shadow-xs group-hover:scale-110 transition-transform duration-500">
-                          {getFurnitureIcon(product.iconType)}
-                        </div>
+                        {!hasUploadedImage && (
+                          <div className="relative z-10 p-4.5 bg-brand-base/70 backdrop-blur-md rounded-full shadow-xs group-hover:scale-110 transition-transform duration-500">
+                            {getFurnitureIcon(product.iconType)}
+                          </div>
+                        )}
 
                         {/* "New In" Label */}
                         {product.isNew && (
@@ -318,7 +355,7 @@ export default function Shop({
                           <div className="flex gap-1">
                             <button
                               type="button"
-                              onClick={() => onAddProductToInquiry(product)}
+                              onClick={() => handleProductInquiry(product)}
                               className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-brand-base text-[9px] uppercase tracking-[0.11em] font-medium transition-all duration-300 cursor-pointer"
                               title="Inquire"
                             >
@@ -338,7 +375,7 @@ export default function Shop({
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -465,7 +502,19 @@ export default function Shop({
               return filteredDesigns.length > 0 ? (
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
                   {filteredDesigns.map((item) => (
-                    <div key={item.id} className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-3 pb-5 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs">
+                    <div
+                      key={item.id}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setSelectedDesign(item)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          setSelectedDesign(item);
+                        }
+                      }}
+                      className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-3 pb-5 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs cursor-pointer"
+                    >
                       <div
                         className="relative rounded-xl w-full h-[140px] flex items-center justify-center p-4 overflow-hidden transition-transform duration-500"
                         style={{ background: item.imageUrl ? `url('${item.imageUrl}') center/cover` : item.imageBg }}
@@ -475,6 +524,17 @@ export default function Shop({
                         <div className="relative z-10 px-3 py-2 rounded-full bg-brand-base/80 backdrop-blur-sm text-[10px] uppercase tracking-[0.16em] text-brand-bark font-medium">
                           {item.assetType}
                         </div>
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setSelectedDesign(item);
+                          }}
+                          className="absolute right-3 top-3 z-20 flex items-center gap-1 rounded-full border border-brand-base/70 bg-brand-base/85 px-2.5 py-1 text-[9px] uppercase tracking-[0.16em] text-brand-dark shadow-sm transition hover:bg-brand-warm"
+                        >
+                          <Eye size={10} />
+                          Preview
+                        </button>
                       </div>
 
                       <div className="mt-4 space-y-3 flex-grow flex flex-col justify-between">
@@ -500,9 +560,27 @@ export default function Shop({
                             {item.accessType === 'Free' ? 'Free access' : formatNairaVal(item.price)}
                           </span>
                           <div className="flex gap-1">
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                setSelectedDesign(item);
+                              }}
+                              className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-brand-base text-[9px] uppercase tracking-[0.11em] font-medium transition-all duration-300 cursor-pointer"
+                            >
+                              <Eye size={10} />
+                              <span>Preview</span>
+                            </button>
                             {item.fileUrl ? (
-                              <a href={item.fileUrl} target="_blank" rel="noreferrer" className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-brand-warm hover:bg-brand-dark text-brand-dark hover:text-brand-base text-[9px] uppercase tracking-[0.11em] font-medium transition-all duration-300 cursor-pointer">
-                                <span>{item.accessType === 'Free' ? 'Download' : 'View asset'}</span>
+                              <a
+                                href={item.fileUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                onClick={(event) => event.stopPropagation()}
+                                className="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-brand-warm hover:bg-brand-wood text-brand-wood hover:text-white text-[9px] uppercase tracking-[0.11em] font-semibold transition-all duration-300 cursor-pointer"
+                              >
+                                <Download size={10} />
+                                <span>Download</span>
                               </a>
                             ) : (
                               <span className="px-2.5 py-1.5 rounded-full bg-brand-warm text-brand-dark text-[9px] uppercase tracking-[0.11em] font-medium">
@@ -556,6 +634,127 @@ export default function Shop({
         </div>
 
       </div>
+
+      {selectedDesign && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-brand-dark/80 px-4 py-6 backdrop-blur-md"
+          onClick={() => setSelectedDesign(null)}
+        >
+          <div
+            className="relative w-full max-w-5xl overflow-hidden rounded-[28px] border border-brand-wood/20 bg-brand-base shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setSelectedDesign(null)}
+              className="absolute right-4 top-4 z-20 rounded-full border border-brand-wood/20 bg-brand-base/90 p-2 text-brand-dark transition hover:bg-brand-warm"
+              aria-label="Close design preview"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="grid md:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[320px] overflow-hidden bg-brand-warm/50 p-4 md:min-h-[460px]">
+                {selectedDesign.fileUrl?.includes('kuula.co/share') ? (
+                  <iframe
+                    src={selectedDesign.fileUrl}
+                    title={selectedDesign.title}
+                    className="absolute inset-0 h-full w-full border-0"
+                    allowFullScreen
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin allow-popups"
+                  />
+                ) : selectedDesign.imageUrl || selectedDesign.imageBg ? (
+                  <img
+                    src={selectedDesign.imageUrl || selectedDesign.fileUrl}
+                    alt={selectedDesign.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-warm to-brand-base p-8 text-center">
+                    <p className="max-w-sm text-sm leading-relaxed text-brand-muted">
+                      This asset is ready for review. Open the download option when you are ready to take it with you.
+                    </p>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-brand-dark/20 to-transparent" />
+                <div className="relative z-10 flex h-full flex-col justify-between">
+                  <div className="flex items-center justify-between">
+                    <span className="rounded-full border border-white/20 bg-white/15 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white backdrop-blur-sm">
+                      {selectedDesign.assetType}
+                    </span>
+                    <span className="rounded-full bg-brand-bark px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-brand-base">
+                      {selectedDesign.accessType} access
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 text-white">
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-brand-wood/90">Preview before download</p>
+                    <h3 className="font-serif text-3xl font-light leading-tight">{selectedDesign.title}</h3>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col justify-between bg-brand-warm/35 p-6 md:p-8">
+                <div className="space-y-5">
+                  <div className="space-y-2">
+                    <p className="text-[10px] uppercase tracking-[0.24em] text-brand-bark">Design preview</p>
+                    <h4 className="font-serif text-2xl font-light text-brand-dark">{selectedDesign.title}</h4>
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-brand-muted">
+                      {[selectedDesign.category, selectedDesign.designStyle, selectedDesign.format].filter(Boolean).join(' · ')}
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 text-sm text-brand-muted">
+                    <p className="leading-relaxed">{selectedDesign.description}</p>
+                    <div className="rounded-2xl border border-brand-wood/15 bg-brand-base/70 p-3">
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-brand-bark">Included details</p>
+                      <p className="mt-2 text-sm text-brand-dark">
+                        {selectedDesign.numberOfRooms ? `${selectedDesign.numberOfRooms} room${selectedDesign.numberOfRooms === 1 ? '' : 's'} · ` : ''}
+                        {selectedDesign.accessType === 'Free' ? 'Free to review and download' : `Available for ${formatNairaVal(selectedDesign.price)}`}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  {selectedDesign.fileUrl ? (
+                    <a
+                      href={selectedDesign.fileUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex flex-1 items-center justify-center gap-2 rounded-full bg-brand-dark px-4 py-3 text-[10px] uppercase tracking-[0.2em] text-brand-base transition hover:bg-brand-wood hover:text-brand-dark"
+                    >
+                      <Download size={14} />
+                      Download asset
+                    </a>
+                  ) : (
+                    <div className="flex flex-1 items-center justify-center rounded-full border border-brand-dark/20 px-4 py-3 text-[10px] uppercase tracking-[0.2em] text-brand-dark">
+                      Download coming soon
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDesign(null)}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full border border-brand-dark/20 px-4 py-3 text-[10px] uppercase tracking-[0.2em] text-brand-dark transition hover:border-brand-bark hover:bg-brand-warm"
+                  >
+                    Close preview
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddProductToInquiry={onAddProductToInquiry}
+          onOpenGiftCheckout={onOpenGiftCheckout}
+        />
+      )}
     </div>
   );
 }

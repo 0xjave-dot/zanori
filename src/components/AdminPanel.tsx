@@ -482,9 +482,8 @@ export default function AdminPanel({
       return;
     }
 
-    try {
-      if (editingProduct) {
-        const updatedProd: Product = {
+    const optimisticProd = editingProduct
+      ? {
           ...editingProduct,
           name: prodName.trim(),
           category: prodCategory,
@@ -493,17 +492,9 @@ export default function AdminPanel({
           imageBg: imagesToBg(prodImages, prodImageBg),
           images: prodImages,
           isNew: prodIsNew
-        };
-        setSyncLock('zanori_products_sync_lock');
-        await setDoc(doc(db, 'products', editingProduct.id), updatedProd);
-        setProducts((prev) => prev.some((p) => p.id === editingProduct.id)
-          ? prev.map((p) => (p.id === editingProduct.id ? updatedProd : p))
-          : [...prev, updatedProd]);
-        triggerBanner(`Updated product "${prodName}" ✓`);
-      } else {
-        const newProdId = `prod-${Date.now()}`;
-        const newProd: Product = {
-          id: newProdId,
+        } as Product
+      : {
+          id: `prod-${Date.now()}`,
           name: prodName.trim(),
           category: prodCategory,
           price: Number(prodPrice),
@@ -511,14 +502,24 @@ export default function AdminPanel({
           imageBg: imagesToBg(prodImages, prodImageBg),
           images: prodImages,
           isNew: prodIsNew
-        };
-        setSyncLock('zanori_products_sync_lock');
-        await setDoc(doc(db, 'products', newProdId), newProd);
-        setProducts((prev) => [newProd, ...prev]);
+        } as Product;
+
+    setProducts((prev) => prev.some((p) => p.id === optimisticProd.id)
+      ? prev.map((p) => (p.id === optimisticProd.id ? optimisticProd : p))
+      : [optimisticProd, ...prev]);
+
+    try {
+      setSyncLock('zanori_products_sync_lock');
+      if (editingProduct) {
+        await setDoc(doc(db, 'products', editingProduct.id), optimisticProd);
+        triggerBanner(`Updated product "${prodName}" ✓`);
+      } else {
+        await setDoc(doc(db, 'products', optimisticProd.id), optimisticProd);
         triggerBanner(`Added "${prodName}" to the Boutique shop ✓`);
       }
     } catch (err) {
-      handleFirestoreError(err, OperationType.WRITE, 'products');
+      console.error('[Zanori] product save sync failed; kept local storefront update:', err);
+      triggerBanner('Saved locally; remote sync is pending');
     }
 
     setIsCreatingProduct(false);
