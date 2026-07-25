@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift, Sparkles } from 'lucide-react';
+import ProductDetailModal from './ProductDetailModal';
 import { PRODUCTS_DATA } from '../data';
 import { ShopCategory, Product, WishlistItem, DesignShowcaseItem } from '../types';
 
@@ -31,6 +32,7 @@ export default function Shop({
   const [sortBy, setSortBy] = useState<'default' | 'priceAsc' | 'priceDesc'>('default');
   const [designFilter, setDesignFilter] = useState<'All' | 'Plain Design' | '3D Design'>('All');
   const [designAccessFilter, setDesignAccessFilter] = useState<'All' | 'Free' | 'Paid'>('All');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const productsToUse = products || PRODUCTS_DATA;
 
@@ -235,9 +237,11 @@ export default function Shop({
                   const primaryImage = hasUploadedImage ? product.images![0] : '';
                   const cardBackground = primaryImage ? `url('${primaryImage}') center/cover` : product.imageBg;
                   return (
-                    <div
+                    <button
                       key={product.id}
-                      className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-4 pb-6 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs"
+                      type="button"
+                      onClick={() => setSelectedProduct(product)}
+                      className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-4 pb-6 flex flex-col justify-between text-left transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs"
                     >
                       {/* Product Visual Layout */}
                       <div
@@ -346,7 +350,7 @@ export default function Shop({
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -473,7 +477,7 @@ export default function Shop({
               return filteredDesigns.length > 0 ? (
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
                   {filteredDesigns.map((item) => (
-                    <div key={item.id} className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-3 pb-5 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs">
+                    <a key={item.id} href={item.fileUrl || '#'} target={item.fileUrl ? '_blank' : undefined} rel={item.fileUrl ? 'noreferrer' : undefined} className="group bg-brand-base rounded-2xl overflow-hidden border border-brand-wood/10 p-3 pb-5 flex flex-col justify-between transition-all duration-500 hover:shadow-md hover:border-brand-wood/35 shadow-xs">
                       <div
                         className="relative rounded-xl w-full h-[140px] flex items-center justify-center p-4 overflow-hidden transition-transform duration-500"
                         style={{ background: item.imageUrl ? `url('${item.imageUrl}') center/cover` : item.imageBg }}
@@ -520,7 +524,7 @@ export default function Shop({
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               ) : (
@@ -564,6 +568,15 @@ export default function Shop({
         </div>
 
       </div>
+
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddProductToInquiry={onAddProductToInquiry}
+          onOpenGiftCheckout={onOpenGiftCheckout}
+        />
+      )}
     </div>
   );
 }
