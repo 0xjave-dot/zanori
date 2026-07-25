@@ -231,6 +231,8 @@ export default function Shop({
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 {filteredProducts.map((product) => {
                   const isWishlisted = wishlist.some((item) => item.productId === product.id);
+                  const hasUploadedImage = Array.isArray(product.images) && product.images.length > 0;
+                  const cardBackground = hasUploadedImage ? `url('${product.images![0]}') center/cover` : product.imageBg;
                   return (
                     <div
                       key={product.id}
@@ -239,7 +241,7 @@ export default function Shop({
                       {/* Product Visual Layout */}
                       <div
                         className="relative rounded-xl w-full h-[180px] flex items-center justify-center p-6 overflow-hidden transition-transform duration-500"
-                        style={{ background: product.imageBg }}
+                        style={{ background: cardBackground }}
                       >
                         <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
 
@@ -247,9 +249,11 @@ export default function Shop({
                         <div className="absolute inset-2 border border-brand-dark/5 rounded-lg opacity-40 pointer-events-none"></div>
 
                         {/* Main furniture icon */}
-                        <div className="relative z-10 p-4.5 bg-brand-base/70 backdrop-blur-md rounded-full shadow-xs group-hover:scale-110 transition-transform duration-500">
-                          {getFurnitureIcon(product.iconType)}
-                        </div>
+                        {!hasUploadedImage && (
+                          <div className="relative z-10 p-4.5 bg-brand-base/70 backdrop-blur-md rounded-full shadow-xs group-hover:scale-110 transition-transform duration-500">
+                            {getFurnitureIcon(product.iconType)}
+                          </div>
+                        )}
 
                         {/* "New In" Label */}
                         {product.isNew && (
