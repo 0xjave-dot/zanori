@@ -1,4 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
+
+// Bump this constant whenever the curated catalog's product IDs change so that
+// stale localStorage caches from prior catalog generations are automatically
+// discarded. Format: YYYY-MM-DD of the catalog replacement commit.
+const CATALOG_VERSION = '2026-07-28';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -63,18 +68,34 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>(() => {
     if (typeof window === 'undefined') return PRODUCTS_DATA.map((prod) => ({ ...prod }));
     try {
+      // If the stored catalog version doesn't match the current one, the cache
+      // pre-dates a catalog ID change and must be discarded entirely so that
+      // stale product entries from old catalog generations don't pollute the UI.
+      const storedVersion = window.localStorage.getItem('zanori_catalog_version');
+      if (storedVersion !== CATALOG_VERSION) {
+        window.localStorage.removeItem('zanori_products_state');
+        window.localStorage.setItem('zanori_catalog_version', CATALOG_VERSION);
+        return PRODUCTS_DATA.map((prod) => ({ ...prod }));
+      }
+
       const cached = window.localStorage.getItem('zanori_products_state');
       if (cached) {
         const parsed = JSON.parse(cached) as Product[];
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Always ensure every curated product is present even if the cache
-          // pre-dates the latest catalog update (stale localStorage issue).
-          const missingFromCache = PRODUCTS_DATA.filter(
-            (prod) => !parsed.some((p) => p.id === prod.id),
+          // Keep only products whose IDs exist in the current curated catalog
+          // or were admin-created (admin products have IDs starting with 'admin-').
+          // This strips any lingering entries from previous catalog generations.
+          const curatedIds = new Set(PRODUCTS_DATA.map((p) => p.id));
+          const validCached = parsed.filter(
+            (p) => curatedIds.has(p.id) || p.id.startsWith('admin-'),
           );
-          return missingFromCache.length > 0
-            ? [...parsed, ...missingFromCache]
-            : parsed;
+
+          // Ensure every curated product is present even if the cache pre-dates
+          // the latest catalog update.
+          const missingFromCache = PRODUCTS_DATA.filter(
+            (prod) => !validCached.some((p) => p.id === prod.id),
+          );
+          return [...validCached, ...missingFromCache];
         }
       }
     } catch {
@@ -329,31 +350,58 @@ export default function App() {
           setProjects(list);
         } else {
           const seededProjects = PORTFOLIO_DATA.map((proj) => ({ ...proj }));
-          await Promise.all(seededProjects.map((proj) => setDoc(doc(db, 'projects', proj.id), proj)));
           setProjects(seededProjects);
+          Promise.all(seededProjects.map((proj) => setDoc(doc(db, 'projects', proj.id), proj))).catch(
+            (writeErr) => {
+              console.warn('[Zanori] projects seed write error (non-fatal):', writeErr instanceof Error ? writeErr.message : writeErr);
+            },
+          );
         }
 
         if (!productsSnapshot.empty) {
-          const list: Product[] = productsSnapshot.docs.map((docSnap) => ({
+          // Load from Firestore but discard products from prior catalog
+          // generations whose IDs are no longer in the curated catalog. Only
+          // keep current curated products plus any admin-created products
+          // (identified by the 'admin-' ID prefix).
+          const curatedIds = new Set(PRODUCTS_DATA.map((p) => p.id));
+          const allFromDb: Product[] = productsSnapshot.docs.map((docSnap) => ({
             ...(docSnap.data() as Product),
             id: docSnap.id,
           }));
-          const curatedMissingFromDatabase = PRODUCTS_DATA.filter(
-            (product) => !list.some((existing) => existing.id === product.id),
+          const validFromDb = allFromDb.filter(
+            (p) => curatedIds.has(p.id) || p.id.startsWith('admin-'),
           );
-          // Backfill any newly-added curated products into Firestore so that
-          // subsequent sessions serve them directly instead of relying on the
-          // in-memory merge every time (fixes the catalog-not-appearing bug).
+          const curatedMissingFromDatabase = PRODUCTS_DATA.filter(
+            (product) => !validFromDb.some((existing) => existing.id === product.id),
+          );
+
+          // Update the UI immediately — do NOT block on Firestore writes.
+          // The previous bug placed setProducts() AFTER an awaited
+          // Promise.all() of backfill writes. Any Firestore permission error
+          // (or network failure) would throw before setProducts() was ever
+          // called, leaving the UI frozen on stale localStorage data.
+          setProducts([...validFromDb, ...curatedMissingFromDatabase]);
+
+          // Backfill missing curated products into Firestore asynchronously.
+          // Wrap in its own try/catch so write failures are logged but never
+          // propagate up to the outer catch and abort the whole hydration.
           if (curatedMissingFromDatabase.length > 0) {
-            await Promise.all(
+            Promise.all(
               curatedMissingFromDatabase.map((prod) => setDoc(doc(db, 'products', prod.id), prod)),
-            );
+            ).catch((writeErr) => {
+              console.warn('[Zanori] backfill write error (non-fatal):', writeErr instanceof Error ? writeErr.message : writeErr);
+            });
           }
-          setProducts([...list, ...curatedMissingFromDatabase]);
         } else {
+          // Firestore collection is empty — seed it with the full curated catalog.
           const seededProducts = PRODUCTS_DATA.map((prod) => ({ ...prod }));
-          await Promise.all(seededProducts.map((prod) => setDoc(doc(db, 'products', prod.id), prod)));
+          // Update UI immediately, then seed Firestore asynchronously.
           setProducts(seededProducts);
+          Promise.all(seededProducts.map((prod) => setDoc(doc(db, 'products', prod.id), prod))).catch(
+            (writeErr) => {
+              console.warn('[Zanori] seed write error (non-fatal):', writeErr instanceof Error ? writeErr.message : writeErr);
+            },
+          );
         }
 
         if (!designsSnapshot.empty) {
@@ -367,8 +415,12 @@ export default function App() {
           setDesignShowcaseItems([...list, ...curatedMissingFromDatabase]);
         } else {
           const seededDesigns = DESIGN_SHOWCASE_DATA.map((item) => ({ ...item }));
-          await Promise.all(seededDesigns.map((item) => setDoc(doc(db, 'designs', item.id), item)));
           setDesignShowcaseItems(seededDesigns);
+          Promise.all(seededDesigns.map((item) => setDoc(doc(db, 'designs', item.id), item))).catch(
+            (writeErr) => {
+              console.warn('[Zanori] designs seed write error (non-fatal):', writeErr instanceof Error ? writeErr.message : writeErr);
+            },
+          );
         }
       } catch (error) {
         // Log gracefully — throwing here would become an unhandled rejection
