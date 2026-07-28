@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift, Sparkles, Eye, Download, X } from 'lucide-react';
+import { Bed, Sofa, Columns, Layers, Archive, Plus, Search, SlidersHorizontal, Truck, ArrowUpDown, Heart, Gift, Sun, Eye, Download, X } from 'lucide-react';
 import ProductDetailModal from './ProductDetailModal';
 import { PRODUCTS_DATA } from '../data';
 import { ShopCategory, Product, WishlistItem, DesignShowcaseItem } from '../types';
@@ -126,7 +126,7 @@ export default function Shop({
       case 'chair':
         return <Sofa className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
       case 'lamp':
-        return <Sparkles className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
+        return <Sun className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
       case 'outdoor':
         return <Layers className="w-8 h-8 text-brand-bark/85 stroke-[1.25]" />;
       case 'decor':
@@ -660,9 +660,11 @@ export default function Shop({
                     src={selectedDesign.fileUrl}
                     title={selectedDesign.title}
                     className="absolute inset-0 h-full w-full border-0"
+                    allow="xr-spatial-tracking; gyroscope; accelerometer; autoplay; fullscreen; vr"
                     allowFullScreen
                     loading="lazy"
-                    sandbox="allow-scripts allow-same-origin allow-popups"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-pointer-lock allow-forms allow-top-navigation"
+                    style={{ touchAction: 'none' }}
                   />
                 ) : selectedDesign.imageUrl || selectedDesign.imageBg ? (
                   <img
