@@ -364,30 +364,54 @@ export default function App() {
           // keep current curated products plus any admin-created products
           // (identified by the 'admin-' ID prefix).
           const curatedIds = new Set(PRODUCTS_DATA.map((p) => p.id));
+          // Build a lookup map so we can restore local image data for curated products.
+          const curatedById = new Map(PRODUCTS_DATA.map((p) => [p.id, p]));
           const allFromDb: Product[] = productsSnapshot.docs.map((docSnap) => ({
             ...(docSnap.data() as Product),
             id: docSnap.id,
           }));
-          const validFromDb = allFromDb.filter(
-            (p) => curatedIds.has(p.id) || p.id.startsWith('admin-'),
-          );
+
+          // Track products whose image data was corrected so we backfill Firestore.
+          const imagesCorrectedIds = new Set<string>();
+
+          const validFromDb = allFromDb
+            .filter((p) => curatedIds.has(p.id) || p.id.startsWith('admin-'))
+            .map((p) => {
+              const curated = curatedById.get(p.id);
+              if (!curated) return p; // admin-created product — keep as-is
+
+              // For curated products, check whether Firestore holds stale remote image
+              // URLs (CDN or Unsplash) from before the images were downloaded locally.
+              // Local paths start with '/' and base64 admin uploads start with 'data:'.
+              // Any image starting with 'http' is a stale remote URL that must be replaced.
+              const hasStaleImages =
+                !p.images ||
+                p.images.length === 0 ||
+                p.images.some((img: string) => img.startsWith('http://') || img.startsWith('https://'));
+
+              if (hasStaleImages) {
+                imagesCorrectedIds.add(p.id);
+                return { ...p, images: curated.images, imageBg: curated.imageBg };
+              }
+              return p;
+            });
+
           const curatedMissingFromDatabase = PRODUCTS_DATA.filter(
             (product) => !validFromDb.some((existing) => existing.id === product.id),
           );
 
           // Update the UI immediately — do NOT block on Firestore writes.
-          // The previous bug placed setProducts() AFTER an awaited
-          // Promise.all() of backfill writes. Any Firestore permission error
-          // (or network failure) would throw before setProducts() was ever
-          // called, leaving the UI frozen on stale localStorage data.
           setProducts([...validFromDb, ...curatedMissingFromDatabase]);
 
-          // Backfill missing curated products into Firestore asynchronously.
-          // Wrap in its own try/catch so write failures are logged but never
-          // propagate up to the outer catch and abort the whole hydration.
-          if (curatedMissingFromDatabase.length > 0) {
+          // Backfill Firestore: write corrected-image products and any missing
+          // curated products in a single async batch.
+          const productsToBackfill: Product[] = [
+            ...validFromDb.filter((p) => imagesCorrectedIds.has(p.id)),
+            ...curatedMissingFromDatabase,
+          ];
+          if (productsToBackfill.length > 0) {
             Promise.all(
-              curatedMissingFromDatabase.map((prod) => setDoc(doc(db, 'products', prod.id), prod)),
+              productsToBackfill.map((prod) => setDoc(doc(db, 'products', prod.id), prod)),
             ).catch((writeErr) => {
               console.warn('[Zanori] backfill write error (non-fatal):', writeErr instanceof Error ? writeErr.message : writeErr);
             });

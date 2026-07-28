@@ -118,9 +118,9 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
   }
 ];
 
-// ─── FURNITURE PRODUCT CATALOG ────────────────────────────────────────────────
-// Comprehensive curated product range across all categories.
-// All prices in Nigerian Naira (NGN). Images sourced from Unsplash.
+// ─── FURNITURE PRODUCT CATALOG (LEGACY) ──────────────────────────────────────
+// Retained only for backwards-compatibility reference. Not exported or used.
+// All active product data now lives in src/data/marketplace.ts with local assets.
 
 const LEGACY_PRODUCTS_DATA: Product[] = [
 
@@ -618,9 +618,9 @@ const LEGACY_PRODUCTS_DATA: Product[] = [
   }
 ];
 
-// ─── INTERIOR DESIGN MARKETPLACE ─────────────────────────────────────────────
-// Downloadable interior design assets — floor plans, 3D models, renders.
-// Mix of free and premium content across all major design styles.
+// ─── DESIGN SHOWCASE (LEGACY) ────────────────────────────────────────────────
+// Retained only for backwards-compatibility reference. Not exported or used.
+// All active showcase data now lives in src/data/marketplace.ts.
 
 const LEGACY_DESIGN_SHOWCASE_DATA: DesignShowcaseItem[] = [
 
