@@ -66,7 +66,16 @@ export default function App() {
       const cached = window.localStorage.getItem('zanori_products_state');
       if (cached) {
         const parsed = JSON.parse(cached) as Product[];
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Always ensure every curated product is present even if the cache
+          // pre-dates the latest catalog update (stale localStorage issue).
+          const missingFromCache = PRODUCTS_DATA.filter(
+            (prod) => !parsed.some((p) => p.id === prod.id),
+          );
+          return missingFromCache.length > 0
+            ? [...parsed, ...missingFromCache]
+            : parsed;
+        }
       }
     } catch {
       // Fall back to defaults if the cache is unreadable.
@@ -332,6 +341,14 @@ export default function App() {
           const curatedMissingFromDatabase = PRODUCTS_DATA.filter(
             (product) => !list.some((existing) => existing.id === product.id),
           );
+          // Backfill any newly-added curated products into Firestore so that
+          // subsequent sessions serve them directly instead of relying on the
+          // in-memory merge every time (fixes the catalog-not-appearing bug).
+          if (curatedMissingFromDatabase.length > 0) {
+            await Promise.all(
+              curatedMissingFromDatabase.map((prod) => setDoc(doc(db, 'products', prod.id), prod)),
+            );
+          }
           setProducts([...list, ...curatedMissingFromDatabase]);
         } else {
           const seededProducts = PRODUCTS_DATA.map((prod) => ({ ...prod }));
