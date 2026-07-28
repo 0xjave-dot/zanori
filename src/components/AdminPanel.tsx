@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, EyeOff, X, Sliders, ImageIcon, Sparkles } from 'lucide-react';
+import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, EyeOff, X, Sliders, ImageIcon } from 'lucide-react';
 import { Project, Product, PortfolioCategory, ShopCategory, DesignShowcaseItem } from '../types';
 import { PORTFOLIO_DATA, PRODUCTS_DATA, DESIGN_SHOWCASE_DATA } from '../data';
 import { db, OperationType, handleFirestoreError } from '../firebase';
@@ -668,7 +668,10 @@ export default function AdminPanel({
                 placeholder="admin@zanori.com"
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
-                autoComplete="email"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
                 className="w-full px-4 py-3 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-brand-base/95 text-sm text-brand-dark font-sans"
               />
             </div>
@@ -837,7 +840,7 @@ export default function AdminPanel({
                     : 'text-brand-muted hover:text-brand-dark'
                     }`}
                 >
-                  <Sparkles size={12} />
+                  <Layers size={12} />
                   <span>Showcase</span>
                 </button>
               </div>
