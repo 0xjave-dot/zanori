@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, Download, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Download, Layers } from 'lucide-react';
 import { DesignShowcaseItem } from '../types';
 
 interface DesignShowcaseProps {
@@ -34,7 +34,7 @@ export default function DesignShowcase({ items }: DesignShowcaseProps) {
 
           <div className="rounded-2xl border border-brand-wood/15 bg-brand-warm/60 px-5 py-4 text-sm text-brand-dark shadow-xs">
             <div className="flex items-center gap-2 text-brand-bark">
-              <Sparkles size={15} />
+              <Layers size={15} />
               <span className="font-medium">Managed from the admin panel</span>
             </div>
             <p className="mt-2 text-xs text-brand-muted font-sans">
