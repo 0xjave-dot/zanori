@@ -21,7 +21,15 @@ export default function InfiniteGallery() {
         <div className="infinite-track" role="presentation">
           {KUULA_EMBEDS.map((src, idx) => (
             <div className="infinite-item" key={`kuula-a-${idx}`}>
-              <iframe src={src} title={`kuula-${idx}`} style={{ border: 0 }} allowFullScreen sandbox="allow-scripts allow-same-origin" />
+              <iframe
+                src={src}
+                title={`Zanori Spaces interior tour ${idx + 1}`}
+                style={{ border: 0 }}
+                allowFullScreen
+                allow="xr-spatial-tracking; gyroscope; accelerometer"
+                sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups allow-forms"
+                loading="lazy"
+              />
               <div className="kuula-cover" />
             </div>
           ))}
@@ -29,7 +37,15 @@ export default function InfiniteGallery() {
           {/* Duplicate set for seamless looping */}
           {KUULA_EMBEDS.map((src, idx) => (
             <div className="infinite-item" key={`kuula-b-${idx}`}>
-              <iframe src={src} title={`kuula-dup-${idx}`} style={{ border: 0 }} allowFullScreen sandbox="allow-scripts allow-same-origin" />
+              <iframe
+                src={src}
+                title={`Zanori Spaces interior tour ${idx + 1} (b)`}
+                style={{ border: 0 }}
+                allowFullScreen
+                allow="xr-spatial-tracking; gyroscope; accelerometer"
+                sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups allow-forms"
+                loading="lazy"
+              />
               <div className="kuula-cover" />
             </div>
           ))}

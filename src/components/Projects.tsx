@@ -9,6 +9,10 @@ export interface Project {
   num: string;
   name: string;
   category: string;
+  description?: string;
+  location?: string;
+  year?: string;
+  service?: string;
   images: {
     col1_1: string;
     col1_2: string;
@@ -21,8 +25,11 @@ const projects: Project[] = [
     num: '01',
     name: 'The Adunola Residence',
     category: 'Residential',
+    description: 'A landmark penthouse in Lekki Phase 1 designed for a prominent lifestyle personality and her family. Performance fabrics and modular storage meet high-fashion photography requirements — where durability and impeccable composition coexist without compromise.',
+    location: 'Lekki Phase 1, Lagos',
+    year: '2024',
+    service: 'Space Styling · Quality Furniture · Design Consultation',
     images: {
-      // Penthouse: dramatic statement lounge / rich warm-toned bedroom / sweeping open-plan
       col1_1: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
       col1_2: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80',
       col2:   'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1200&q=80',
@@ -32,8 +39,11 @@ const projects: Project[] = [
     num: '02',
     name: 'Eko Heights Apartment',
     category: 'Residential',
+    description: 'A high-rise apartment on Victoria Island conceived as a calm contemporary retreat. A restrained palette of warm limestone, aged oak, and blackened steel frames panoramic city views and creates an unhurried, editorial atmosphere suited to a discerning professional.',
+    location: 'Victoria Island, Lagos',
+    year: '2023',
+    service: '3D Interior Design · Design Consultation',
     images: {
-      // Modern apartment: crisp open-plan living / sleek kitchen island / architectural dining nook
       col1_1: 'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=800&q=80',
       col1_2: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80',
       col2:   'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80',
@@ -43,8 +53,11 @@ const projects: Project[] = [
     num: '03',
     name: 'The Banwo Family Home',
     category: 'Residential',
+    description: 'A four-bedroom family home in Ikoyi fully redesigned for a family of five with young children. Bespoke cabinetry, child-rated floor finishes, and performance upholstery deliver a home that photographs as effortlessly composed as it lives day-to-day.',
+    location: 'Ikoyi, Lagos',
+    year: '2024',
+    service: 'Space Styling · Quality Furniture · Design Consultation',
     images: {
-      // Family home: earthy textured lounge / sun-drenched reading corner / calm master bedroom
       col1_1: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80',
       col1_2: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80',
       col2:   'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',

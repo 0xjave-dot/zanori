@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Hourglass, AlertCircle } from 'lucide-react';
+import { X, Hourglass, MapPin, Calendar, Layers } from 'lucide-react';
 
 interface Project {
   num: string;
@@ -17,6 +17,7 @@ interface Project {
   };
 }
 
+
 interface ProjectDetailModalProps {
   project: Project | null;
   isOpen: boolean;
@@ -26,24 +27,28 @@ interface ProjectDetailModalProps {
 const getSpecs = (projectId: string) => {
   switch (projectId) {
     case '01':
-    case '04':
       return {
-        timeframe: '3 Weeks Design to Master Render',
+        timeframe: '8 Weeks — Concept to Handover',
         clientNotes:
-          "This project needed a striking, abstract spatial aesthetic to showcase dynamic depth.",
+          'A penthouse residence in Lekki Phase 1 designed for a prominent lifestyle personality with a growing family. The brief demanded a home that would photograph beautifully while comfortably absorbing the demands of active family life. Performance fabrics, porcelain tile flooring rated for high foot traffic, and a modular storage system for the open-plan family room resolved both goals without compromise. The result reads as effortlessly composed — the durability decisions are invisible in the finished space.',
       };
     case '02':
-    case '05':
       return {
-        timeframe: '2 Weeks Exploratory Phase',
+        timeframe: '6 Weeks — Concept to Completion',
         clientNotes:
-          'A brand exploratory project centering on kinetic iridescence and procedural detail.',
+          'A high-rise apartment on Victoria Island conceived as a calm, contemporary retreat for a finance professional. The design exploits the city views through a restrained palette of warm limestone, aged oak, and blackened steel that draws the eye outward rather than competing with the skyline. Every material was specified for durability and ease of maintenance without sacrificing the considered, unhurried quality the client requested.',
+      };
+    case '03':
+      return {
+        timeframe: '10 Weeks — Full Home Redesign',
+        clientNotes:
+          'A four-bedroom family home in Ikoyi redesigned around a family of five with young children. The challenge was balancing livability with a premium aesthetic — soft furnishings were selected in stain-resistant performance fabrics, floor tiles were chosen for child-safe friction ratings, and bespoke cabinetry was engineered to grow with the family. Despite these functional priorities, the completed home reads as warm, layered, and effortlessly put together.',
       };
     default:
       return {
-        timeframe: '4 Weeks Production Cycle',
+        timeframe: '6 Weeks — Design to Delivery',
         clientNotes:
-          'An organic, fluid core engine showcasing clean light beams and handcrafted finishes.',
+          'A considered residential interior developed in close collaboration with the client, balancing refined aesthetics with long-term practicality. Every material selection, spatial arrangement, and detail was resolved through an iterative design and digital simulation process before any procurement was authorised.',
       };
   }
 };
@@ -106,22 +111,45 @@ export default function ProjectDetailModal({ project, isOpen, onClose }: Project
               </div>
 
               <div className="space-y-4">
-                <p className="text-sm text-[#D7E2EA]/85">{specs.clientNotes}</p>
+                <p className="text-sm text-[#D7E2EA]/85 leading-relaxed">
+                  {project.description ?? specs.clientNotes}
+                </p>
 
                 <div className="bg-white/5 border border-[#D7E2EA]/8 p-4 rounded-lg">
                   <div className="flex items-center gap-3">
                     <Hourglass className="w-5 h-5 text-[#BBCCD7]" />
                     <div>
                       <div className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase">Timeline</div>
-                      <div className="text-sm font-medium uppercase">{specs.timeframe}</div>
+                      <div className="text-sm font-medium uppercase">
+                        {project.year ? `${project.year} · ` : ''}{specs.timeframe}
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white/5 border border-yellow-500/20 px-3.5 py-3 rounded-2xl flex items-center gap-2 text-yellow-200/90">
-                  <AlertCircle className="w-4 h-4 stroke-[2]" />
+                {project.location && (
+                  <div className="bg-white/5 border border-[#D7E2EA]/8 p-4 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <MapPin className="w-5 h-5 text-[#BBCCD7]" />
+                      <div>
+                        <div className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase">Location</div>
+                        <div className="text-sm font-medium">{project.location}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-                </div>
+                {project.service && (
+                  <div className="bg-white/5 border border-[#D7E2EA]/8 p-4 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <Layers className="w-5 h-5 text-[#BBCCD7]" />
+                      <div>
+                        <div className="font-mono text-[10px] text-[#D7E2EA]/40 uppercase">Services</div>
+                        <div className="text-sm font-medium">{project.service}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>

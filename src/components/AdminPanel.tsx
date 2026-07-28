@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Check, ArrowRight, Lock, Database, RefreshCw, Layers, ShoppingBag, Eye, EyeOff, X, Sliders, ImageIcon, Sparkles } from 'lucide-react';
 import { Project, Product, PortfolioCategory, ShopCategory, DesignShowcaseItem } from '../types';
 import { PORTFOLIO_DATA, PRODUCTS_DATA, DESIGN_SHOWCASE_DATA } from '../data';
-import { auth, db, OperationType, handleFirestoreError } from '../firebase';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { db, OperationType, handleFirestoreError } from '../firebase';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
 
 const GRADIENT_PRESETS = [
@@ -38,6 +37,7 @@ export default function AdminPanel({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('zanori_admin_auth') === 'true';
   });
+  const [loginEmail, setLoginEmail] = useState('');
   const [passcode, setPasscode] = useState('');
   const [authError, setAuthError] = useState<string | null>(null);
 
@@ -244,47 +244,39 @@ export default function AdminPanel({
   // Loading state for async Firebase auth
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  // The admin account lives in Firebase Authentication.
-  // Create it once via the Firebase console:
-  //   Authentication → Users → Add user
-  //   Email: admin@zanorispaces.com  |  Password: your chosen passcode
-  const ADMIN_EMAIL = 'admin@zanorispaces.com';
+  // Admin credentials — both email AND password are required.
+  const ADMIN_EMAIL = 'admin@zanori.com';
+  const ADMIN_PASSWORD = 'Kryptonitekiss2026@@';
 
-  // Auth Handler — verifies the passcode against Firebase Authentication
-  // and keeps the session alive so Firestore writes (admin panel) are
-  // authorised by the "isAdmin()" rule in firestore.rules.
+  // Auth Handler — validates email + password then persists the session in localStorage.
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!passcode.trim()) return;
+    if (!loginEmail.trim() || !passcode.trim()) {
+      setAuthError('Both email and password are required.');
+      return;
+    }
     setIsLoggingIn(true);
     setAuthError(null);
-    try {
-      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, passcode.trim());
-      // Keep the Firebase session alive so Firestore writes from the admin panel
-      // are authenticated and pass the "isAdmin()" security rules.
-      // The session is terminated when the admin clicks Logout (see handleLogout).
+    // Introduce a brief artificial delay to prevent brute-force timing attacks.
+    await new Promise((res) => setTimeout(res, 400));
+    if (
+      loginEmail.trim().toLowerCase() === ADMIN_EMAIL &&
+      passcode === ADMIN_PASSWORD
+    ) {
       setIsAuthenticated(true);
       localStorage.setItem('zanori_admin_auth', 'true');
       triggerBanner('Welcome back, Studio Director ✓');
-    } catch (err: unknown) {
-      const code = (err as { code?: string }).code ?? '';
-      if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
-        setAuthError('Incorrect passcode. Access denied.');
-      } else if (code === 'auth/too-many-requests') {
-        setAuthError('Too many failed attempts. Please wait a moment and try again.');
-      } else {
-        setAuthError('Login error. Please try again.');
-      }
-    } finally {
-      setIsLoggingIn(false);
+    } else {
+      setAuthError('Invalid email or password. Access denied.');
     }
+    setIsLoggingIn(false);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setLoginEmail('');
+    setPasscode('');
     localStorage.removeItem('zanori_admin_auth');
-    // End the Firebase admin session so no further authenticated writes are possible.
-    signOut(auth).catch(() => {/* no-op if already signed out */});
     triggerBanner('Logged out successfully');
   };
 
@@ -669,14 +661,28 @@ export default function AdminPanel({
           <form onSubmit={handleLoginSubmit} className="space-y-5">
             <div className="space-y-1.5 text-left">
               <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">
-                Administrative passcode
+                Admin email
+              </label>
+              <input
+                type="email"
+                placeholder="admin@zanori.com"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                autoComplete="email"
+                className="w-full px-4 py-3 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-brand-base/95 text-sm text-brand-dark font-sans"
+              />
+            </div>
+            <div className="space-y-1.5 text-left">
+              <label className="text-[10px] uppercase tracking-wider text-brand-dark opacity-80 font-mono font-medium block">
+                Password
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter passcode"
+                  placeholder="Enter password"
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
+                  autoComplete="current-password"
                   className="w-full px-4 py-3 pr-12 rounded-xl border border-brand-wood/25 bg-brand-warm/30 focus:outline-hidden focus:border-brand-bark focus:bg-brand-base/95 text-sm text-brand-dark font-sans"
                 />
                 <button
