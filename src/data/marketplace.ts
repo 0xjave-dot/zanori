@@ -1,25 +1,5 @@
 import { DesignShowcaseItem, Product } from '../types';
 
-// CDN helpers per manufacturer/retailer
-const cb2 = (sku: string) =>
-  `https://cb2.scene7.com/is/image/CB2/${sku}?$web_product_desktop2x$`;
-const westelm = (sku: string) =>
-  `https://westelm.scene7.com/is/image/WestelInteriors/${sku}?$web-product-desktop2x$`;
-const crate = (sku: string) =>
-  `https://crateandbarrel.scene7.com/is/image/Crate/${sku}?$web_xlarge$`;
-const pb = (sku: string) =>
-  `https://potterybarn.scene7.com/is/image/Pottery/${sku}?$web_product_hero_large$`;
-const rh = (sku: string) =>
-  `https://rh.scene7.com/is/image/restaurationhardware/${sku}?$web_product_desktop2x$`;
-const hm = (path: string) =>
-  `https://a.hermanmiller.com/content/dam/hermanmiller/page_assets/products/${path}`;
-const hay = (slug: string) =>
-  `https://hay.dk/media/catalog/product/cache/7bda959b4a9c264fc5dc6cf71e7d69a4/${slug}`;
-const muuto = (slug: string) =>
-  `https://muuto.com/media/catalog/product/cache/1/${slug}`;
-const ikea = (slug: string) =>
-  `https://www.ikea.com/us/en/images/products/${slug}`;
-
 // ─────────────────────────────────────────────────────────────────────────────
 // CURATED PRODUCTS DATA
 // All products sourced from reputable furniture manufacturers and retailers.
