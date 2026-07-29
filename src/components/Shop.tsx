@@ -315,7 +315,7 @@ export default function Shop({
                       <div className="mt-5 space-y-3 flex-grow flex flex-col justify-between">
                         <div className="space-y-1">
                           <span className="text-[10px] uppercase tracking-[0.15em] text-brand-muted font-light block">
-                            {product.category} &bull; Lagos Curated
+                            {product.category}
                           </span>
                           <h3 className="font-serif text-lg font-light text-brand-dark leading-snug group-hover:text-brand-bark transition-colors duration-300">
                             {product.name}
